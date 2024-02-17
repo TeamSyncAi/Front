@@ -147,7 +147,7 @@ class MyApp extends StatelessWidget {
               ],
             ),
             child: Center(
-              child: Image.asset("assets/images/google_logo.png"),
+              child: Image.asset("assets/icons/google.bmp"),
             ),
           ),
         ),
