@@ -152,48 +152,70 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialLoginButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.25),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Center(
-              child: Image.asset("assets/icons/search.png"),
-            ),
+Widget _buildSocialLoginButtons() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      InkWell(
+        onTap: () {
+          // Handle Google login
+        },
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Image.asset("assets/icons/search.png"),
           ),
         ),
-        SizedBox(width: 10),
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Image.asset("assets/icons/facebook.png"),
-            ),
+      ),
+      SizedBox(width: 10),
+      InkWell(
+        onTap: () {
+          // Handle Facebook login
+        },
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Image.asset("assets/icons/facebook.png"),
           ),
         ),
-      ],
-    );
-  }
+      ),
+      SizedBox(width: 10),
+      InkWell(
+        onTap: () {
+          // Handle LinkedIn login
+        },
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Image.asset("assets/icons/linkedin.png"),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 }
