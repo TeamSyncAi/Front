@@ -19,15 +19,23 @@ class MyApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                 
                   Image.asset("assets/images/logo.png"),
                   SizedBox(height: 20),
-
-                  
-                  _buildTextField("Email or Username"),
+                  _buildTextField("Email or Username", Icons.person),
                   SizedBox(height: 10),
-                  _buildTextField("Password"),
-
+                  _buildTextField("Password", Icons.lock),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: false, // Initially unchecked
+                        onChanged: (bool? value) {
+                          // Handle checkbox changes here
+                        },
+                      ),
+                      Text("Remember Me"),
+                    ],
+                  ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -35,20 +43,26 @@ class MyApp extends StatelessWidget {
                       child: Text(
                         "Forgot Password?",
                         style: TextStyle(
-                          color: Color(0xFF009688),
+                          color: Color.fromARGB(255, 119, 194, 245),
                           fontSize: 14,
                         ),
                       ),
                     ),
                   ),
-
                   SizedBox(height: 20),
-
-                  // Login button
-                  _buildLoginButton(),
-
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: _buildLoginButton("Login"),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: _buildLoginButton("Register", buttonColor: Colors.white, textColor: Colors.orange),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 20),
-
                   // Terms and conditions
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,16 +78,21 @@ class MyApp extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             decoration: TextDecoration.underline,
-                            color: Color(0xFF009688),
+                            color: Color.fromARGB(255, 119, 194, 245),
                           ),
                         ),
                       ),
                     ],
                   ),
-
-                  SizedBox(height: 20),
-
-                  // Social login buttons
+                 SizedBox(height: 20),
+                  const Text(
+                    "or connect with",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 10),
                   _buildSocialLoginButtons(),
                 ],
               ),
@@ -84,7 +103,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String labelText) {
+  Widget _buildTextField(String labelText, IconData iconData) {
     return Container(
       width: double.infinity,
       height: 50,
@@ -94,30 +113,38 @@ class MyApp extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: TextField(
-          decoration: InputDecoration(
-            labelText: labelText,
-            border: InputBorder.none,
-          ),
+        child: Row(
+          children: [
+            Icon(iconData, color: Colors.orange), 
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildLoginButton(String buttonText, {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-     
+        backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         minimumSize: Size(double.infinity, 50),
       ),
       child: Text(
-        "Login",
+        buttonText,
         style: TextStyle(
-          color: Colors.white,
+          color: textColor,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -147,7 +174,7 @@ class MyApp extends StatelessWidget {
               ],
             ),
             child: Center(
-              child: Image.asset("assets/icons/google.bmp"),
+              child: Image.asset("assets/icons/search.png"),
             ),
           ),
         ),
@@ -162,7 +189,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Image.asset("assets/images/facebook_logo.png"),
+              child: Image.asset("assets/icons/facebook.png"),
             ),
           ),
         ),
