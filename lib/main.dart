@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/launch_screen.dart';
 import 'package:teamsyncai/screens/login_screen.dart';
+import 'package:teamsyncai/screens/register.dart';
 
 
 void main() {
@@ -15,10 +16,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LaunchScreen(), 
+      home: LaunchScreen(),
       routes: {
-        '/login': (context) => MyApp(), 
+        '/login': (context) => MyApp(), // Assuming you have a LoginScreen class
+        '/register': (context) => register(), // Add this line for the registration screen
       },
     );
   }
 }
+

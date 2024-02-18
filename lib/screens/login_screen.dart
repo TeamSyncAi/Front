@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'register.dart'; // Importing the register.dart file
 
 void main() {
   runApp(MyApp());
@@ -54,11 +55,11 @@ class MyApp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                        child: _buildLoginButton("Login"),
+                        child: _buildLoginButton(context, "Login"),
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: _buildLoginButton("Register", buttonColor: Colors.white, textColor: Colors.orange),
+                        child: _buildLoginButton(context, "Register", buttonColor: Colors.white, textColor: Colors.orange),
                       ),
                     ],
                   ),
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                   ),
-                 SizedBox(height: 20),
+                  SizedBox(height: 20),
                   const Text(
                     "or connect with",
                     style: TextStyle(
@@ -115,7 +116,7 @@ class MyApp extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Row(
           children: [
-            Icon(iconData, color: Colors.orange), 
+            Icon(iconData, color: Colors.orange),
             SizedBox(width: 10),
             Expanded(
               child: TextField(
@@ -131,9 +132,18 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(String buttonText, {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
+  Widget _buildLoginButton(BuildContext context, String buttonText, {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        if (buttonText == "Register") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => register()), // Navigate to RegisterScreen
+          );
+        } else {
+          // Handle other button actions
+        }
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
@@ -152,70 +162,69 @@ class MyApp extends StatelessWidget {
     );
   }
 
-Widget _buildSocialLoginButtons() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-      InkWell(
-        onTap: () {
-          // Handle Google login
-        },
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.25),
-                spreadRadius: 2,
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Image.asset("assets/icons/search.png"),
-          ),
-        ),
-      ),
-      SizedBox(width: 10),
-      InkWell(
-        onTap: () {
-          // Handle Facebook login
-        },
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Image.asset("assets/icons/facebook.png"),
+  Widget _buildSocialLoginButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        InkWell(
+          onTap: () {
+            // Handle Google login
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.25),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Image.asset("assets/icons/search.png"),
+            ),
           ),
         ),
-      ),
-      SizedBox(width: 10),
-      InkWell(
-        onTap: () {
-          // Handle LinkedIn login
-        },
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Image.asset("assets/icons/linkedin.png"),
+        SizedBox(width: 10),
+        InkWell(
+          onTap: () {
+            // Handle Facebook login
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Image.asset("assets/icons/facebook.png"),
+            ),
           ),
         ),
-      ),
-    ],
-  );
-}
-
+        SizedBox(width: 10),
+        InkWell(
+          onTap: () {
+            // Handle LinkedIn login
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Image.asset("assets/icons/linkedin.png"),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
