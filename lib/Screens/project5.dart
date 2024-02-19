@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_dash/Screens/project6.dart';
 
 import '../models/module.dart';
 
@@ -20,6 +21,7 @@ class _ProjectFifthState extends State<ProjectFifth> {
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         title: Text('Edit Module'),
+        backgroundColor: Color(0xFFE89F16),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -29,6 +31,18 @@ class _ProjectFifthState extends State<ProjectFifth> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text("Name", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                SizedBox(height: 20),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Enter new module name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    hintStyle: TextStyle(color: Colors.grey.withOpacity(0.0)),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text("Tasks",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 20),
                 ListView.builder(
                   shrinkWrap: true,
@@ -58,8 +72,12 @@ class _ProjectFifthState extends State<ProjectFifth> {
                         child: ListTile(
                           title: Text(tasks[index]),
                           onTap: () {
-                            // Implement task name editing here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ProjectSixth(taskTitle: tasks[index])),
+                            );
                           },
+
                         ),
                       ),
                     );

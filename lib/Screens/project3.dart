@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_dash/Screens/project2.dart';
 import 'package:project_dash/Screens/project4.dart';
 import 'package:project_dash/Screens/project5.dart';
 
@@ -240,9 +239,8 @@ class _ProjectThirdState extends State<ProjectThird> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ProjectSecond()),
-                        );
+                        Navigator.pop(context);
+
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFE89F16),

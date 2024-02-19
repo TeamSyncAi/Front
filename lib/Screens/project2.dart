@@ -12,6 +12,10 @@ class _ProjectSecond extends State<ProjectSecond> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Creating The Project'),
+        backgroundColor: Color(0xFFE89F16), // Set app's primary color as the app bar's background color
+      ),
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -20,7 +24,7 @@ class _ProjectSecond extends State<ProjectSecond> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 20,),
+                const SizedBox(height: 10,),
                 const Text('Project Leader',
                 style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
                 ),
@@ -66,7 +70,7 @@ class _ProjectSecond extends State<ProjectSecond> {
                   ),
                   maxLines: 3,
                 ),
-                const SizedBox(height: 225),
+                const SizedBox(height: 170),
                 ElevatedButton(onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProjectThird()));
                 },
