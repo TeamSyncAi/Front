@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_dash/Screens/project2.dart';
 import 'package:project_dash/Screens/project4.dart';
+import 'package:project_dash/Screens/project5.dart';
+
+import '../models/module.dart';
+
+
 
 class ProjectThird extends StatefulWidget {
   const ProjectThird({Key? key}) : super(key: key);
@@ -10,6 +15,16 @@ class ProjectThird extends StatefulWidget {
 }
 
 class _ProjectThirdState extends State<ProjectThird> {
+  List<Module> modules = [
+    Module(name: "Module User", tasks: []),
+    Module(name: "Module Reclamation", tasks: []),
+    Module(name: "Module Payment", tasks: []),
+    Module(name: "Module Payment", tasks: []),
+    Module(name: "Module Payment", tasks: []),
+    Module(name: "Module Payment", tasks: []),
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,23 +34,23 @@ class _ProjectThirdState extends State<ProjectThird> {
           children: [
             Container(
               height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
+              decoration: BoxDecoration(
+                image: const DecorationImage(
                   image: AssetImage('assets/Vector.png'),
                   fit: BoxFit.cover,
                 ),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(10.0),
                   bottomRight: Radius.circular(10.0),
                 ),
               ),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Center(
-                      child: Text(
+                      child: const Text(
                         "Project Details",
                         style: TextStyle(
                           fontSize: 20,
@@ -45,12 +60,12 @@ class _ProjectThirdState extends State<ProjectThird> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "Name :",
                           style: TextStyle(
@@ -62,12 +77,12 @@ class _ProjectThirdState extends State<ProjectThird> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "Leader :",
                           style: TextStyle(
@@ -82,21 +97,21 @@ class _ProjectThirdState extends State<ProjectThird> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Text(
                                   "Start time",
                                   style: TextStyle(
@@ -111,7 +126,7 @@ class _ProjectThirdState extends State<ProjectThird> {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Text("End time",
                                     style: TextStyle(
                                         fontSize: 16,
@@ -123,18 +138,79 @@ class _ProjectThirdState extends State<ProjectThird> {
                           )
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.grey,
                         thickness: 1.0,
                         height: 20,
                         indent: 5,
                         endIndent: 5,
                       ),
-                      SizedBox(height: 10),
-                      Text("Modules",
+                      const SizedBox(height: 10),
+                      const Text("Modules",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 250),
+                      const SizedBox(height: 10),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: modules.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == modules.length) {
+                            return IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                setState(() {
+                                  modules.add(Module(name: "New Module", tasks: []));
+                                });
+                              },
+                            );
+                          } else {
+                            return Dismissible(
+                              key: Key(modules[index].name),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) {
+                                setState(() {
+                                  modules.removeAt(index);
+                                });
+                              },
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                color: Colors.orange,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 16.0),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              child: Card(
+                                elevation: 4,
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8.0),
+                                child: ListTile(
+                                  title: Text(
+                                    modules[index].name,
+                                    style: TextStyle(fontSize: 18.0),
+                                  ),
+                                  subtitle: Text(
+                                    'Number of tasks: ${modules[index].tasks.length}',
+                                    style: TextStyle(fontSize: 14.0),
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ProjectFifth(
+                                          module: modules[index],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -148,13 +224,14 @@ class _ProjectThirdState extends State<ProjectThird> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProjectFourth()));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ProjectFourth()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFE89F16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)
-                          )),
+                              borderRadius: BorderRadius.circular(10.0))),
                       child: const Text("OK",
                           style: TextStyle(color: Colors.white)),
                     ),
@@ -163,14 +240,14 @@ class _ProjectThirdState extends State<ProjectThird> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProjectSecond()));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ProjectSecond()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFE89F16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)
-                        )
-                      ),
+                          backgroundColor: const Color(0xFFE89F16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0))),
                       child: const Text("Cancel",
                           style: TextStyle(color: Colors.white)),
                     ),
