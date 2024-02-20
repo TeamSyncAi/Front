@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:teamsyncai/screens/onboardingscreen.dart';
+import 'onboardingscreen.dart'; 
 
 class completeProfile extends StatefulWidget {
   @override
@@ -15,9 +17,6 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
   bool _showSkills = false;
 
   final List<String> _skills = ['Java', 'Swift'];
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -51,12 +50,12 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _pickImage(ImageSource.gallery); // Access gallery to pick an image
+                  _pickImage(ImageSource.gallery);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, // Set button color to orange
-                  minimumSize: Size(200, 50), // Set minimum button size
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), // Make button circular
+                  backgroundColor: Colors.orange,
+                  minimumSize: Size(200, 50),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                 ),
                 child: Text('Upload Photo', style: TextStyle(fontSize: 16)),
               ),
@@ -110,18 +109,24 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
               children: [
                 TextButton(
                   onPressed: () {
-                    // Skip for now functionality
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OnboardingScreen()), // Navigate to OnboardingScreen
+                    );
                   },
                   child: Text('Skip for Now'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Save profile functionality
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OnboardingScreen()), // Navigate to OnboardingScreen
+                    );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange, // Set button color to orange
-                    minimumSize: Size(120, 50), // Set minimum button size
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), // Make button circular
+                    backgroundColor: Colors.orange,
+                    minimumSize: Size(120, 50),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   ),
                   child: Text('Save Profile', style: TextStyle(fontSize: 16)),
                 ),
