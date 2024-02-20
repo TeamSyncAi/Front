@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:teamsyncai/screens/home.dart';
+import 'package:teamsyncai/screens/home.dart';
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -40,16 +41,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             bottom: 20.0,
             child: Center(
               child: ElevatedButton(
-                onPressed: () {
-                  
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange, 
-                  minimumSize: Size(200, 50), 
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), 
-                ),
-                child: Text('Get Started', style: TextStyle(fontSize: 18.0)),
-              ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => home()), // Navigate to home.dart
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.orange, 
+    minimumSize: Size(200, 50), 
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), 
+  ),
+  child: Text('Get Started', style: TextStyle(fontSize: 18.0)),
+),
+
             ),
           ),
         ],
