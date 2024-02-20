@@ -8,10 +8,16 @@ class completeProfile extends StatefulWidget {
 }
 
 class _ProfileCompletionScreenState extends State<completeProfile> {
+  File? _image;
+  String _selectedRole = '';
+  bool _isTeamLeader = false;
+  bool _isGuest = false;
+  bool _showSkills = false;
+
+  final List<String> _skills = ['Java', 'Swift'];
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
-  File? _image;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -30,7 +36,6 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
-        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +44,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 38),
-             Text(
+            Text(
               'Upload a photo for us to easily identify you.',
               style: TextStyle(fontSize: 16.0),
             ),
@@ -57,30 +62,48 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
               ),
             ),
             SizedBox(height: 20.0),
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                hintText: 'Your Name',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), // Make text field circular
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Team Leader'),
+                Switch(
+                  value: _isTeamLeader,
+                  onChanged: (value) {
+                    setState(() {
+                      _isTeamLeader = value;
+                      _isGuest = !value;
+                      _showSkills = false;
+                    });
+                  },
+                ),
+                Text('Guest'),
+                Switch(
+                  value: _isGuest,
+                  onChanged: (value) {
+                    setState(() {
+                      _isGuest = value;
+                      _isTeamLeader = !value;
+                      _showSkills = value;
+                    });
+                  },
+                ),
+              ],
             ),
-            SizedBox(height: 10.0),
-            TextField(
-              controller: _ageController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: 'Your Age',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), // Make text field circular
+            if (_showSkills)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Skills:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  for (var skill in _skills)
+                    SwitchListTile(
+                      title: Text(skill),
+                      value: false, // You can set the initial value of the switch here
+                      onChanged: (value) {
+                        // Handle skill selection
+                      },
+                    ),
+                ],
               ),
-            ),
-            SizedBox(height: 10.0),
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                hintText: 'Your Title',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), // Make text field circular
-              ),
-            ),
             SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
