@@ -131,7 +131,7 @@ class register extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Select your role:'),
+                  const Text('Your title:'),
                   const SizedBox(width: 10),
                   SizedBox(
                     width: 200, 
