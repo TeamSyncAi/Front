@@ -31,13 +31,11 @@ class Member {
 }
 
 class TasksPage extends StatefulWidget {
-  final String title;
-  final List<String> profileImagePaths;
+  final Task task;
 
   const TasksPage({
     Key? key,
-    required this.title,
-    required this.profileImagePaths,
+    required this.task,
   }) : super(key: key);
 
   @override
@@ -49,83 +47,11 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = [
-      Task(
-        taskTitle: 'Design Template Screens',
-        taskDescription: 'Create template screen for tasks todo app.',
-        date: DateTime.now(),
-        members: [
-          Member(
-            name: 'ahmed maadi',
-            email: 'ahmed@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-          Member(
-            name: 'hama boualeg',
-            email: 'hama@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-          Member(
-            name: 'hama boualeg',
-            email: 'hama@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-          Member(
-            name: 'ahmed maadi',
-            email: 'ahmed@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-          Member(
-            name: 'ahmed maadi',
-            email: 'ahmed@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-        ],
-      ),
-      Task(
-        taskTitle: 'Design Template Screens',
-        taskDescription: 'Create template screen for tasks todo app.',
-        date: DateTime.now(),
-        members: [
-          Member(
-            name: 'ekbel zrelli',
-            email: 'ekbel@example.com',
-            profileImagePath: ['images/zz.png'],
-          ),
-        ],
-      ),
-      // Add more tasks as needed
-    ];
-
-    List<Task> filteredTasks = _selectedDay == 'Today'
-        ? tasks
-            .where((task) =>
-                task.date
-                    .isBefore(DateTime.now().add(const Duration(days: 1))) &&
-                task.date
-                    .isAfter(DateTime.now().subtract(const Duration(days: 1))))
-            .toList()
-        : _selectedDay == 'Upcoming'
-            ? tasks
-                .where((task) =>
-                    task.date.isBefore(
-                        DateTime.now().add(const Duration(days: 1))) &&
-                    task.date.isAfter(
-                        DateTime.now().subtract(const Duration(days: 1))))
-                .toList()
-            : _selectedDay == 'Completed'
-                ? tasks
-                    .where((task) =>
-                        task.date.isBefore(
-                            DateTime.now().add(const Duration(days: 1))) &&
-                        task.date.isAfter(
-                            DateTime.now().subtract(const Duration(days: 1))))
-                    .toList()
-                : [];
+    Task task = widget.task;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.title} tasks'),
+        title: Text('${task.taskTitle} tasks'),
       ),
       body: Column(
         children: [
@@ -189,9 +115,8 @@ class _TasksPageState extends State<TasksPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: filteredTasks.length,
+              itemCount: 1,
               itemBuilder: (context, index) {
-                Task task = filteredTasks[index];
                 return Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(

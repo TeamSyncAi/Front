@@ -84,64 +84,96 @@ class MyApp extends StatelessWidget {
                       profileImagePaths: const ['images/zz.png'],
                       percentage: 50,
                       imagePath: 'images/pp.png',
+                      task: Task(
+                        taskTitle: 'Design Template Screens',
+                        taskDescription:
+                            'Create template screen for tasks todo app.',
+                        date: DateTime.now(),
+                        members: [
+                          Member(
+                            name: 'ahmed maadi',
+                            email: 'ahmed@example.com',
+                            profileImagePath: ['images/zz.png'],
+                          ),
+                          Member(
+                            name: 'hama boualeg',
+                            email: 'hama@example.com',
+                            profileImagePath: ['images/zz.png'],
+                          ),
+                        ],
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TasksPage(
-                              title: 'payement',
-                              profileImagePaths: ['images/zz.png'],
-                            ),
+                            builder: (context) => TasksPage(
+                                task: Task(
+                              taskTitle: 'Design Template Screens',
+                              taskDescription:
+                                  'Create template screen for tasks todo app.',
+                              date: DateTime.now(),
+                              members: [
+                                Member(
+                                  name: 'ahmed maadi',
+                                  email: 'ahmed@example.com',
+                                  profileImagePath: ['images/zz.png'],
+                                ),
+                                Member(
+                                  name: 'hama boualeg',
+                                  email: 'hama@example.com',
+                                  profileImagePath: ['images/zz.png'],
+                                ),
+                              ],
+                            )),
                           ),
                         );
                       },
                     ),
                     ListTileModule(
-                      title: 'Example Task 1',
-                      description: 'Description of the task',
-                      profileImagePaths: const [
-                        'images/zz.png',
-                        'images/zz.png'
-                      ],
+                      title: 'Reclamation ',
+                      description: 'Reclamation description',
+                      profileImagePaths: const ['images/zz.png'],
                       percentage: 50,
                       imagePath: 'images/reclamation.jpg',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const TasksPage(
-                              title: 'Example Task 1',
-                              profileImagePaths: [
-                                'images/zz.png',
-                                'images/zz.png'
-                              ],
-                            ),
+                      task: Task(
+                        taskTitle: 'UI/UX screens',
+                        taskDescription: 'Create UI/UX screens todo app.',
+                        date: DateTime.now(),
+                        members: [
+                          Member(
+                            name: 'ahmed maadi',
+                            email: 'ahmed@example.com',
+                            profileImagePath: ['images/zz.png'],
                           ),
-                        );
-                      },
-                    ),
-                    ListTileModule(
-                      title: 'Example Task 2',
-                      description: 'Description of the task',
-                      profileImagePaths: const [
-                        'images/zz.png',
-                        'images/zz.png',
-                        'images/zz.png'
-                      ],
-                      percentage: 70,
-                      imagePath: 'images/zzz.jpg',
+                          Member(
+                            name: 'ekbel zrelli',
+                            email: 'ahmed@example.com',
+                            profileImagePath: ['images/zz.png'],
+                          ),
+                        ],
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TasksPage(
-                              title: 'Example Task 2',
-                              profileImagePaths: [
-                                'images/zz.png',
-                                'images/zz.png',
-                                'images/zz.png'
+                            builder: (context) => TasksPage(
+                                task: Task(
+                              taskTitle: 'UI/UX screens',
+                              taskDescription: 'Create UI/UX screens todo app.',
+                              date: DateTime.now(),
+                              members: [
+                                Member(
+                                  name: 'ahmed maadi',
+                                  email: 'ahmed@example.com',
+                                  profileImagePath: ['images/zz.png'],
+                                ),
+                                Member(
+                                  name: 'ekbel zrelli',
+                                  email: 'ahmed@example.com',
+                                  profileImagePath: ['images/zz.png'],
+                                ),
                               ],
-                            ),
+                            )),
                           ),
                         );
                       },

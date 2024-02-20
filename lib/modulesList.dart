@@ -2,6 +2,7 @@
 // ignore_for_file: file_names, duplicate_ignore
 
 import 'package:flutter/material.dart';
+import 'package:flutter_pim/tasksPage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class ListTileModule extends StatelessWidget {
@@ -10,6 +11,7 @@ class ListTileModule extends StatelessWidget {
   final List<String> profileImagePaths;
   final int percentage;
   final String imagePath; 
+  final Task task; // Add Task property
   final VoidCallback onTap;// New property for image asset path
 
   const ListTileModule({
@@ -19,6 +21,7 @@ class ListTileModule extends StatelessWidget {
     required this.profileImagePaths,
     required this.percentage,
     required this.imagePath,
+     required this.task,
     required this.onTap,
   }) : super(key: key);
 
