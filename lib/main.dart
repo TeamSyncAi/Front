@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/launch_screen.dart';
 import 'package:teamsyncai/screens/login_screen.dart';
 import 'package:teamsyncai/screens/register.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());

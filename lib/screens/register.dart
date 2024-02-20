@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncai/screens/otp.dart';
 
 void main() {
   runApp(register());
 }
 
 class register extends StatelessWidget {
-  Widget _buildTextField(String labelText, IconData iconData) {
+  Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     return Container(
       width: double.infinity,
       height: 50,
@@ -21,9 +22,9 @@ class register extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: TextFormField(
+                obscureText: obscureText, // <-- Set obscureText property
                 decoration: InputDecoration(
                   labelText: labelText,
-                  labelStyle: TextStyle(color: Colors.orange),
                   border: InputBorder.none,
                 ),
               ),
@@ -106,27 +107,62 @@ class register extends StatelessWidget {
       home: Scaffold(
         body: SafeArea(
           child: ListView(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             children: <Widget>[
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset("assets/images/logo.png"), // Replace with your logo image
-                  Text(
-                    'Create your account',
+                  const Text(
+                    'GET STARTED',
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
-              _buildTextField('Name', Icons.person),
-              SizedBox(height: 10.0),
-              _buildTextField('Email Address', Icons.email),
-              SizedBox(height: 10.0),
-              _buildTextField('Password', Icons.lock),
-              SizedBox(height: 10.0),
-              _buildTextField('Confirm Password', Icons.lock),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 20.0),
+              _buildTextField('Name', Icons.person, false),
+              const SizedBox(height: 10.0),
+              _buildTextField('Email Address', Icons.email, false),
+              const SizedBox(height: 10.0),
+              _buildTextField('Password', Icons.lock, true),
+              const SizedBox(height: 10.0),
+              _buildTextField('Confirm Password', Icons.lock, true),
+              const SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('Select your role:'),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 200, 
+                    child: Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(25),
+                      child: ToggleButtons(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Team Leader'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Guest'),
+                          ),
+                        ],
+                        isSelected: [true, false], // Default selection
+                        onPressed: (int index) {
+                          // Handle toggle
+                        },
+                        borderRadius: BorderRadius.circular(25),
+                        selectedColor: Colors.white,
+                        fillColor: Colors.orange,
+                        borderColor: Colors.orange,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
                   Checkbox(
@@ -134,7 +170,7 @@ class register extends StatelessWidget {
                     onChanged: (value) {},
                   ),
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: 'I understood the ',
                       style: TextStyle(color: Colors.black),
                       children: <TextSpan>[
@@ -147,40 +183,40 @@ class register extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
- ElevatedButton(
-  onPressed: () {
-    Navigator.pop(context); // Navigate back to login page
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.orange, // Set background color to white
-    textStyle: TextStyle(color: Colors.white60), // Set text color to orange
-  ),
-  child: Text(
-    'Sign up',
-  ),
-),
-
-
-              SizedBox(height: 10.0),
-              Text('or sign up with'),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => otp()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  textStyle: const TextStyle(color: Colors.white60),
+                ),
+                child: const Text(
+                  'Sign up',
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              const Text('or sign up with'),
+              const SizedBox(height: 10.0),
               _buildSocialLoginButtons(),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Have an account?'),
-               TextButton(
-  child: Text(
-    'SIGN IN',
-    style: TextStyle(color: Colors.orange),
-  ),
-  onPressed: () {
-    Navigator.of(context).pop(); // Navigate back to the previous route (login page)
-  },
-),
-
+                  const Text('Have an account?'),
+                  TextButton(
+                    child: const Text(
+                      'SIGN IN',
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Go back to the previous screen
+                    },
+                  ),
                 ],
               ),
             ],
