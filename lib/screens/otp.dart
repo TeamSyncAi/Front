@@ -56,14 +56,13 @@ class _VerificationScreenState extends State<otp> {
               children: [
                 TextButton(
                   onPressed: () {
-                    // Resend code functionality
+                   
                   },
                   child: Text('Resend code', style: TextStyle(fontSize: 16.0, color: Colors.orange)), // Orange color for text
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Verify code functionality
-                    // Navigate to the complete profile page
+                   
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => completeProfile()), // Navigate to the complete profile page

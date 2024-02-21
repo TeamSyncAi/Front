@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncai/screens/displayprofile.dart';
 import 'package:teamsyncai/screens/otp.dart';
+import 'package:teamsyncai/providers/GoogleSignInApi.dart';
 
-void main() {
-  runApp(register());
+class registerPage extends StatefulWidget {
+  const registerPage({super.key});
+
+  @override
+  register createState() => register();
 }
-
-class register extends StatelessWidget {
+class register  extends State<registerPage>{
   Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     return Container(
       width: double.infinity,
@@ -40,9 +44,7 @@ class register extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         InkWell(
-          onTap: () {
-            // Handle Google login
-          },
+          onTap: signIn,
           child: Container(
             width: 50,
             height: 50,
@@ -139,13 +141,13 @@ class register extends StatelessWidget {
                       elevation: 2,
                       borderRadius: BorderRadius.circular(25),
                       child: ToggleButtons(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text('Team Leader'),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text('Guest'),
                           ),
                         ],
@@ -224,5 +226,18 @@ class register extends StatelessWidget {
         ),
       ),
     );
+  }
+   Future signIn() async {
+    final user = await GoogleSignInApi.login();
+
+
+    if (user == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Sign in Failed')));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => displayprofile(user: user),
+      ));
+    }
   }
 }

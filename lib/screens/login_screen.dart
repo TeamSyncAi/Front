@@ -191,7 +191,7 @@ Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
         if (buttonText == "Register") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => register()), 
+            MaterialPageRoute(builder: (context) => registerPage()), 
           );
         } else {
           // Handle other button actions

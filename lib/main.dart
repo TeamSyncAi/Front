@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       home: LaunchScreen(),
       routes: {
         '/login': (context) => MyApp(), // Assuming you have a LoginScreen class
-        '/register': (context) => register(), // Add this line for the registration screen
+        '/register': (context) => registerPage(), // Add this line for the registration screen
       },
     );
   }
