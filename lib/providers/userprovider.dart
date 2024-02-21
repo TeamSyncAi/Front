@@ -10,8 +10,21 @@ class UserProvider with ChangeNotifier {
   List<User> get users => _users;
   String get invitationStatus => _invitationStatus;
 
-  Future<User> authenticateUser(String email, String password) async {
-    final User user = await UserApiService.authenticateUser(email, password);
+Future<User> createUser(String username, String email, String password) async {
+    try {
+      final User newUser = await UserApiService.createUser(username, email, password );
+      
+      // Optionally, you can perform actions after creating the user, such as updating the UI or storing user data
+      
+      return newUser;
+    } catch (e) {
+      // Handle errors if user creation fails
+      print('Failed to create user: $e');
+      throw Exception('Failed to create user');
+    }
+  }
+  Future<User> authenticateUser(String username, String password) async {
+    final User user = await UserApiService.authenticateUser(username, password);
 
     // After successful authentication, you might want to store user data or token
     // For example, storing user ID in SharedPreferences for later use

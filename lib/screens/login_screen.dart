@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'register.dart'; 
+import 'register.dart';
+import 'package:teamsyncai/providers/userprovider.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,8 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateMixin {
+class _SignInPageState extends State<SignInPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -66,10 +68,10 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
                     children: <Widget>[
                       Image.asset("assets/images/logo.png"),
                       const SizedBox(height: 20),
-                      _buildTextField("Email or Username", Icons.person,false),
+                      _buildTextField(
+                          "Email or Username", Icons.person, false),
                       const SizedBox(height: 10),
-                     _buildTextField("Password", Icons.lock, true),
-
+                      _buildTextField("Password", Icons.lock, true),
                       const SizedBox(height: 10),
                       Row(
                         children: [
@@ -106,7 +108,9 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
                           ),
                           const SizedBox(width: 10),
                           Expanded(
-                            child: _buildLoginButton(context, "Register", buttonColor: Colors.white, textColor: Colors.orange),
+                            child: _buildLoginButton(context, "Register",
+                                buttonColor: Colors.white,
+                                textColor: Colors.orange),
                           ),
                         ],
                       ),
@@ -127,7 +131,8 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
                                 fontSize: 12,
                                 decoration: TextDecoration.underline,
                                 color: Color.fromARGB(255, 119, 194, 245),
-                                fontFamily: 'Montserrat', // Change font here
+                                fontFamily:
+                                    'Montserrat', // Change font here
                               ),
                             ),
                           ),
@@ -155,46 +160,47 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
     );
   }
 
-Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
-  return Container(
-    width: double.infinity,
-    height: 50,
-    decoration: BoxDecoration(
-      color: const Color(0xFFF2F2F2),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        children: [
-          Icon(iconData, color: Colors.orange),
-          const SizedBox(width: 10),
-          Expanded(
-            child: TextField(
-              obscureText: obscureText, // <-- Set obscureText property
-              decoration: InputDecoration(
-                labelText: labelText,
-                border: InputBorder.none,
+  Widget _buildTextField(
+      String labelText, IconData iconData, bool obscureText) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Icon(iconData, color: Colors.orange),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                obscureText: obscureText, // <-- Set obscureText property
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  border: InputBorder.none,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-
-  Widget _buildLoginButton(BuildContext context, String buttonText, {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
+  Widget _buildLoginButton(BuildContext context, String buttonText,
+      {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
     return ElevatedButton(
       onPressed: () {
         if (buttonText == "Register") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => registerPage()), 
+            MaterialPageRoute(builder: (context) => registerPage()),
           );
         } else {
-          // Handle other button actions
+          UserProvider().authenticateUser("email", "password");
         }
       },
       style: ElevatedButton.styleFrom(

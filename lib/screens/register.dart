@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/displayprofile.dart';
 import 'package:teamsyncai/screens/otp.dart';
 import 'package:teamsyncai/providers/GoogleSignInApi.dart';
+import 'package:teamsyncai/providers/userprovider.dart';
+import 'package:teamsyncai/model/user_model.dart';
 
 class registerPage extends StatefulWidget {
   const registerPage({super.key});
@@ -10,6 +12,7 @@ class registerPage extends StatefulWidget {
   register createState() => register();
 }
 class register  extends State<registerPage>{
+    final UserProvider _userProvider = UserProvider(); // Create an instance of UserProvider
   Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     return Container(
       width: double.infinity,
@@ -187,11 +190,21 @@ class register  extends State<registerPage>{
               ),
               const SizedBox(height: 20.0),
               ElevatedButton(
-                onPressed: () {
-                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => otp()),
-                  );
+ onPressed: () async {
+                  try {
+                    final User newUser = await _userProvider.createUser(
+                      'username', // Replace with actual username
+                      'email',    // Replace with actual email
+                      'password', // Replace with actual password
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => otp()),
+                    );
+                  } catch (e) {
+                    print('Error creating user: $e');
+                    // Handle error
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
@@ -199,6 +212,7 @@ class register  extends State<registerPage>{
                 ),
                 child: const Text(
                   'Sign up',
+                  
                 ),
               ),
               const SizedBox(height: 10.0),
