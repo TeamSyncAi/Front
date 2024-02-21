@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncai/screens/otp.dart';
+import 'package:teamsyncai/widgets/hompepage.dart';
+import 'package:teamsyncai/widgets/otp.dart';
+import 'package:teamsyncai/providers/google_signin_api.dart';
 
-void main() {
-  runApp(register());
+
+
+class registerPage extends StatefulWidget {
+  const registerPage({super.key});
+
+  @override
+  _registerPageState createState() => _registerPageState();
 }
 
-class register extends StatelessWidget {
+class _registerPageState extends State<registerPage> {
   Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     return Container(
       width: double.infinity,
@@ -40,9 +47,8 @@ class register extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         InkWell(
-          onTap: () {
-            // Handle Google login
-          },
+          onTap: 
+            signIn,
           child: Container(
             width: 50,
             height: 50,
@@ -139,17 +145,7 @@ class register extends StatelessWidget {
                       elevation: 2,
                       borderRadius: BorderRadius.circular(25),
                       child: ToggleButtons(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Team Leader'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Guest'),
-                          ),
-                        ],
-                        isSelected: [true, false], // Default selection
+                        isSelected: const [true, false], // Default selection
                         onPressed: (int index) {
                           // Handle toggle
                         },
@@ -157,6 +153,16 @@ class register extends StatelessWidget {
                         selectedColor: Colors.white,
                         fillColor: Colors.orange,
                         borderColor: Colors.orange,
+                        children: const <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Team Leader'),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text('Guest'),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -188,7 +194,7 @@ class register extends StatelessWidget {
                 onPressed: () {
                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => otp()),
+                    MaterialPageRoute(builder: (context) => const otp()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -224,5 +230,21 @@ class register extends StatelessWidget {
         ),
       ),
     );
+    
   }
+    Future signIn() async {
+    final user = await GoogleSignInApi.login();
+
+
+    if (user == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Sign in Failed')));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => HomePage(user: user),
+      ));
+    }
+  }
+
 }
+

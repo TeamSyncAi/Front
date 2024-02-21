@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class completeProfile extends StatefulWidget {
+  const completeProfile({super.key});
+
   @override
   _ProfileCompletionScreenState createState() => _ProfileCompletionScreenState();
 }
 
 class _ProfileCompletionScreenState extends State<completeProfile> {
   File? _image;
-  String _selectedRole = '';
+  final String _selectedRole = '';
   bool _isTeamLeader = false;
   bool _isGuest = false;
   bool _showSkills = false;
@@ -32,19 +34,19 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Complete Profile'),
+        title: const Text('Complete Profile'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Last step for creating your profile',
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 38),
-            Text(
+            const SizedBox(height: 38),
+            const Text(
               'Upload a photo for us to easily identify you.',
               style: TextStyle(fontSize: 16.0),
             ),
@@ -55,17 +57,17 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange, // Set button color to orange
-                  minimumSize: Size(200, 50), // Set minimum button size
+                  minimumSize: const Size(200, 50), // Set minimum button size
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), // Make button circular
                 ),
-                child: Text('Upload Photo', style: TextStyle(fontSize: 16)),
+                child: const Text('Upload Photo', style: TextStyle(fontSize: 16)),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Team Leader'),
+                const Text('Team Leader'),
                 Switch(
                   value: _isTeamLeader,
                   onChanged: (value) {
@@ -76,7 +78,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
                     });
                   },
                 ),
-                Text('Guest'),
+                const Text('Guest'),
                 Switch(
                   value: _isGuest,
                   onChanged: (value) {
@@ -93,7 +95,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Skills:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const Text('Skills:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   for (var skill in _skills)
                     SwitchListTile(
                       title: Text(skill),
@@ -104,7 +106,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
                     ),
                 ],
               ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -112,7 +114,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
                   onPressed: () {
                     // Skip for now functionality
                   },
-                  child: Text('Skip for Now'),
+                  child: const Text('Skip for Now'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -120,10 +122,10 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange, // Set button color to orange
-                    minimumSize: Size(120, 50), // Set minimum button size
+                    minimumSize: const Size(120, 50), // Set minimum button size
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)), // Make button circular
                   ),
-                  child: Text('Save Profile', style: TextStyle(fontSize: 16)),
+                  child: const Text('Save Profile', style: TextStyle(fontSize: 16)),
                 ),
               ],
             ),

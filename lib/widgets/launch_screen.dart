@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncai/screens/login_screen.dart';
+import 'package:teamsyncai/widgets/login_screen.dart';
 
 
 
@@ -20,7 +20,7 @@ class _LaunchScreenState extends State<LaunchScreen > {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyApp()),
+        MaterialPageRoute(builder: (context) => const MyApp()),
       );
     });
   }
@@ -33,7 +33,7 @@ class _LaunchScreenState extends State<LaunchScreen > {
       body: Stack(
         children: <Widget>[
           Container(
-            color: Color.fromARGB(255, 245, 186, 115),
+            color: const Color.fromARGB(255, 245, 186, 115),
           ),
           Center(
             child: Image.asset(

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncai/screens/launch_screen.dart';
-import 'package:teamsyncai/screens/login_screen.dart';
-import 'package:teamsyncai/screens/register.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:teamsyncai/widgets/launch_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,11 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LaunchScreen(),
-      routes: {
-        '/login': (context) => MyApp(), // Assuming you have a LoginScreen class
-        '/register': (context) => register(), // Add this line for the registration screen
-      },
+      home: const LaunchScreen(),
+   
     );
   }
 }

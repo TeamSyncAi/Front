@@ -3,19 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'register.dart'; 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: SignInPage(),
     );
   }
 }
 
 class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
+
   @override
   _SignInPageState createState() => _SignInPageState();
 }
@@ -29,7 +33,7 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     );
     _animation = Tween<double>(
       begin: 1.0,
@@ -87,7 +91,7 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
                               color: Color.fromARGB(255, 119, 194, 245),
@@ -191,7 +195,7 @@ Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
         if (buttonText == "Register") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => register()), 
+            MaterialPageRoute(builder: (context) => const registerPage()), 
           );
         } else {
           // Handle other button actions

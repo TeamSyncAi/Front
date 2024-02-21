@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncai/screens/completeprofile.dart';
+import 'package:teamsyncai/widgets/completeprofile.dart';
 
 
 class otp extends StatefulWidget {
+  const otp({super.key});
+
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
 }
@@ -16,33 +18,33 @@ class _VerificationScreenState extends State<otp> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false, // Remove the back button
-        title: Text('Verification', style: TextStyle(color: Colors.black)), // Set app bar title color
+        title: const Text('Verification', style: TextStyle(color: Colors.black)), // Set app bar title color
         backgroundColor: Colors.transparent, // Make app bar transparent
         elevation: 0, // Remove app bar shadow
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Enter Confirmation Code',
               style: TextStyle(fontSize: 28.0, fontWeight: FontWeight.bold, color: Colors.black87), // Larger font size and black color
             ),
-            SizedBox(height: 20.0),
-            Text(
+            const SizedBox(height: 20.0),
+            const Text(
               'Enter the 6-digit code we sent to your email',
               style: TextStyle(fontSize: 18.0, color: Colors.black54), // Smaller font size and gray color
               textAlign: TextAlign.center, // Center align text
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             TextField(
               controller: _codeController,
               keyboardType: TextInputType.number,
               maxLength: 6,
               textAlign: TextAlign.center, // Center align text field content
-              style: TextStyle(fontSize: 24.0, color: Colors.black87, fontWeight: FontWeight.bold), // Larger font size and bold
-              decoration: InputDecoration(
+              style: const TextStyle(fontSize: 24.0, color: Colors.black87, fontWeight: FontWeight.bold), // Larger font size and bold
+              decoration: const InputDecoration(
                 hintText: 'Enter code',
                 hintStyle: TextStyle(fontSize: 18.0, color: Colors.black54), // Smaller font size and gray color for hint text
                 focusedBorder: UnderlineInputBorder(
@@ -50,7 +52,7 @@ class _VerificationScreenState extends State<otp> {
                 ),
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -58,7 +60,7 @@ class _VerificationScreenState extends State<otp> {
                   onPressed: () {
                     // Resend code functionality
                   },
-                  child: Text('Resend code', style: TextStyle(fontSize: 16.0, color: Colors.orange)), // Orange color for text
+                  child: const Text('Resend code', style: TextStyle(fontSize: 16.0, color: Colors.orange)), // Orange color for text
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -66,15 +68,15 @@ class _VerificationScreenState extends State<otp> {
                     // Navigate to the complete profile page
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => completeProfile()), // Navigate to the complete profile page
+                      MaterialPageRoute(builder: (context) => const completeProfile()), // Navigate to the complete profile page
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange, // Change button color to orange
-                    padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0), // Increase button padding
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0), // Increase button padding
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)), // Round button corners
                   ),
-                  child: Text('Confirm', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)), // Larger font size and bold
+                  child: const Text('Confirm', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)), // Larger font size and bold
                 ),
               ],
             ),
