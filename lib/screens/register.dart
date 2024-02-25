@@ -12,7 +12,7 @@ class registerPage extends StatefulWidget {
   register createState() => register();
 }
 class register  extends State<registerPage>{
-    final UserProvider _userProvider = UserProvider(); // Create an instance of UserProvider
+    final UserProvider _userProvider = UserProvider(); 
   Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     return Container(
       width: double.infinity,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teamsyncai/screens/home.dart';
 import 'register.dart';
 import 'package:teamsyncai/providers/userprovider.dart';
 
-void main() {
-  runApp(MyApp());
-}
+
 
 class MyApp extends StatelessWidget {
   @override
@@ -190,7 +189,7 @@ class _SignInPageState extends State<SignInPage>
     );
   }
 
-  Widget _buildLoginButton(BuildContext context, String buttonText,
+ Widget _buildLoginButton(BuildContext context, String buttonText,
       {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
     return ElevatedButton(
       onPressed: () {
@@ -200,7 +199,11 @@ class _SignInPageState extends State<SignInPage>
             MaterialPageRoute(builder: (context) => registerPage()),
           );
         } else {
-          UserProvider().authenticateUser("email", "password");
+          
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => home()), 
+          );
         }
       },
       style: ElevatedButton.styleFrom(
@@ -221,6 +224,7 @@ class _SignInPageState extends State<SignInPage>
       ),
     );
   }
+
 
   Widget _buildSocialLoginButtons() {
     return Row(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncai/screens/home.dart';
-import 'package:teamsyncai/screens/chat.dart';
-import 'package:teamsyncai/screens/calendrier.dart';
-import 'package:teamsyncai/screens/plus.dart';
 import 'package:teamsyncai/screens/profile.dart';
+import 'appbar.dart';
 
 class home extends StatefulWidget {
   @override
@@ -14,22 +11,26 @@ class _MyHomePageState extends State<home> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    switch (index) {
-      case 0:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home()));
-        break;
-      case 1:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => chat()));
-        break;
-      case 2:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => plus()));
-        break;
-      case 3:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => calendrier()));
-        break;
-      case 4:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => profile()));
-        break;
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 4) {
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          transitionDuration: Duration(milliseconds: 500),
+          pageBuilder: (_, __, ___) => profile(),
+          transitionsBuilder: (_, animation, __, child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        ),
+      );
     }
   }
 
@@ -37,39 +38,16 @@ class _MyHomePageState extends State<home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove the "retour" button
+        automaticallyImplyLeading: false,
         title: Text('TeamSyncAi'),
       ),
       body: IndexedStack(
         index: _selectedIndex,
+        children: [],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white70,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.plus_one_outlined),
-            label: 'Plus',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_view_week_rounded),
-            label: 'Calendrier',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_outlined),
-            label: 'Profile',
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

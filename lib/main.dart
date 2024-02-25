@@ -8,20 +8,30 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isDarkModeEnabled = false;
+
+  void _toggleDarkMode(bool value) {
+    setState(() {
+      _isDarkModeEnabled = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TeamSyncai',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: _isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
       home: LaunchScreen(),
       routes: {
-        '/login': (context) => MyApp(), // Assuming you have a LoginScreen class
-        '/register': (context) => registerPage(), // Add this line for the registration screen
+        '/login': (context) => SignInPage(),
+        '/register': (context) => registerPage(),
       },
     );
   }
 }
-
