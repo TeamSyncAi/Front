@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncai/screens/EditProfile.dart';
 import 'package:teamsyncai/screens/home.dart';
+import 'package:teamsyncai/screens/login_screen.dart'; 
 
 class profile extends StatefulWidget {
   @override
@@ -50,9 +52,9 @@ class _ProfileState extends State<profile> {
                   ],
                 ),
                 SizedBox(height: 20.0),
-                ElevatedButton.icon(
+               ElevatedButton.icon(
                   onPressed: () {
-                    // Navigate to Edit Profile screen
+                    _showEditProfileBottomSheet(context); // Show bottom sheet
                   },
                   icon: Icon(Icons.edit),
                   label: Text(
@@ -112,7 +114,7 @@ class _ProfileState extends State<profile> {
                 SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle log out
+                    _showLogoutDialog(context);
                   },
                   child: Text(
                     'Log Out',
@@ -131,6 +133,44 @@ class _ProfileState extends State<profile> {
       ),
     );
   }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Log Out'),
+          content: Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Log out logic
+                Navigator.of(context).pop(); // Close dialog
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage())); // Navigate to login screen
+              },
+              child: Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+void _showEditProfileBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return EditProfile(); // Your bottom sheet widget
+      },
+    );
+  
+
+}
 }
 
 List<Map<String, dynamic>> _accountSettings = [
@@ -139,3 +179,4 @@ List<Map<String, dynamic>> _accountSettings = [
   {'title': 'Report a problem', 'icon': Icons.privacy_tip},
   {'title': 'Other', 'icon': Icons.more_horiz},
 ];
+
