@@ -7,32 +7,28 @@ class profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<profile> {
-  bool _isDarkModeEnabled = false;
-
-  void _toggleDarkMode(bool value) {
-    setState(() {
-      _isDarkModeEnabled = value;
-    });
-  }
+  bool _isDarkMode = false; // Initial dark mode state
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: _isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
-      home: Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => home()),
+          (route) => false,
+        );
+        return false;
+      },
+      child: Scaffold(
         appBar: AppBar(
-          title: Text('User Profile'),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => home()),
-                (route) => false,
-              );
-            },
+          title: Text(
+            'Account Settings',
+            style: TextStyle(color: Colors.black),
           ),
+          backgroundColor: Colors.white,
+          elevation: 0, // Remove app bar shadow
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -40,50 +36,93 @@ class _ProfileState extends State<profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'My Account',
-                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/logo.png'),
+                      radius: 40,
+                    ),
+                    Text(
+                      'Yassine',
+                      style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10.0),
-                ListTile(
-                  title: Text('Edit Profile'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
+                SizedBox(height: 20.0),
+                ElevatedButton.icon(
+                  onPressed: () {
                     // Navigate to Edit Profile screen
                   },
+                  icon: Icon(Icons.edit),
+                  label: Text(
+                    'Edit Profile',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white54,
+                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  ),
                 ),
-                ListTile(
-                  title: Text('Change Password'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    // Navigate to Change Password screen
-                  },
-                ),
-                ListTile(
-                  title: Text('Notification Settings'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    // Navigate to Notification Settings screen
-                  },
-                ),
-                ListTile(
-                  title: Text('Tutorial'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    // Navigate to Tutorial screen
-                  },
-                ),
-                ListTile(
-                  title: Text('Privacy Policy'),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    // Navigate to Privacy Policy screen
+                SizedBox(height: 20.0),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _accountSettings.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 3, // Add card elevation
+                      shadowColor: Colors.orange.withOpacity(0.5), // Orange shadow
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                      child: ListTile(
+                        title: Text(_accountSettings[index]['title']),
+                        trailing: Icon(_accountSettings[index]['icon']),
+                        onTap: () {
+                          // Handle tap based on setting
+                          switch (_accountSettings[index]['title']) {
+                            case 'Security':
+                              // Navigate to Security screen
+                              break;
+                            case 'Notifications':
+                              // Navigate to Notifications screen
+                              break;
+                            case 'Report a problem':
+                              // Navigate to Privacy screen
+                              break;
+                            case 'Other':
+                              // Handle other setting
+                              break;
+                          }
+                        },
+                      ),
+                    );
                   },
                 ),
                 SwitchListTile(
                   title: Text('Dark Mode'),
-                  value: _isDarkModeEnabled,
-                  onChanged: _toggleDarkMode,
+                  value: _isDarkMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _isDarkMode = value;
+                      // Update app theme based on dark mode state
+                    });
+                  },
+                ),
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle log out
+                  },
+                  child: Text(
+                    'Log Out',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                  ),
                 ),
               ],
             ),
@@ -93,3 +132,10 @@ class _ProfileState extends State<profile> {
     );
   }
 }
+
+List<Map<String, dynamic>> _accountSettings = [
+  {'title': 'Security', 'icon': Icons.security},
+  {'title': 'Notifications', 'icon': Icons.notifications},
+  {'title': 'Report a problem', 'icon': Icons.privacy_tip},
+  {'title': 'Other', 'icon': Icons.more_horiz},
+];
