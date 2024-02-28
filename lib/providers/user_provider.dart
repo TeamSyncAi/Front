@@ -1,47 +1,21 @@
-import 'package:flutter/cupertino.dart';
-import 'package:teamsyncai/model/user_model.dart';
-import 'package:teamsyncai/services/user_api_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:teamsyncai/model/message_model.dart';
+import 'package:teamsyncai/services/message_service.dart';
 
-class UserProvider with ChangeNotifier {
-  final List<User> _users = [];
-  String _invitationStatus = '';
 
-  List<User> get users => _users;
-  String get invitationStatus => _invitationStatus;
+class MessageProvider extends Model {
+  final MessageService messageService = MessageService();
 
-  Future<User> authenticateUser(String email, String password) async {
-    final User user = await UserApiService.authenticateUser(email, password);
-
-    // After successful authentication, you might want to store user data or token
-    // For example, storing user ID in SharedPreferences for later use
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userId', user.id); // Assuming 'id' is a field in your User model
-
-    notifyListeners(); // Notify listeners in case you need to update the UI based on authentication status
-    return user;
+  void init() {
+    messageService.init();
   }
 
-  Future<User> getUserDetails() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String userId = prefs.getString('userId') ?? '';
-    return UserApiService.fetchUserProfile(userId);
+  void sendMessage(String text, String receiverChatID) {
+    messageService.sendMessage(text, receiverChatID);
+    notifyListeners();
   }
 
-  Future<void> sendCredentialsByEmail(String adminEmail) async {
-    try {
-      _invitationStatus = 'Sending credentials...';
-      notifyListeners();
-
-      await UserApiService.sendCredentialsByEmail(adminEmail);
-
-      _invitationStatus = 'Credentials sent successfully';
-      notifyListeners();
-    } catch (e) {
-      _invitationStatus = 'Failed to send credentials';
-      notifyListeners();
-    }
+  List<Message> getMessagesForChatID(String chatID) {
+    return messageService.getMessagesForChatID(chatID);
   }
-
-  // Implement other functionalities as needed...
 }

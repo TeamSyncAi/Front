@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:teamsyncai/widgets/completeprofile.dart';
 
 
-class otp extends StatefulWidget {
-  const otp({super.key});
+class Otp extends StatefulWidget {
+  const Otp({super.key});
 
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
 }
 
-class _VerificationScreenState extends State<otp> {
+class _VerificationScreenState extends State<Otp> {
   final TextEditingController _codeController = TextEditingController();
 
   @override

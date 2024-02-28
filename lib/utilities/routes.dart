@@ -5,6 +5,6 @@ import 'package:teamsyncai/widgets/register.dart';
 
    Map<String, Widget Function(BuildContext)> routes = {
         '/login': (context) => const SignInPage(), // Assuming you have a LoginScreen class
-        '/register': (context) => const registerPage(), // Add this line for the registration screen
+        '/register': (context) => const RegisterPage(), // Add this line for the registration screen
 
       };

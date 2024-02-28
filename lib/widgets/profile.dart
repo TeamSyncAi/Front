@@ -4,10 +4,10 @@ import 'package:teamsyncai/providers/google_signin_api.dart';
 
 import 'register.dart';
 
-class HomePage extends StatelessWidget {
+class Profile extends StatelessWidget {
   final GoogleSignInAccount user;
 
-  const HomePage({
+  const Profile({
     super.key,
     required this.user,
   });
@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
                 await GoogleSignInApi.logout();
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const registerPage(),
+                  builder: (context) => const RegisterPage(),
                 ));
               },
             )
