@@ -61,48 +61,7 @@ class _ProfileCompletionScreenState extends State<completeProfile> {
               ),
             ),
             SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Team Leader'),
-                Switch(
-                  value: _isTeamLeader,
-                  onChanged: (value) {
-                    setState(() {
-                      _isTeamLeader = value;
-                      _isGuest = !value;
-                      _showSkills = false;
-                    });
-                  },
-                ),
-                Text('Guest'),
-                Switch(
-                  value: _isGuest,
-                  onChanged: (value) {
-                    setState(() {
-                      _isGuest = value;
-                      _isTeamLeader = !value;
-                      _showSkills = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            if (_showSkills)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Skills:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  for (var skill in _skills)
-                    SwitchListTile(
-                      title: Text(skill),
-                      value: false, // You can set the initial value of the switch here
-                      onChanged: (value) {
-                        // Handle skill selection
-                      },
-                    ),
-                ],
-              ),
+           
             SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

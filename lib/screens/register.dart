@@ -117,7 +117,7 @@ class register  extends State<registerPage>{
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset("assets/images/logo.png"), // Replace with your logo image
+                  Image.asset("assets/images/logo.png"), 
                   const Text(
                     'GET STARTED',
                     style: TextStyle(fontSize: 20.0),
@@ -133,40 +133,7 @@ class register  extends State<registerPage>{
               const SizedBox(height: 10.0),
               _buildTextField('Confirm Password', Icons.lock, true),
               const SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Your title:'),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 200, 
-                    child: Material(
-                      elevation: 2,
-                      borderRadius: BorderRadius.circular(25),
-                      child: ToggleButtons(
-                        children: const <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Team Leader'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('Guest'),
-                          ),
-                        ],
-                        isSelected: [true, false], // Default selection
-                        onPressed: (int index) {
-                          // Handle toggle
-                        },
-                        borderRadius: BorderRadius.circular(25),
-                        selectedColor: Colors.white,
-                        fillColor: Colors.orange,
-                        borderColor: Colors.orange,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+             
               const SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
@@ -189,32 +156,30 @@ class register  extends State<registerPage>{
                 ],
               ),
               const SizedBox(height: 20.0),
-              ElevatedButton(
- onPressed: () async {
+          ElevatedButton(
+                onPressed: () async {
                   try {
-                    final User newUser = await _userProvider.createUser(
+                    /*final User newUser = await _userProvider.createUser(
                       'username', // Replace with actual username
                       'email',    // Replace with actual email
                       'password', // Replace with actual password
-                    );
+                    );*/
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => otp()),
+                      MaterialPageRoute(builder: (context) => otp()), // Navigate to otp.dart page
                     );
                   } catch (e) {
                     print('Error creating user: $e');
                     // Handle error
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  textStyle: const TextStyle(color: Colors.white60),
-                ),
-                child: const Text(
-                  'Sign up',
-                  
-                ),
-              ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.orange,
+    textStyle: const TextStyle(color: Colors.white),
+  ),
+  child: const Text('Sign up'),
+),
+
               const SizedBox(height: 10.0),
               const Text('or sign up with'),
               const SizedBox(height: 10.0),
