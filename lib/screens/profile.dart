@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/EditProfile.dart';
+import 'package:teamsyncai/screens/StillToCome%20.dart';
 import 'package:teamsyncai/screens/home.dart';
 import 'package:teamsyncai/screens/login_screen.dart'; 
+import 'package:teamsyncai/screens/Identification.dart'; 
+import 'package:teamsyncai/screens/Notifications.dart'; 
+import 'package:teamsyncai/screens/ReportProblem.dart'; 
 
 class profile extends StatefulWidget {
   @override
@@ -28,9 +32,9 @@ class _ProfileState extends State<profile> {
             'Account Settings',
             style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.white,
-          elevation: 0, // Remove app bar shadow
-          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.orange,
+          elevation: 15, 
+          iconTheme: IconThemeData(color: Colors.black38),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -52,11 +56,11 @@ class _ProfileState extends State<profile> {
                   ],
                 ),
                 SizedBox(height: 20.0),
-               ElevatedButton.icon(
+                ElevatedButton.icon(
                   onPressed: () {
-                    _showEditProfileBottomSheet(context); // Show bottom sheet
+                    _showEditProfileBottomSheet(context); 
                   },
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.edit/*, color: Colors.white*/), 
                   label: Text(
                     'Edit Profile',
                     style: TextStyle(fontSize: 16.0),
@@ -77,27 +81,68 @@ class _ProfileState extends State<profile> {
                       elevation: 3, 
                       shadowColor: Colors.orange.withOpacity(0.5), 
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                      child: ListTile(
-                        title: Text(_accountSettings[index]['title']),
-                        trailing: Icon(_accountSettings[index]['icon']),
-                        onTap: () {
-                          // Handle tap based on setting
-                          switch (_accountSettings[index]['title']) {
-                            case 'Identification':
-                              // Navigate to Security screen
-                              break;
-                            case 'Notifications':
-                              // Navigate to Notifications screen
-                              break;
-                            case 'Report a problem':
-                              // Navigate to Privacy screen
-                              break;
-                            case 'Other':
-                              // Handle other setting
-                              break;
-                          }
-                        },
-                      ),
+                      child: _accountSettings[index]['title'] == 'Other'
+                          ? ListTile(
+                              title: Stack(
+                                children: [
+                                  Text(_accountSettings[index]['title']),
+                                  Positioned(
+                                    right: 0,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      child: Text(
+                                        'Exclusive',
+                                        style: TextStyle(color: Colors.white, fontSize: 12.0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange), 
+                              onTap: () {
+                                // Handle tap based on setting
+                                switch (_accountSettings[index]['title']) {
+                                  case 'Identification':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Identification())); // Navigate to Identification screen
+                                    break;
+                                  case 'Notifications':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications())); // Navigate to Notifications screen
+                                    break;
+                                  case 'Report a problem':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem())); // Navigate to ReportProblem screen
+                                    break;
+                                  case 'Other':
+                                    // Handle other setting
+                                    break;
+                                }
+                              },
+                            )
+                          : ListTile(
+                              title: Text(_accountSettings[index]['title']),
+                              trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange), 
+                              onTap: () {
+                                // Handle tap based on setting
+                                switch (_accountSettings[index]['title']) {
+                                  case 'Identification':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Identification())); // Navigate to Identification screen
+                                    break;
+                                  case 'Notifications':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications())); // Navigate to Notifications screen
+                                    break;
+                                  case 'Report a problem':
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem())); // Navigate to ReportProblem screen
+                                    break;
+                                  case 'Still to come':
+  Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));
+  break;
+
+                                }
+                              },
+                            ),
                     );
                   },
                 ),
@@ -161,22 +206,20 @@ class _ProfileState extends State<profile> {
       },
     );
   }
-void _showEditProfileBottomSheet(BuildContext context) {
+
+  void _showEditProfileBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return EditProfile(); // Your bottom sheet widget
       },
     );
-  
-
-}
+  }
 }
 
 List<Map<String, dynamic>> _accountSettings = [
   {'title': 'Identification', 'icon': Icons.save_as_sharp},
   {'title': 'Notifications', 'icon': Icons.notifications},
   {'title': 'Report a problem', 'icon': Icons.privacy_tip},
-  {'title': 'Other', 'icon': Icons.more_horiz},
+  {'title': 'Still to come', 'icon': Icons.more_horiz},
 ];
-
