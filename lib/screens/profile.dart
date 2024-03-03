@@ -9,7 +9,7 @@ class profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<profile> {
-  bool _isDarkMode = false; // Initial dark mode state
+  bool _isDarkMode = false; 
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +74,8 @@ class _ProfileState extends State<profile> {
                   itemCount: _accountSettings.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      elevation: 3, // Add card elevation
-                      shadowColor: Colors.orange.withOpacity(0.5), // Orange shadow
+                      elevation: 3, 
+                      shadowColor: Colors.orange.withOpacity(0.5), 
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                       child: ListTile(
                         title: Text(_accountSettings[index]['title']),
@@ -83,7 +83,7 @@ class _ProfileState extends State<profile> {
                         onTap: () {
                           // Handle tap based on setting
                           switch (_accountSettings[index]['title']) {
-                            case 'Security':
+                            case 'Identification':
                               // Navigate to Security screen
                               break;
                             case 'Notifications':
@@ -174,7 +174,7 @@ void _showEditProfileBottomSheet(BuildContext context) {
 }
 
 List<Map<String, dynamic>> _accountSettings = [
-  {'title': 'Security', 'icon': Icons.security},
+  {'title': 'Identification', 'icon': Icons.save_as_sharp},
   {'title': 'Notifications', 'icon': Icons.notifications},
   {'title': 'Report a problem', 'icon': Icons.privacy_tip},
   {'title': 'Other', 'icon': Icons.more_horiz},
