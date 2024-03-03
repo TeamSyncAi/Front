@@ -93,7 +93,7 @@ class _SignInPageState extends State<SignInPage>
                             style: TextStyle(
                               color: Color.fromARGB(255, 119, 194, 245),
                               fontSize: 14,
-                              fontFamily: 'Roboto', // Change font here
+                              fontFamily: 'Roboto', 
                             ),
                           ),
                         ),
@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage>
                         ],
                       ),
                       const SizedBox(height: 20),
-                      // Terms and conditions
+                     // Terms and conditions
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -123,7 +123,9 @@ class _SignInPageState extends State<SignInPage>
                             style: TextStyle(fontSize: 12),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              _showPrivacyPolicyBottomSheet(context);
+                            },
                             child: const Text(
                               "Terms & Conditions",
                               style: TextStyle(
@@ -131,7 +133,7 @@ class _SignInPageState extends State<SignInPage>
                                 decoration: TextDecoration.underline,
                                 color: Color.fromARGB(255, 119, 194, 245),
                                 fontFamily:
-                                    'Montserrat', // Change font here
+                                    'Montserrat', 
                               ),
                             ),
                           ),
@@ -159,6 +161,38 @@ class _SignInPageState extends State<SignInPage>
     );
   }
 
+  void _showPrivacyPolicyBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "How We Use Your Data",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                " We collect and store data provided by users to improve our services and customize user experiences. Your use of the app is at your own risk.Limitation of Liability: Our company shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising out of or in connection with your use of the app. Governing Law: These Terms & Conditions shall be governed by and construed in accordance with the laws of Tunisia, without regard to its conflict of law provisions. Contact Us: If you have any questions or concerns about these Terms & Conditions, please contact us at teamsyncai@gmail.tn.Thank you for using our app!",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              // Add more text or content here as needed
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
   Widget _buildTextField(
       String labelText, IconData iconData, bool obscureText) {
     return Container(
@@ -176,7 +210,7 @@ class _SignInPageState extends State<SignInPage>
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                obscureText: obscureText, // <-- Set obscureText property
+                obscureText: obscureText, 
                 decoration: InputDecoration(
                   labelText: labelText,
                   border: InputBorder.none,
@@ -291,4 +325,4 @@ class _SignInPageState extends State<SignInPage>
       ],
     );
   }
-}
+

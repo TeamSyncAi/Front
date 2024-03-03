@@ -14,39 +14,39 @@ bool _pushNotifications = true; // Initial state for push notifications
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notification Settings'),
+        title: const Text('Notification Settings'),
         backgroundColor: Colors.orange,
           elevation: 15, 
-          iconTheme: IconThemeData(color: Colors.black38),
+          iconTheme: const IconThemeData(color: Colors.black38),
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Text(
+                const Text(
                   'Choose what notifications you want to receive below and we will update the settings.',
                   style: TextStyle(fontSize: 16.0),
                 ),
                 SizedBox(height: 20.0),
                 SwitchListTile(
-                  title: Text('Push Notifications'),
+                  title: const Text('Push Notifications'),
                   subtitle: Text(
                       'Receive occasional push notifications from our application.'),
                   value: _pushNotifications,
                   onChanged: (value) => setState(() => _pushNotifications = value),
                 ),
                 SwitchListTile(
-                  title: Text('Phone Notifications'),
-                  subtitle: Text(
+                  title: const Text('Phone Notifications'),
+                  subtitle: const Text(
                       'Receive email notifications from our marketing team about new features.'),
                   value: _emailNotifications,
                   onChanged: (value) => setState(() => _emailNotifications = value),
                 ),
                 SwitchListTile(
-                  title: Text('Location Services'),
-                  subtitle: Text(
+                  title: const Text('Location Services'),
+                  subtitle: const Text(
                       'Allow us to track your location to keep track of spending and keep you safe (optional).'),
                   value: _locationServices,
                   onChanged: (value) => setState(() => _locationServices = value),
