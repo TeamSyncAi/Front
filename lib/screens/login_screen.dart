@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teamsyncai/screens/ForgetPasswordPage.dart';
 import 'package:teamsyncai/screens/home.dart';
 import 'register.dart';
 import 'package:teamsyncai/providers/userprovider.dart';
@@ -87,7 +88,13 @@ class _SignInPageState extends State<SignInPage>
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                           
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
+                            );
+                          },
                           child: Text(
                             "Forgot Password?",
                             style: TextStyle(
@@ -114,7 +121,7 @@ class _SignInPageState extends State<SignInPage>
                         ],
                       ),
                       const SizedBox(height: 20),
-                     // Terms and conditions
+                    
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

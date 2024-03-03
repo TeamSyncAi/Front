@@ -13,34 +13,35 @@ class registerPage extends StatefulWidget {
 }
 class register  extends State<registerPage>{
     final UserProvider _userProvider = UserProvider(); 
-  Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF2F2F2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Row(
-          children: [
-            Icon(iconData, color: Colors.orange),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextFormField(
-                obscureText: obscureText, // <-- Set obscureText property
-                decoration: InputDecoration(
-                  labelText: labelText,
-                  border: InputBorder.none,
-                ),
+Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
+  return Container(
+    width: double.infinity,
+    height: 50,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF2F2F2),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        children: [
+          Icon(iconData, color: Colors.orange),
+          const SizedBox(width: 10),
+          Expanded(
+            child: TextFormField(
+              obscureText: obscureText, // <-- Set obscureText property
+              decoration: InputDecoration(
+                labelText: labelText,
+                border: InputBorder.none,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildSocialLoginButtons() {
     return Row(
@@ -129,7 +130,10 @@ class register  extends State<registerPage>{
               const SizedBox(height: 10.0),
               _buildTextField('Email Address', Icons.email, false),
               const SizedBox(height: 10.0),
-              _buildTextField('Password', Icons.lock, true),
+              _buildTextField('Phone Number', Icons.phone, false),
+const SizedBox(height: 10.0),
+_buildTextField('Password', Icons.lock, true),
+
               const SizedBox(height: 10.0),
               _buildTextField('Confirm Password', Icons.lock, true),
               const SizedBox(height: 10.0),
