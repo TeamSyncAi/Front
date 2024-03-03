@@ -23,6 +23,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notification Settings'),
+         backgroundColor: Colors.orange,
+          elevation: 15, 
+          iconTheme: IconThemeData(color: Colors.black38),
       ),
       body: SafeArea(
         child: Padding(

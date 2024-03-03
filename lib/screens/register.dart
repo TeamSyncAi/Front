@@ -14,6 +14,9 @@ class registerPage extends StatefulWidget {
 class register  extends State<registerPage>{
     final UserProvider _userProvider = UserProvider(); 
 Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
+  TextEditingController nameController = TextEditingController(); 
+  List<String> usernameSuggestions = ['john_doe', 'user123', 'example']; // Example list of username suggestions
+  
   return Container(
     width: double.infinity,
     height: 50,
@@ -28,12 +31,54 @@ Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
           Icon(iconData, color: Colors.orange),
           const SizedBox(width: 10),
           Expanded(
-            child: TextFormField(
-              obscureText: obscureText, // <-- Set obscureText property
-              decoration: InputDecoration(
-                labelText: labelText,
-                border: InputBorder.none,
-              ),
+            child: Autocomplete<String>(
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                // Filter suggestions based on the entered text
+                return usernameSuggestions
+                    .where((suggestion) =>
+                        suggestion.toLowerCase().contains(textEditingValue.text.toLowerCase()))
+                    .toList();
+              },
+              onSelected: (String selectedUsername) {
+                // Update the text field with the selected username
+                nameController.text = selectedUsername;
+              },
+              fieldViewBuilder: (BuildContext context, TextEditingController fieldController, FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
+                // This is the text field view builder
+                nameController = fieldController; // Assign the controller to the outer variable
+                return TextFormField(
+                  controller: fieldController,
+                  focusNode: fieldFocusNode,
+                  onFieldSubmitted: (_) => onFieldSubmitted(),
+                  obscureText: obscureText,
+                  decoration: InputDecoration(
+                    labelText: labelText,
+                    border: InputBorder.none,
+                  ),
+                );
+              },
+              optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
+                // This is the view builder for the suggestions list
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4,
+                    child: SizedBox(
+                      height: 200,
+                      child: ListView(
+                        children: options
+                            .map((String option) => GestureDetector(
+                                  onTap: () => onSelected(option),
+                                  child: ListTile(
+                                    title: Text(option),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -41,6 +86,7 @@ Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
     ),
   );
 }
+
 
 
   Widget _buildSocialLoginButtons() {
