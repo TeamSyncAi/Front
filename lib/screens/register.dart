@@ -140,24 +140,31 @@ _buildTextField('Password', Icons.lock, true),
              
               const SizedBox(height: 10.0),
               Row(
-                children: <Widget>[
-                  Checkbox(
+             children: <Widget>[
+               Checkbox(
                     value: false,
                     onChanged: (value) {},
                   ),
-                  RichText(
-                    text: const TextSpan(
-                      text: 'I understood the ',
-                      style: TextStyle(color: Colors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'terms & policy',
-                          style: TextStyle(color: Colors.orange),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                          const Text(
+                            "By signing in, you agree to our ",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _showPrivacyPolicyBottomSheet(context);
+                            },
+                            child: const Text(
+                              "Terms & Conditions",
+                              style: TextStyle(
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                                color: Color.fromARGB(255, 119, 194, 245),
+                                fontFamily:
+                                    'Montserrat', 
+                              ),
+                            ),
+                          ),
+                        ],
               ),
               const SizedBox(height: 20.0),
           ElevatedButton(
@@ -224,3 +231,33 @@ _buildTextField('Password', Icons.lock, true),
     }
   }
 }
+  void _showPrivacyPolicyBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "How We Use Your Data",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                " We collect and store data provided by users to improve our services and customize user experiences. Your use of the app is at your own risk.Limitation of Liability: Our company shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising out of or in connection with your use of the app. Governing Law: These Terms & Conditions shall be governed by and construed in accordance with the laws of Tunisia, without regard to its conflict of law provisions. Contact Us: If you have any questions or concerns about these Terms & Conditions, please contact us at teamsyncai@gmail.tn.Thank you for using our app!",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              // Add more text or content here as needed
+            ],
+          ),
+        );
+      },
+    );
+  }

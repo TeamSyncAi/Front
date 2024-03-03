@@ -81,7 +81,7 @@ class _SignInPageState extends State<SignInPage>
                           ),
                           Text(
                             "Remember Me",
-                            style: GoogleFonts.openSans(), // Change font here
+                            style: GoogleFonts.openSans(), 
                           ),
                         ],
                       ),
