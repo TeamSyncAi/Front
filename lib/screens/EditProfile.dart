@@ -20,7 +20,7 @@ class _EditProfileState extends State<EditProfile> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
-  String? _profilePicture; // Store the selected profile picture path
+  File? _profilePicture; // Store the selected profile picture file
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +37,34 @@ class _EditProfileState extends State<EditProfile> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Center(
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 50.0,
-                          backgroundImage: _profilePicture != null
-                              ? FileImage(
-                                  _profilePicture! as File,
-                                )
-                              : NetworkImage(
-                                  'https://example.com/profile_picture.jpg',
-                                ) as ImageProvider,
+                  GestureDetector(
+                    onTap: () {
+                      _pickImage(); // Call image picker when profile picture is tapped
+                    },
+                    child: Container(
+                      width: 100.0,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: _profilePicture != null
+                              ? FileImage(_profilePicture!)
+                              : AssetImage('assets/images/default_profile_image.jpg') as ImageProvider,
                         ),
-                        Positioned(
-                          bottom: -10.0,
-                          right: -10.0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                _pickImage(); // Call image picker when edit button is pressed
-                              },
-                            ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 15.0,
+                          child: Icon(
+                            Icons.edit,
+                            size: 20.0,
+                            color: Colors.black,
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.0),
@@ -160,10 +158,10 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        _profilePicture = pickedFile.path; // Store the picked image path
+        _profilePicture = File(pickedFile.path); // Store the picked image file
       });
     }
   }

@@ -71,78 +71,24 @@ class _ProfileState extends State<profile> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                 SizedBox(height: 20.0),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: _accountSettings.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      elevation: 3, 
-                      shadowColor: Colors.orange.withOpacity(0.5), 
+                      elevation: 3,
+                      shadowColor: Colors.orange.withOpacity(0.5),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                      child: _accountSettings[index]['title'] == 'Other'
-                          ? ListTile(
-                              title: Stack(
-                                children: [
-                                  Text(_accountSettings[index]['title']),
-                                  Positioned(
-                                    right: 0,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(8.0),
-                                      ),
-                                      child: Text(
-                                        'Exclusive',
-                                        style: TextStyle(color: Colors.white, fontSize: 12.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange), 
-                              onTap: () {
-                                // Handle tap based on setting
-                                switch (_accountSettings[index]['title']) {
-                                  case 'Identification':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Identification())); // Navigate to Identification screen
-                                    break;
-                                  case 'Notifications':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications())); // Navigate to Notifications screen
-                                    break;
-                                  case 'Report a problem':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem())); // Navigate to ReportProblem screen
-                                    break;
-                                  case 'Other':
-                                    // Handle other setting
-                                    break;
-                                }
-                              },
-                            )
-                          : ListTile(
-                              title: Text(_accountSettings[index]['title']),
-                              trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange), 
-                              onTap: () {
-                                // Handle tap based on setting
-                                switch (_accountSettings[index]['title']) {
-                                  case 'Identification':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Identification())); // Navigate to Identification screen
-                                    break;
-                                  case 'Notifications':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications())); // Navigate to Notifications screen
-                                    break;
-                                  case 'Report a problem':
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem())); // Navigate to ReportProblem screen
-                                    break;
-                                  case 'Still to come':
-  Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));
-  break;
-
-                                }
-                              },
-                            ),
+                      child: ListTile(
+                        title: Text(
+                          _accountSettings[index]['title'],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange),
+                        onTap: () => _handleAccountSettingTap(context, _accountSettings[index]['title']),
+                      ),
                     );
                   },
                 ),
@@ -214,6 +160,23 @@ class _ProfileState extends State<profile> {
         return EditProfile(); // Your bottom sheet widget
       },
     );
+  }
+
+  void _handleAccountSettingTap(BuildContext context, String title) {
+    switch (title) {
+      case 'Identification':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Identification()));
+        break;
+      case 'Notifications':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+        break;
+      case 'Report a problem':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem()));
+        break;
+      case 'Still to come':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));
+        break;
+    }
   }
 }
 
