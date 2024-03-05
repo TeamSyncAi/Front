@@ -20,8 +20,8 @@ class _ProjectFifthState extends State<ProjectFifth> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: Text('Edit Module'),
-        backgroundColor: Color(0xFFE89F16),
+        title: const Text('Edit Module'),
+        backgroundColor: const Color(0xFFE89F16),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,8 +30,8 @@ class _ProjectFifthState extends State<ProjectFifth> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text("Name", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(height: 20),
+                const Text("Name", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Enter new module name',
@@ -41,9 +41,9 @@ class _ProjectFifthState extends State<ProjectFifth> {
                     hintStyle: TextStyle(color: Colors.grey.withOpacity(0.0)),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text("Tasks",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
+                const Text("Tasks",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: tasks.length,
@@ -58,7 +58,7 @@ class _ProjectFifthState extends State<ProjectFifth> {
                       background: Container(
                       alignment: Alignment.centerRight,
                       color: Colors.orange,
-                      child: Padding(
+                      child: const Padding(
                         padding: EdgeInsets.only(right: 16.0),
                         child: Icon(
                           Icons.delete,
@@ -83,9 +83,9 @@ class _ProjectFifthState extends State<ProjectFifth> {
                     );
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: () {
                     // Implement adding new task functionality
                   },

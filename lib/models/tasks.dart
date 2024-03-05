@@ -1,13 +1,19 @@
-class Tasks {
+class Task {
+  final String id;
+  final String moduleId; // ID of the module this task belongs to
+  final String description;
 
-  List<String> tasksList;
+  Task({
+    required this.id,
+    required this.moduleId,
+    required this.description,
+  });
 
-  Tasks(this.tasksList);
-
-  int get length => tasksList.length;
-
-  String operator [](int index) => tasksList[index];
-
-  void removeAt(int index) => tasksList.removeAt(index);
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      id: json['id'],
+      moduleId: json['moduleId'],
+      description: json['description'],
+    );
+  }
 }
-

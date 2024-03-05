@@ -8,8 +8,8 @@ class ProjectFourth extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Project Dashboard'),
-        backgroundColor: Color(0xFFE89F16),
+        title: const Text('Project Dashboard'),
+        backgroundColor: const Color(0xFFE89F16),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -17,12 +17,12 @@ class ProjectFourth extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildCompletionStatus(),
-              SizedBox(height: 10),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildCharts(),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildModuleCompletionList(),
             ],
           ),
@@ -32,21 +32,27 @@ class ProjectFourth extends StatelessWidget {
   }
   Widget _buildCompletionStatus() {
     return Card(
+
+      surfaceTintColor: Colors.white,
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'StuStay',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE89F16)),
             ),
-            SizedBox(height: 15),
-            SizedBox(
+            const SizedBox(height: 15),
+            const SizedBox(
               height: 190,
               child: CustomPaint(
                 painter: RadialPainter(
@@ -67,13 +73,13 @@ class ProjectFourth extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildCompletionLegend('60% done', Colors.orange),
-                SizedBox(width: 30),
-                _buildCompletionLegend('40% not done', Color(0xFF8D6322)),
+                const SizedBox(width: 30),
+                _buildCompletionLegend('40% not done', const Color(0xFF8D6322)),
               ],
             ),
           ],
@@ -94,10 +100,10 @@ class ProjectFourth extends StatelessWidget {
             color: color,
           ),
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(
           text,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -106,7 +112,7 @@ class ProjectFourth extends StatelessWidget {
   Widget _buildModuleCompletionList() {
     return ListView(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         _buildModuleCompletion('Module 1', 20, Colors.red),
         _buildModuleCompletion('Module 2', 10, Colors.blue),
@@ -120,9 +126,14 @@ class ProjectFourth extends StatelessWidget {
 
   Widget _buildModuleCompletion(String title, int percentage, Color color) {
     return Card(
+      surfaceTintColor: Colors.white,
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -131,9 +142,9 @@ class ProjectFourth extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             Expanded(
               child: LinearProgressIndicator(
                 value: percentage / 100,
@@ -141,10 +152,10 @@ class ProjectFourth extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               '$percentage%',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -156,9 +167,9 @@ class ProjectFourth extends StatelessWidget {
     return Column(
       children: [
         _buildModuleHoursChart(),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         _buildTaskStatusChart(),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
 
       ],
     );
@@ -166,21 +177,26 @@ class ProjectFourth extends StatelessWidget {
 
   Widget _buildModuleHoursChart() {
     return Card(
+      surfaceTintColor: Colors.white,
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Module Hours (Hours per Day)',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE89F16)),
             ),
-            SizedBox(height: 10),
-            Container(
+            const SizedBox(height: 10),
+            SizedBox(
               height: 300,
               child: LineChart(
                 LineChartData(
@@ -194,9 +210,10 @@ class ProjectFourth extends StatelessWidget {
                         FlSpot(4, 4),
                         FlSpot(5, 6),
                         FlSpot(6, 4),
+
                       ],
                       isCurved: true,
-                      colors: [Color(0xFFE89F16)],
+                      colors: [const Color(0xFFE89F16)],
                       barWidth: 3,
                       isStrokeCapRound: true,
                       belowBarData: BarAreaData(show: false),
@@ -210,6 +227,7 @@ class ProjectFourth extends StatelessWidget {
                         FlSpot(4, 3),
                         FlSpot(5, 5),
                         FlSpot(6, 3),
+
                       ],
                       isCurved: true,
                       colors: [Colors.blue],
@@ -226,6 +244,7 @@ class ProjectFourth extends StatelessWidget {
                         FlSpot(4, 4),
                         FlSpot(5, 2),
                         FlSpot(6, 5),
+
                       ],
                       isCurved: true,
                       colors: [Colors.red],
@@ -249,16 +268,21 @@ class ProjectFourth extends StatelessWidget {
 
   Widget _buildTaskStatusChart() {
     return Card(
+      surfaceTintColor: Colors.white,
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        side: const BorderSide(
+          color: Colors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Task Status',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFFE89F16)),
             ),
@@ -266,8 +290,8 @@ class ProjectFourth extends StatelessWidget {
               children: [
                 Center(
                   child: SizedBox(
-                    height: 250, // Adjust height of the PieChart
-                    width: 250, // Adjust width of the PieChart
+                    height: 250,
+                    width: 250,
                     child: PieChart(
                       PieChartData(
                         sections: [
@@ -275,19 +299,19 @@ class ProjectFourth extends StatelessWidget {
                             value: 60,
                             color: Colors.green,
                             title: '60%',
-                            radius: 100, // Adjust radius of the PieChart section
+                            radius: 100,
                           ),
                           PieChartSectionData(
                             value: 25,
                             color: Colors.red,
                             title: '25%',
-                            radius: 100, // Adjust radius of the PieChart section
+                            radius: 100,
                           ),
                           PieChartSectionData(
                             value: 15,
                             color: Colors.yellow,
                             title: '15%',
-                            radius: 100, // Adjust radius of the PieChart section
+                            radius: 100,
                           ),
                         ],
                         centerSpaceRadius: 0,
@@ -304,9 +328,9 @@ class ProjectFourth extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _buildLegendItem(color: Colors.green, text: 'done'),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       _buildLegendItem(color: Colors.red, text: 'not done'),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       _buildLegendItem(color: Colors.yellow, text: 'pending'),
                     ],
                   ),
@@ -331,10 +355,10 @@ class ProjectFourth extends StatelessWidget {
             color: color,
           ),
         ),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Text(
           text,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ],
     );

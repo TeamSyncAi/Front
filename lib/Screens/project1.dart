@@ -8,16 +8,19 @@ class ProjectFirst extends StatefulWidget {
   @override
   _ProjectFirstState createState() => _ProjectFirstState();
 }
+
 class _ProjectFirstState extends State<ProjectFirst> {
   DateTime? startDate;
   DateTime? endDate;
+  String projectName = '';
+  String description = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Creating The Project'),
-        backgroundColor: Color(0xFFE89F16), // Set app's primary color as the app bar's background color
+        title: const Text('Creating The Project'),
+        backgroundColor: const Color(0xFFE89F16),
       ),
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -41,6 +44,9 @@ class _ProjectFirstState extends State<ProjectFirst> {
                     ),
                     hintStyle: TextStyle(color: Colors.grey.withOpacity(0.0)),
                   ),
+                  onChanged: (value) {
+                    projectName = value;
+                  },
                 ),
                 const SizedBox(height: 30),
                 const Text(
@@ -91,17 +97,25 @@ class _ProjectFirstState extends State<ProjectFirst> {
                     hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
                   ),
                   maxLines: 3,
+                  onChanged: (value) {
+                    description = value;
+                  },
                 ),
                 const SizedBox(height: 110),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProjectSecond()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProjectSecond(
+                      projectName: projectName,
+                      startDate: startDate,
+                      endDate: endDate,
+                      description: description,
+                    )));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFE89F16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                    )
+                      backgroundColor: const Color(0xFFE89F16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)
+                      )
                   ),
                   child: const Text(
                     'Next',
