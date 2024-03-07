@@ -14,11 +14,11 @@ Future<User> createUser(String username, String email, String numTel, String pas
     try {
       final User newUser = await UserApiService.createUser(username, email, numTel,password );
       
-      // Optionally, you can perform actions after creating the user, such as updating the UI or storing user data
+ 
       
       return newUser;
     } catch (e) {
-      // Handle errors if user creation fails
+      
       print('Failed to create user: $e');
       throw Exception('Failed to create user');
     }
@@ -30,7 +30,7 @@ Future<User> createUser(String username, String email, String numTel, String pas
     final SharedPreferences prefs = await SharedPreferences.getInstance();
   //  await prefs.setString('userId', user.id); // Assuming 'id' is a field in your User model
 
-    notifyListeners(); // Notify listeners in case you need to update the UI based on authentication status
+    notifyListeners(); 
     return user;
   }
 
@@ -55,5 +55,5 @@ Future<User> createUser(String username, String email, String numTel, String pas
     }
   }
 
-  // Implement other functionalities as needed...
+ 
 }

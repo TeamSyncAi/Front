@@ -19,7 +19,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
   
-    final String role = json['role']?.toLowerCase() ?? 'Client'; // Ensure case-insensitive match
+    final String role = json['role']?.toLowerCase() ?? 'Client'; 
     final validRoles = ['teamleader', 'Client'];
     final selectedRole = validRoles.contains(role) ? role : 'Client';
 
@@ -31,7 +31,7 @@ class User {
 
       password: json['password'],
       role: selectedRole,
-      termsAccepted: json['termsAccepted'] ?? false, // Default to false if not provided
+      termsAccepted: json['termsAccepted'] ?? false, 
     );
   }
 }

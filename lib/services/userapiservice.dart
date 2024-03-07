@@ -49,7 +49,7 @@ static Future<User> authenticateUser(String username, String password) async {
     }
   }
 
-  // Method to send credentials by email (assuming an endpoint exists for this)
+  
   static Future<void> sendCredentialsByEmail(String adminEmail) async {
     final Uri requestUri = Uri.parse('$baseUrl/sendCredentials');
     final Map<String, String> requestBody = {
@@ -88,5 +88,5 @@ static Future<User> authenticateUser(String username, String password) async {
       throw Exception('Failed to create user');
     }
   }
-  // Add other methods as needed...
+  
 }
