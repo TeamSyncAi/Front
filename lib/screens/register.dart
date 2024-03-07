@@ -5,89 +5,93 @@ import 'package:teamsyncai/providers/GoogleSignInApi.dart';
 import 'package:teamsyncai/providers/userprovider.dart';
 import 'package:teamsyncai/model/user_model.dart';
 
-class registerPage extends StatefulWidget {
-  const registerPage({super.key});
+class register extends StatefulWidget {
+  const register({Key? key}) : super(key: key);
 
   @override
-  register createState() => register();
+  _RegisterState createState() => _RegisterState();
 }
-class register  extends State<registerPage>{
-    final UserProvider _userProvider = UserProvider(); 
-Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
-  TextEditingController nameController = TextEditingController(); 
-  List<String> usernameSuggestions = ['john_doe', 'user123', 'example']; // Example list of username suggestions
+
+class _RegisterState extends State<register>{
+  final UserProvider _userProvider = UserProvider(); 
+
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController numTelController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _isLoading = false;
+  Widget _buildTextField(TextEditingController controller, String labelText, IconData iconData, bool obscureText) {
+    List<String> usernameSuggestions = ['john_doe', 'user123', 'example'];
   
-  return Container(
-    width: double.infinity,
-    height: 50,
-    decoration: BoxDecoration(
-      color: const Color(0xFFF2F2F2),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        children: [
-          Icon(iconData, color: Colors.orange),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Autocomplete<String>(
-              optionsBuilder: (TextEditingValue textEditingValue) {
-                // Filter suggestions based on the entered text
-                return usernameSuggestions
-                    .where((suggestion) =>
-                        suggestion.toLowerCase().contains(textEditingValue.text.toLowerCase()))
-                    .toList();
-              },
-              onSelected: (String selectedUsername) {
-                // Update the text field with the selected username
-                nameController.text = selectedUsername;
-              },
-              fieldViewBuilder: (BuildContext context, TextEditingController fieldController, FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
-                // This is the text field view builder
-                nameController = fieldController; // Assign the controller to the outer variable
-                return TextFormField(
-                  controller: fieldController,
-                  focusNode: fieldFocusNode,
-                  onFieldSubmitted: (_) => onFieldSubmitted(),
-                  obscureText: obscureText,
-                  decoration: InputDecoration(
-                    labelText: labelText,
-                    border: InputBorder.none,
-                  ),
-                );
-              },
-              optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
-                // This is the view builder for the suggestions list
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4,
-                    child: SizedBox(
-                      height: 200,
-                      child: ListView(
-                        children: options
-                            .map((String option) => GestureDetector(
-                                  onTap: () => onSelected(option),
-                                  child: ListTile(
-                                    title: Text(option),
-                                  ),
-                                ))
-                            .toList(),
+    return Container(
+      width: double.infinity,
+      height: 50,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Icon(iconData, color: Colors.orange),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Autocomplete<String>(
+                optionsBuilder: (TextEditingValue textEditingValue) {
+                  // Filter suggestions based on the entered text
+                  return usernameSuggestions
+                      .where((suggestion) =>
+                          suggestion.toLowerCase().contains(textEditingValue.text.toLowerCase()))
+                      .toList();
+                },
+                onSelected: (String selectedUsername) {
+                  // Update the text field with the selected username
+                  controller.text = selectedUsername;
+                },
+                fieldViewBuilder: (BuildContext context, TextEditingController fieldController, FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
+                  // This is the text field view builder
+                  fieldController = controller; // Assign the controller to the outer variable
+                  return TextFormField(
+                    controller: fieldController,
+                    focusNode: fieldFocusNode,
+                    onFieldSubmitted: (_) => onFieldSubmitted(),
+                    obscureText: obscureText,
+                    decoration: InputDecoration(
+                      labelText: labelText,
+                      border: InputBorder.none,
+                    ),
+                  );
+                },
+                optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
+                  // This is the view builder for the suggestions list
+                  return Align(
+                    alignment: Alignment.topLeft,
+                    child: Material(
+                      elevation: 4,
+                      child: SizedBox(
+                        height: 200,
+                        child: ListView(
+                          children: options
+                              .map((String option) => GestureDetector(
+                                    onTap: () => onSelected(option),
+                                    child: ListTile(
+                                      title: Text(option),
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
-
+    );
+  }
 
   Widget _buildSocialLoginButtons() {
     return Row(
@@ -172,71 +176,75 @@ Widget _buildTextField(String labelText, IconData iconData, bool obscureText) {
                 ],
               ),
               const SizedBox(height: 20.0),
-              _buildTextField('Name', Icons.person, false),
+              _buildTextField(usernameController, 'Name', Icons.person, false),
               const SizedBox(height: 10.0),
-              _buildTextField('Email Address', Icons.email, false),
+              _buildTextField(emailController, 'Email Address', Icons.email, false),
               const SizedBox(height: 10.0),
-              _buildTextField('Phone Number', Icons.phone, false),
-const SizedBox(height: 10.0),
-_buildTextField('Password', Icons.lock, true),
-
+              _buildTextField(numTelController, 'Phone Number', Icons.phone, false),
               const SizedBox(height: 10.0),
-              _buildTextField('Confirm Password', Icons.lock, true),
+              _buildTextField(passwordController, 'Password', Icons.lock, true),
               const SizedBox(height: 10.0),
-             
+              _buildTextField(passwordController, 'Confirm Password', Icons.lock, true),
               const SizedBox(height: 10.0),
               Row(
-             children: <Widget>[
-               Checkbox(
+                children: <Widget>[
+                  Checkbox(
                     value: false,
                     onChanged: (value) {},
                   ),
-                          const Text(
-                            "By signing in, you agree to our ",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _showPrivacyPolicyBottomSheet(context);
-                            },
-                            child: const Text(
-                              "Terms & Conditions",
-                              style: TextStyle(
-                                fontSize: 12,
-                                decoration: TextDecoration.underline,
-                                color: Color.fromARGB(255, 119, 194, 245),
-                                fontFamily:
-                                    'Montserrat', 
-                              ),
-                            ),
-                          ),
-                        ],
+                  const Text(
+                    "By signing in, you agree to our ",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _showPrivacyPolicyBottomSheet(context);
+                    },
+                    child: const Text(
+                      "Terms & Conditions",
+                      style: TextStyle(
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: Color.fromARGB(255, 119, 194, 245),
+                        fontFamily: 'Montserrat', 
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 20.0),
-          ElevatedButton(
-                onPressed: () async {
-                  try {
-                    /*final User newUser = await _userProvider.createUser(
-                      'username', // Replace with actual username
-                      'email',    // Replace with actual email
-                      'password', // Replace with actual password
-                    );*/
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => otp()), // Navigate to otp.dart page
-                    );
-                  } catch (e) {
-                    print('Error creating user: $e');
-                    // Handle error
-                  }
-                },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.orange,
-    textStyle: const TextStyle(color: Colors.white),
-  ),
-  child: const Text('Sign up'),
-),
+            ElevatedButton(
+        onPressed: () async {
+  if (usernameController.text.isEmpty || emailController.text.isEmpty || numTelController.text.isEmpty || passwordController.text.isEmpty) {
+    // Show an error message or dialog indicating that all fields are required
+    return;
+  }
 
+  try {
+    final User newUser = await _userProvider.createUser(
+      usernameController.text,
+      emailController.text,
+      numTelController.text,
+      passwordController.text,
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => otp()), 
+    );
+  } catch (e) {
+    print('Error creating user: $e');
+    // Handle error
+  }
+},
+
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  textStyle: const TextStyle(color: Colors.white),
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white) // Show progress indicator while loading
+                    : const Text('Sign up'),
+              ),
               const SizedBox(height: 10.0),
               const Text('or sign up with'),
               const SizedBox(height: 10.0),
@@ -263,9 +271,9 @@ _buildTextField('Password', Icons.lock, true),
       ),
     );
   }
-   Future signIn() async {
-    final user = await GoogleSignInApi.login();
 
+  Future signIn() async {
+    final user = await GoogleSignInApi.login();
 
     if (user == null) {
       ScaffoldMessenger.of(context)
@@ -276,7 +284,7 @@ _buildTextField('Password', Icons.lock, true),
       ));
     }
   }
-}
+
   void _showPrivacyPolicyBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -307,3 +315,4 @@ _buildTextField('Password', Icons.lock, true),
       },
     );
   }
+}

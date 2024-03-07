@@ -1,15 +1,17 @@
 class User {
-  final String id;
-  final String name; 
-  final String email;
-  final String password; 
-  final String role; 
+  //final String id;
+  final String? username; 
+  final String? email;
+  final String? numTel;
+  final String? password; 
+  final String? role; 
   final bool termsAccepted; 
 
   const User({
-    required this.id,
-    required this.name,
+    //required this.id,
+    required this.username,
     required this.email,
+    required this.numTel,
     required this.password, 
     this.role = 'Client', 
     required this.termsAccepted, // Now required
@@ -22,9 +24,11 @@ class User {
     final selectedRole = validRoles.contains(role) ? role : 'Client';
 
     return User(
-      id: json['id'],
-      name: json['name'],
+      //id: json['id'],
+      username: json['username'],
       email: json['email'],
+      numTel: json['numTel'],
+
       password: json['password'],
       role: selectedRole,
       termsAccepted: json['termsAccepted'] ?? false, // Default to false if not provided

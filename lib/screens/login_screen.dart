@@ -237,7 +237,7 @@ class _SignInPageState extends State<SignInPage>
         if (buttonText == "Register") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => registerPage()),
+            MaterialPageRoute(builder: (context) => register()),
           );
         } else {
           

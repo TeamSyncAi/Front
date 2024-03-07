@@ -24,7 +24,7 @@ class displayprofile extends StatelessWidget {
                 await GoogleSignInApi.logout();
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const registerPage(),
+                  builder: (context) => const register(),
                 ));
               },
             )

@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       home: LaunchScreen(),
       routes: {
         '/login': (context) => SignInPage(),
-        '/register': (context) => registerPage(),
+        '/register': (context) => register(),
       },
     );
   }
