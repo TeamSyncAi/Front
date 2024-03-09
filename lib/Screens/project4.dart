@@ -4,6 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import '../charts/radialP.dart';
 
 class ProjectFourth extends StatelessWidget {
+  const ProjectFourth();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,8 +60,8 @@ class ProjectFourth extends StatelessWidget {
                 painter: RadialPainter(
                   bgColor: Color(0xFF8D6322),
                   lineColor: Colors.orange,
-                  percent: 60 / 100, // Adjust percentage as needed
-                  width: 15.0, // Adjust thickness as needed
+                  percent: 60 / 100,
+                  width: 15.0,
                 ),
                 child: Center(
                   child: Text(

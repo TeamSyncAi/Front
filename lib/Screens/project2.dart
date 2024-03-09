@@ -22,13 +22,13 @@ class ProjectSecond extends StatefulWidget {
 }
 
 class _ProjectSecondState extends State<ProjectSecond> {
-  TextEditingController projectLeaderController = TextEditingController();
+  TextEditingController teamLeaderController = TextEditingController();
   TextEditingController membersController = TextEditingController();
   TextEditingController keywordsController = TextEditingController();
 
   void createProject() async {
     try {
-      String projectLeader = projectLeaderController.text;
+      String teamLeader = teamLeaderController.text;
       String members = membersController.text;
       String keywords = keywordsController.text;
 
@@ -44,28 +44,42 @@ class _ProjectSecondState extends State<ProjectSecond> {
         endDate: endDate,
         description: widget.description,
         keywords: keywordList,
-        teamLeader: projectLeader,
+        teamLeader: teamLeader,
         members: memberList,
       );
 
       // Call your API service to create the project
-      await ApiService.createProject(project);
+      Map<String, dynamic>? projectData = await ApiService.createProject(project);
 
-      // After successful creation, navigate to the next screen
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ProjectThird(
-            projectName: project.name,
-            projectLeader: project.teamLeader,
-            members: project.members,
-            keywords: project.keywords,
+
+      if (projectData != null && projectData.containsKey('projectID')) {
+        String projectId = projectData['projectID'];
+
+        // After successful creation, navigate to the third screen
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ProjectThird(
+              projectId: projectId,
+              projectName: project.name,
+              teamLeader: project.teamLeader,
+              members: project.members,
+              keywords: project.keywords,
+              startDate: project.startDate,
+              endDate: project.endDate
+            ),
           ),
-        ),
-      );
+        );
+
+        // Navigate to the fourth screen
+
+      } else {
+        throw Exception('Project data is null or does not contain projectID field');
+      }
     } catch (e) {
-      print('Error creating project: $e');
     }
   }
+
+
 
 
   @override
@@ -90,7 +104,7 @@ class _ProjectSecondState extends State<ProjectSecond> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  controller: projectLeaderController,
+                  controller: teamLeaderController,
                   decoration: InputDecoration(
                     labelText: 'Enter project leader',
                     border: OutlineInputBorder(

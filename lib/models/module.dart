@@ -1,21 +1,27 @@
-import 'package:project_dash/models/tasks.dart';
-
 class Module {
-  final String id;
-  final String name;
-  final List<Task> tasks;
+  final String module_id;
+  final String module_name;
+  List<String> taskIds;
 
   Module({
-    required this.id,
-    required this.name,
-    required this.tasks,
+    required this.module_id,
+    required this.module_name,
+    required this.taskIds,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': module_id,
+      'module_name': module_name,
+      'taskIds': taskIds,
+    };
+  }
 
   factory Module.fromJson(Map<String, dynamic> json) {
     return Module(
-      id: json['id'],
-      name: json['name'],
-      tasks: (json['tasks'] as List).map((taskJson) => Task.fromJson(taskJson)).toList(),
+      module_id: json['_id'],
+      module_name: json['module_name'],
+      taskIds: List<String>.from(json['taskIds'] ?? []),
     );
   }
 }
