@@ -120,7 +120,7 @@ class _ProjectFirstState extends State<ProjectFirst> {
                   child: const Text(
                     'Next',
                     style: TextStyle(
-                      color: Colors.white, // Text color
+                      color: Colors.white, 
                     ),
                   ),
                 ),
