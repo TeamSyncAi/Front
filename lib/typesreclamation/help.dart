@@ -37,7 +37,7 @@ class Help extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('En cours', Colors.orange),
+                  _buildEtatCircle('Rejected', const Color.fromARGB(255, 255, 0, 0)),
                 ],
               ),
             ),
