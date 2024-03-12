@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'AddReclamation.dart';
-lass IdeeSuggestion extends StatelessWidget {
+
+
+class IdeeSuggestion extends StatelessWidget {
   final String type;
 
   IdeeSuggestion({required this.type});
@@ -44,14 +46,14 @@ lass IdeeSuggestion extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddReclamation())),
+                  MaterialPageRoute(builder: (context) => AddReclamation()),
                 );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
               ),
               child: Text(
-                'Add suggestion',
+                'Add reclamation',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -62,4 +64,22 @@ lass IdeeSuggestion extends StatelessWidget {
       ),
     );
   }
-      
+
+  Widget _buildEtatCircle(String etat, Color couleur) {
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: couleur,
+          radius: 8.0,
+        ),
+        SizedBox(width: 8.0),
+        Text(
+          etat,
+          style: TextStyle(
+            fontSize: 14.0,
+          ),
+        ),
+      ],
+    );
+  }
+}
