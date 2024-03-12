@@ -37,7 +37,7 @@ class IdeeSuggestion extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('En cours', Colors.orange),
+                  _buildEtatCircle('In progress', Colors.orange),
                 ],
               ),
             ),
