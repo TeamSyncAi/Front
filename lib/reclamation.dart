@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'ideesuggestion.dart';
-
+import 'typesreclamation/ideesuggestion.dart';
+import 'typesreclamation/signalement.dart'; 
+import 'typesreclamation/help.dart';     
+import 'typesreclamation/gestiontaches.dart';  // Import for Gestion des tâches et des projets screen
+import 'typesreclamation/feedback.dart';            // Import for Feedback screen
+import 'typesreclamation/health.dart';                // Import for Santé screen (assuming a separate screen exists)
 
 class Reclamation {
   String type;
@@ -9,6 +13,7 @@ class Reclamation {
   Reclamation({required this.type, this.count = 0});
 }
 
+
 class ReclamationScreen extends StatefulWidget {
   @override
   _ReclamationScreenState createState() => _ReclamationScreenState();
@@ -16,14 +21,15 @@ class ReclamationScreen extends StatefulWidget {
 
 class _ReclamationScreenState extends State<ReclamationScreen> {
   List<Reclamation> reclamations = [
-    Reclamation(type: 'Idées et suggestions'),
+    Reclamation(type: 'Idea and suggestions'),
     Reclamation(type: 'Signalement des problèmes'),
     Reclamation(type: 'Demande de support'),
     Reclamation(type: 'Gestion des tâches et des projets'),
     Reclamation(type: 'Feedback'),
     Reclamation(type: 'Santé'),
   ];
-   @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,11 +55,34 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    Widget targetScreen; 
+
+                    switch (reclamations[index].type) {
+                      case 'Idea and suggestions':
+                        targetScreen = IdeeSuggestion(type: reclamations[index].type);
+                        break;
+                      case 'Signalement des problèmes':
+                        targetScreen = Signalement(type: reclamations[index].type); 
+                        break;
+                      case 'Demande de support':
+                        targetScreen = help(type: reclamations[index].type); 
+                         break;
+                      case 'Gestion des tâches et des projets':
+                        targetScreen = GestionTaches(type: reclamations[index].type); 
+                         break;
+                      case 'Feedback':
+                        targetScreen = Feedback(type: reclamations[index].type); 
+                          break;
+                      case 'Santé':
+                        targetScreen = health(type: reclamations[index].type); 
+                         break;
+                      default:
+                        print('Unhandled reclamation type: ${reclamations[index].type}');
+                    }
+
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => IdeeSuggestion(type: reclamations[index].type),
-                      ),
+                      MaterialPageRoute(builder: (context) => targetScreen),
                     );
                   },
                   child: Card(

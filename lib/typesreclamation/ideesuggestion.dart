@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'AddReclamation.dart';
+import '../AddReclamation.dart';
 
 
 class IdeeSuggestion extends StatelessWidget {
