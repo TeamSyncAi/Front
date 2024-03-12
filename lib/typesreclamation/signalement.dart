@@ -53,7 +53,7 @@ class Signalement extends StatelessWidget {
                 backgroundColor: Colors.orange,
               ),
               child: Text(
-                'Add reclamation',
+                'Add ',
                 style: TextStyle(
                   color: Colors.white,
                 ),
