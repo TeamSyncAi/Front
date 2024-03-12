@@ -11,7 +11,7 @@ class GestionTaches extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Project task management'),
+        title: Text('Task and project management'),
       ),
       body: Center(
         child: Column(
