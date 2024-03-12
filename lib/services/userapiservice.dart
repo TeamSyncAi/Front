@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:teamsyncai/model/user_model.dart';
 
 class UserApiService {
-  static const String baseUrl = "http://172.16.2.216:3000";
+  static const String baseUrl = "http://192.168.1.3:3000";
 
 
 static Future<User> authenticateUser(String username, String password) async {

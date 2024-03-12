@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/displayprofile.dart';
 import 'package:teamsyncai/screens/otp.dart';
@@ -20,6 +23,8 @@ class _RegisterState extends State<register>{
   final TextEditingController numTelController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _isLoading = false;
+   File? _cvFile;
+  final TextEditingController _cvSkillsController = TextEditingController();
   Widget _buildTextField(TextEditingController controller, String labelText, IconData iconData, bool obscureText) {
     List<String> usernameSuggestions = ['john_doe', 'user123', 'example'];
   
@@ -92,7 +97,32 @@ class _RegisterState extends State<register>{
       ),
     );
   }
+Future<void> _pickCV() async {
+  // Remove permission check
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
 
+  if (result != null) {
+    setState(() {
+      _cvFile = File(result.files.single.path!);
+    });
+    _extractSkillsFromCV();
+  } else {
+    // User canceled the picker
+  }
+}
+
+  void _extractSkillsFromCV() {
+    // Implement logic to parse PDF and extract skills
+    // For now, let's assume dummy skills
+    final List<String> dummySkills = ['Skill 1', 'Skill 2', 'Skill 3'];
+
+    setState(() {
+      _cvSkillsController.text = dummySkills.join(', ');
+    });
+  }
   Widget _buildSocialLoginButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -185,6 +215,24 @@ class _RegisterState extends State<register>{
               _buildTextField(passwordController, 'Password', Icons.lock, true),
               const SizedBox(height: 10.0),
               _buildTextField(passwordController, 'Confirm Password', Icons.lock, true),
+              ElevatedButton(
+                onPressed: _pickCV,
+                child: Text(_cvFile != null ? 'Change CV' : 'Pick CV'),
+              ),
+              if (_cvFile != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(_cvFile!.path),
+                ),
+              TextField(
+                controller: _cvSkillsController,
+                decoration: InputDecoration(
+                  labelText: 'Skills from CV',
+                  hintText: 'Extracted skills will appear here',
+                  border: OutlineInputBorder(),
+                ),
+                readOnly: true,
+              ),
               const SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
