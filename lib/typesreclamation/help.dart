@@ -11,7 +11,7 @@ class Help extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('Support Requests'),
       ),
       body: Center(
         child: Column(
