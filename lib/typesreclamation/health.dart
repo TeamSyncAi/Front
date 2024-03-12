@@ -11,7 +11,7 @@ class Health extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('Health'),
       ),
       body: Center(
         child: Column(
