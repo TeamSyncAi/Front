@@ -11,7 +11,7 @@ class IdeeSuggestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('ideas and suggestions'),
       ),
       body: Center(
         child: Column(

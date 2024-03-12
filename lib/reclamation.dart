@@ -20,8 +20,8 @@ class ReclamationScreen extends StatefulWidget {
 
 class _ReclamationScreenState extends State<ReclamationScreen> {
   List<Reclamation> reclamations = [
-    Reclamation(type: 'Idea and suggestions'),
-    Reclamation(type: 'Signalement des problèmes'),
+    Reclamation(type: 'Ideas and suggestions'),
+    Reclamation(type: 'Reporting problems'),
     Reclamation(type: 'Demande de support'),
     Reclamation(type: 'Gestion des tâches et des projets'),
     Reclamation(type: 'Feedback'),
