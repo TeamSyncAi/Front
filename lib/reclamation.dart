@@ -65,7 +65,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                         targetScreen = Signalement(type: reclamations[index].type); 
                         break;
                       case 'Demande de support':
-                        targetScreen = help(type: reclamations[index].type); 
+                        targetScreen = Help(type: reclamations[index].type); 
                          break;
                       case 'Gestion des tâches et des projets':
                         targetScreen = GestionTaches(type: reclamations[index].type); 
@@ -74,7 +74,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                         targetScreen = Feedback(type: reclamations[index].type); 
                           break;
                       case 'Santé':
-                        targetScreen = health(type: reclamations[index].type); 
+                        targetScreen = Health(type: reclamations[index].type); 
                          break;
                       default:
                         print('Unhandled reclamation type: ${reclamations[index].type}');
