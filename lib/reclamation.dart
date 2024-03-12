@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ReclamationDetail.dart';
+import 'IdeeSuggestion.dart';
 
 class Reclamation {
   String type;
