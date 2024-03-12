@@ -11,7 +11,7 @@ class Signalement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('Reporting problems'),
       ),
       body: Center(
         child: Column(
@@ -37,7 +37,7 @@ class Signalement extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('En cours', Colors.orange),
+                  _buildEtatCircle('Rejected', const Color.fromARGB(255, 255, 0, 0)),
                 ],
               ),
             ),
