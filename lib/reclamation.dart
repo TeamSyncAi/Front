@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncia/ideesuggestion.dart';
 import 'IdeeSuggestion.dart';
 
 class Reclamation {
@@ -51,7 +52,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReclamationDetail(type: reclamations[index].type),
+                        builder: (context) => IdeeSuggestion(type: reclamations[index].type),
                       ),
                     );
                   },
