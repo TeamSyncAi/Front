@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../AddReclamation.dart';
 
 
@@ -82,4 +82,4 @@ class Feedback extends StatelessWidget {
       ],
     );
   }
-}*/
+}
