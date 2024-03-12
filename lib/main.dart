@@ -53,3 +53,25 @@ class MyHomePage extends StatelessWidget {
                 backgroundColor: Colors.orange,
               ),
             ),
+             SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReportsScreen()),
+                );
+              },
+              child: Text(
+                'Reports',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
