@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../AddReclamation.dart';
 
 
-class IdeeSuggestion extends StatelessWidget {
+class Signalement extends StatelessWidget {
   final String type;
 
-  IdeeSuggestion({required this.type});
+ Signalement({required this.type});
 
   @override
   Widget build(BuildContext context) {
