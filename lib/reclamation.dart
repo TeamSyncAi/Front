@@ -25,7 +25,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
     Reclamation(type: 'Support Requests'),
     Reclamation(type: 'Task and project management'),
     Reclamation(type: 'Feedback'),
-    Reclamation(type: 'Santé'),
+    Reclamation(type: 'Health'),
   ];
 
   @override
