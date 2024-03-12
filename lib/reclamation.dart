@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teamsyncia/ideesuggestion.dart';
-import 'IdeeSuggestion.dart';
+import 'ideesuggestion.dart';
+
 
 class Reclamation {
   String type;
@@ -27,7 +27,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Réclamations'),
+        title: Text('Reclamations'),
       ),
       body: Column(
         children: [
