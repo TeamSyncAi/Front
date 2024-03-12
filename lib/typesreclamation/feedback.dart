@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '../AddReclamation.dart';
 
 
-class Feedback extends StatelessWidget {
+class FeedbackScreen extends StatelessWidget {
   final String type;
 
-  Feedback({required this.type});
+  FeedbackScreen ({required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('Feedbacks'),
       ),
       body: Center(
         child: Column(
@@ -37,7 +37,7 @@ class Feedback extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('En cours', Colors.orange),
+                  _buildEtatCircle('accepted', const Color.fromARGB(255, 0, 255, 17)),
                 ],
               ),
             ),
@@ -53,7 +53,7 @@ class Feedback extends StatelessWidget {
                 backgroundColor: Colors.orange,
               ),
               child: Text(
-                'Add reclamation',
+                'Add feedback',
                 style: TextStyle(
                   color: Colors.white,
                 ),

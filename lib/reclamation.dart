@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'typesreclamation/ideesuggestion.dart';
 import 'typesreclamation/signalement.dart'; 
 import 'typesreclamation/help.dart';     
-import 'typesreclamation/gestiontaches.dart';  // Import for Gestion des tâches et des projets screen
-import 'typesreclamation/feedback.dart';            // Import for Feedback screen
-import 'typesreclamation/health.dart';                // Import for Santé screen (assuming a separate screen exists)
-
+import 'typesreclamation/gestiontaches.dart';  
+import 'typesreclamation/health.dart';   
+import 'typesreclamation/feedback.dart';            
 class Reclamation {
   String type;
   int count;
@@ -55,8 +54,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Widget targetScreen; 
-
+Widget targetScreen = Container();
                     switch (reclamations[index].type) {
                       case 'Idea and suggestions':
                         targetScreen = IdeeSuggestion(type: reclamations[index].type);
@@ -71,7 +69,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                         targetScreen = GestionTaches(type: reclamations[index].type); 
                          break;
                       case 'Feedback':
-                        targetScreen = Feedback(type: reclamations[index].type); 
+                        targetScreen = FeedbackScreen (type: reclamations[index].type); 
                           break;
                       case 'Santé':
                         targetScreen = Health(type: reclamations[index].type); 
