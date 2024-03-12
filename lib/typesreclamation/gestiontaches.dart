@@ -11,7 +11,7 @@ class GestionTaches extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamation'),
+        title: Text('Project task management'),
       ),
       body: Center(
         child: Column(
@@ -37,7 +37,7 @@ class GestionTaches extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('En cours', Colors.orange),
+                  _buildEtatCircle('In progress', Colors.orange),
                 ],
               ),
             ),
@@ -53,7 +53,7 @@ class GestionTaches extends StatelessWidget {
                 backgroundColor: Colors.orange,
               ),
               child: Text(
-                'Add reclamation',
+                'Add ',
                 style: TextStyle(
                   color: Colors.white,
                 ),
