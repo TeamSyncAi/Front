@@ -22,8 +22,8 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
   List<Reclamation> reclamations = [
     Reclamation(type: 'Ideas and suggestions'),
     Reclamation(type: 'Reporting problems'),
-    Reclamation(type: 'Demande de support'),
-    Reclamation(type: 'Gestion des tâches et des projets'),
+    Reclamation(type: 'Support Requests'),
+    Reclamation(type: 'Task and project management'),
     Reclamation(type: 'Feedback'),
     Reclamation(type: 'Santé'),
   ];
