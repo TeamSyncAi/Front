@@ -73,9 +73,9 @@ class _ProfileState extends State<Profile> {
         appBar: AppBar(
           title: const Text(
             'Account Settings',
-            style: TextStyle(color: Colors.black),
+        
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.white,
           elevation: 15,
           iconTheme: const IconThemeData(color: Colors.black38),
         ),

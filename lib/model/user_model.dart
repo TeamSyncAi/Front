@@ -14,7 +14,7 @@ class User {
     required this.numTel,
     required this.password, 
     this.role = 'Client', 
-    required this.termsAccepted, // Now required
+    required this.termsAccepted, 
   });
 
   factory User.fromJson(Map<String, dynamic> json) {

@@ -1,11 +1,8 @@
-import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() {
-  runApp(EditProfile());
-}
+
 
 class EditProfile extends StatefulWidget {
   @override
@@ -20,7 +17,6 @@ class _EditProfileState extends State<EditProfile> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
- 
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,13 @@ class _EditProfileState extends State<EditProfile> {
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: const Text('Edit Profile'),
+          title: Text(
+            'Edit Profile',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.orangeAccent, // Couleur jaune
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -36,13 +38,20 @@ class _EditProfileState extends State<EditProfile> {
             child: Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                
-                  const SizedBox(height: 20.0),
                   TextFormField(
                     initialValue: _username,
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    decoration: InputDecoration(
                       labelText: 'Username',
+                      labelStyle: TextStyle(color: Colors.grey), // Couleur du label
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey), // Bordure grise
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrangeAccent), // Bordure jaune lorsque le champ est sélectionné
+                      ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -51,14 +60,25 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     onChanged: (value) {
-                      _username = value;
+                      setState(() {
+                        _username = value;
+                      });
                     },
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     initialValue: _email,
-                    decoration: const InputDecoration(
+                    keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    decoration: InputDecoration(
                       labelText: 'Email Address',
+                      labelStyle: TextStyle(color: Colors.grey), // Couleur du label
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey), // Bordure grise
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange), // Bordure jaune lorsque le champ est sélectionné
+                      ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -68,15 +88,25 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     onChanged: (value) {
-                      _email = value;
+                      setState(() {
+                        _email = value;
+                      });
                     },
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     obscureText: true,
                     initialValue: _password,
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    decoration: InputDecoration(
                       labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.grey), // Couleur du label
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey), // Bordure grise
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange), // Bordure jaune lorsque le champ est sélectionné
+                      ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -86,15 +116,25 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     onChanged: (value) {
-                      _password = value;
+                      setState(() {
+                        _password = value;
+                      });
                     },
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     obscureText: true,
                     initialValue: _confirmPassword,
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: Colors.black), // Couleur du texte
+                    decoration: InputDecoration(
                       labelText: 'Confirm Password',
+                      labelStyle: TextStyle(color: Colors.grey), // Couleur du label
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey), // Bordure grise
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.orange), // Bordure jaune lorsque le champ est sélectionné
+                      ),
                     ),
                     validator: (value) {
                       if (value != _password) {
@@ -103,7 +143,9 @@ class _EditProfileState extends State<EditProfile> {
                       return null;
                     },
                     onChanged: (value) {
-                      _confirmPassword = value;
+                      setState(() {
+                        _confirmPassword = value;
+                      });
                     },
                   ),
                   const SizedBox(height: 20.0),
@@ -111,11 +153,12 @@ class _EditProfileState extends State<EditProfile> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        // Perform save profile logic here
                         _showSaveConfirmation();
-                        Navigator.pop(context);
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black, backgroundColor: Colors.orange, // Couleur du texte
+                    ),
                     child: const Text('Save Changes'),
                   ),
                 ],
@@ -127,14 +170,23 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-
-
   void _showSaveConfirmation() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Profile changes saved successfully!'),
-        duration: Duration(seconds: 2),
-      ),
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Success'),
+          content: Text('Profile changes saved successfully!'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
