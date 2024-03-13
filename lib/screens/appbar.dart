@@ -40,11 +40,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_view_week_rounded),
-          label: 'Calendrier',
+          label: 'Calander',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline_outlined),
-          label: 'Profile',
+          icon: Icon(Icons.task_alt_outlined),
+          label: 'Tasks',
         ),
       ],
     );

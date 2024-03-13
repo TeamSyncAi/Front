@@ -56,7 +56,7 @@ class _MyHomePageState extends State<home> {
             MaterialPageRoute(builder: (context) => Profile()),
           );
         },
-        child: Icon(Icons.notifications_outlined),
+        child: Icon(Icons.person_remove),
       ),
     );
   }
