@@ -50,23 +50,23 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedbacks'),
+        title: const Text('Feedbacks'),
       ),
       body: Center(
         child: feedbacks.isEmpty
-            ? Text('No feedback found')
+            ? const Text('No feedback found')
             : ListView.builder(
                 itemCount: feedbacks.length,
                 itemBuilder: (context, index) {
                   final feedback = feedbacks[index];
                   return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 1.0),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -76,12 +76,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               children: [
                                 Text(
                                   feedback.title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 5.0),
+                                const SizedBox(height: 5.0),
                                 Text(feedback.description),
                               ],
                             ),
@@ -101,8 +101,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             MaterialPageRoute(builder: (context) => AddReclamation()),
           );
         },
-        child: Icon(Icons.add),
-        backgroundColor: Color.fromARGB(255, 241, 241, 241),
+        child: const Icon(Icons.add),
+        backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       ),
     );
   }
@@ -133,11 +133,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        SizedBox(width: 5.0),
+        const SizedBox(width: 5.0),
         Text(status),
-        SizedBox(width: 5.0),
+        const SizedBox(width: 5.0),
                IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: () {
             // Implement deletion logic here
             // (e.g., call an API endpoint or show confirmation dialog)

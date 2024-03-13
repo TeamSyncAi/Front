@@ -12,7 +12,7 @@ class _AddReclamationState extends State<AddReclamation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add reclamation'),
+        title: const Text('Add reclamation'),
       ),
       body: Form(
         key: _formKey,
@@ -22,7 +22,7 @@ class _AddReclamationState extends State<AddReclamation> {
             children: [
               TextFormField(
                 controller: _titreController,
-                decoration: InputDecoration(labelText: 'Titre'),
+                decoration: const InputDecoration(labelText: 'Titre'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez entrer un titre';
@@ -30,10 +30,10 @@ class _AddReclamationState extends State<AddReclamation> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
                 maxLines: 5,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -42,7 +42,7 @@ class _AddReclamationState extends State<AddReclamation> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -50,7 +50,7 @@ class _AddReclamationState extends State<AddReclamation> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Ajouter'),
+                child: const Text('Ajouter'),
               ),
             ],
           ),

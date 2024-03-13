@@ -5,7 +5,7 @@ class ReportsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rapports'),
+        title: const Text('Rapports'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -15,8 +15,8 @@ class ReportsScreen extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   labelText: 'Rechercher',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.search),
+                  border: const OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.orange[100],
                 ),
@@ -26,10 +26,10 @@ class ReportsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Dashboard(reportType: 'Ventes')),
+                  MaterialPageRoute(builder: (context) => const Dashboard(reportType: 'Ventes')),
                 );
               },
-              child: Text(
+              child: const Text(
                 'Ventes',
                 style: TextStyle(color: Colors.white),
               ),
@@ -41,10 +41,10 @@ class ReportsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Dashboard(reportType: 'Dépenses')),
+                  MaterialPageRoute(builder: (context) => const Dashboard(reportType: 'Dépenses')),
                 );
               },
-              child: Text(
+              child: const Text(
                 'Dépenses',
                 style: TextStyle(color: Colors.white),
               ),
@@ -56,10 +56,10 @@ class ReportsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Dashboard(reportType: 'Profit')),
+                  MaterialPageRoute(builder: (context) => const Dashboard(reportType: 'Profit')),
                 );
               },
-              child: Text(
+              child: const Text(
                 'Profit',
                 style: TextStyle(color: Colors.white),
               ),
@@ -73,7 +73,7 @@ class ReportsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.orange,
       ),
     );

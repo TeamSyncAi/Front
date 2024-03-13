@@ -66,7 +66,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reclamations'),
+        title: const Text('Reclamations'),
       ),
       body: Column(
         children: [
@@ -75,8 +75,8 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
             child: TextField(
               decoration: InputDecoration(
                 labelText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
                 filled: true,
                 fillColor: Colors.orange[100],
               ),
@@ -121,7 +121,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.orange, width: 2.0),
+                      side: const BorderSide(color: Colors.orange, width: 2.0),
                     ),
                     child: ListTile(
                       title: Text(reclamation.type),

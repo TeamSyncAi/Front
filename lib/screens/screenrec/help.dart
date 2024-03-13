@@ -12,14 +12,14 @@ class Help extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Support Requests'),
+        title: const Text('Support Requests'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
@@ -32,17 +32,17 @@ class Help extends StatelessWidget {
                 children: [
                   Text(
                     type,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   _buildEtatCircle('Rejected', const Color.fromARGB(255, 255, 0, 0)),
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -53,7 +53,7 @@ class Help extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
               ),
-              child: Text(
+              child: const Text(
                 'Add reclamation',
                 style: TextStyle(
                   color: Colors.white,
@@ -73,10 +73,10 @@ class Help extends StatelessWidget {
           backgroundColor: couleur,
           radius: 8.0,
         ),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         Text(
           etat,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14.0,
           ),
         ),
