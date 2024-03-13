@@ -20,7 +20,7 @@ class _EditProfileState extends State<EditProfile> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
-  File? _profilePicture; // Store the selected profile picture file
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -28,49 +28,20 @@ class _EditProfileState extends State<EditProfile> {
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('Edit Profile'),
+          title: const Text('Edit Profile'),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      _pickImage(); // Call image picker when profile picture is tapped
-                    },
-                    child: Container(
-                      width: 100.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: _profilePicture != null
-                              ? FileImage(_profilePicture!)
-                              : AssetImage('assets/images/default_profile_image.jpg') as ImageProvider,
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 15.0,
-                          child: Icon(
-                            Icons.edit,
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0),
+                
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     initialValue: _username,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Username',
                     ),
                     validator: (value) {
@@ -83,10 +54,10 @@ class _EditProfileState extends State<EditProfile> {
                       _username = value;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     initialValue: _email,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email Address',
                     ),
                     validator: (value) {
@@ -100,11 +71,11 @@ class _EditProfileState extends State<EditProfile> {
                       _email = value;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     obscureText: true,
                     initialValue: _password,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Password',
                     ),
                     validator: (value) {
@@ -118,11 +89,11 @@ class _EditProfileState extends State<EditProfile> {
                       _password = value;
                     },
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   TextFormField(
                     obscureText: true,
                     initialValue: _confirmPassword,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Confirm Password',
                     ),
                     validator: (value) {
@@ -135,7 +106,7 @@ class _EditProfileState extends State<EditProfile> {
                       _confirmPassword = value;
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -145,7 +116,7 @@ class _EditProfileState extends State<EditProfile> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text('Save Changes'),
+                    child: const Text('Save Changes'),
                   ),
                 ],
               ),
@@ -156,19 +127,11 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _profilePicture = File(pickedFile.path); // Store the picked image file
-      });
-    }
-  }
+
 
   void _showSaveConfirmation() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('Profile changes saved successfully!'),
         duration: Duration(seconds: 2),
       ),

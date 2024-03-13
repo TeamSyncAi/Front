@@ -50,7 +50,12 @@ class _MyHomePageState extends State<home> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Profile()),
+          );
+        },
         child: Icon(Icons.notifications_outlined),
       ),
     );

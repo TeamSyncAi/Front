@@ -19,6 +19,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   File? _image;
   bool _isDarkMode = false;
+  TextEditingController _searchController = TextEditingController();
+  List<Map<String, dynamic>> _filteredAccountSettings = [];
 
   void _navigateToReports(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
@@ -31,6 +33,29 @@ class _ProfileState extends State<Profile> {
         _image = File(pickedFile.path);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredAccountSettings = _accountSettings;
+    _searchController.addListener(() {
+      _filterAccountSettings(_searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterAccountSettings(String query) {
+    setState(() {
+      _filteredAccountSettings = _accountSettings
+          .where((item) => item['title'].toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -86,11 +111,11 @@ class _ProfileState extends State<Profile> {
                             borderRadius: BorderRadius.circular(20),
                             child: _image != null
                                 ? Image.file(
-                              _image!,
-                              width: 150,
-                              height: 150,
-                              fit: BoxFit.cover,
-                            )
+                                    _image!,
+                                    width: 150,
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                  )
                                 : const Icon(Icons.camera_alt, size: 50, color: Colors.grey),
                           ),
                           Positioned(
@@ -118,19 +143,31 @@ class _ProfileState extends State<Profile> {
                 ),
 
                 const SizedBox(height: 20.0),
-              FloatingActionButton(
-  onPressed: () {
-    _showEditProfileBottomSheet(context);
-  },
-  backgroundColor: Colors.orange,
-  child: const Icon(Icons.edit, color: Colors.white),
-),
+                FloatingActionButton(
+                  onPressed: () {
+                    _showEditProfileBottomSheet(context);
+                  },
+                  backgroundColor: Colors.orange,
+                  child: const Icon(Icons.edit, color: Colors.white),
+                ),
+
+                const SizedBox(height: 20.0),
+                TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Search',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
 
                 const SizedBox(height: 20.0),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _accountSettings.length,
+                  itemCount: _filteredAccountSettings.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 3,
@@ -138,11 +175,11 @@ class _ProfileState extends State<Profile> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
                       child: ListTile(
                         title: Text(
-                          _accountSettings[index]['title'],
+                          _filteredAccountSettings[index]['title'],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        trailing: Icon(_accountSettings[index]['icon'], color: Colors.orange),
-                        onTap: () => _handleAccountSettingTap(context, _accountSettings[index]['title']),
+                        trailing: Icon(_filteredAccountSettings[index]['icon'], color: Colors.orange),
+                        onTap: () => _handleAccountSettingTap(context, _filteredAccountSettings[index]['title']),
                       ),
                     );
                   },
