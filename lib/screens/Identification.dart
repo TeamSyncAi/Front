@@ -42,7 +42,7 @@ class _IdentState extends State<Identification> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('Close'),
+                          child: Text(''),
                         ),
                       ],
                     );
