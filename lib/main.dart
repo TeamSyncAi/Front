@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'reclamation.dart';
-import 'reports.dart';
+import 'widgets/reclamation.dart';
+import 'widgets/reports.dart';
 //page d'accueil
 void main() {
   runApp(const MyApp());

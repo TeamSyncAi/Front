@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../AddReclamation.dart';
+import '../addReclamation.dart';
 
 
-class IdeeSuggestion extends StatelessWidget {
+class GestionTaches extends StatelessWidget {
   final String type;
 
-  IdeeSuggestion({required this.type});
+  GestionTaches({required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ideas and suggestions'),
+        title: Text('Task and project management'),
       ),
       body: Center(
         child: Column(
@@ -53,7 +53,7 @@ class IdeeSuggestion extends StatelessWidget {
                 backgroundColor: Colors.orange,
               ),
               child: Text(
-                'Add reclamation',
+                'Add ',
                 style: TextStyle(
                   color: Colors.white,
                 ),

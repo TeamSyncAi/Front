@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../AddReclamation.dart';
+import '../../widgets/addReclamation.dart';
 
 
 class Help extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../AddReclamation.dart';
+import '../addReclamation.dart';
 
 
 class Signalement extends StatelessWidget {

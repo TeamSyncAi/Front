@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../AddReclamation.dart';
+import '../addReclamation.dart';
 
 
-class Health extends StatelessWidget {
+class IdeeSuggestion extends StatelessWidget {
   final String type;
 
-  Health({required this.type});
+  IdeeSuggestion({required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Health'),
+        title: Text('ideas and suggestions'),
       ),
       body: Center(
         child: Column(

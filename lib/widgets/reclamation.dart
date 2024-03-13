@@ -4,7 +4,7 @@ import 'typesreclamation/signalement.dart';
 import 'typesreclamation/help.dart';     
 import 'typesreclamation/gestiontaches.dart';  
 import 'typesreclamation/health.dart';   
-import 'typesreclamation/feedback.dart';            
+import 'feedback.dart';            
 class Reclamation {
   String type;
   int count;
@@ -69,8 +69,8 @@ Widget targetScreen = Container();
                         targetScreen = GestionTaches(type: reclamations[index].type); 
                          break;
                       case 'Feedback':
-                        targetScreen = FeedbackScreen (type: reclamations[index].type); 
-                          break;
+                        targetScreen = FeedbackScreen();
+                              break;
                       case 'Santé':
                         targetScreen = Health(type: reclamations[index].type); 
                          break;
