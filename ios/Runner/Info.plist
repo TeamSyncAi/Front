@@ -2,8 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>We need access to your photo library to select a file.</string>
+   
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -49,6 +48,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 <string>Allow access to your photo library to upload photos</string>
+ <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to select a file.</string>
 
 </dict>
 </plist>

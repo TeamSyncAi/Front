@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:teamsyncai/model/user_model.dart';
 import 'package:teamsyncai/screens/ForgetPasswordPage.dart';
 import 'package:teamsyncai/screens/home.dart';
 import 'register.dart';
 import 'package:teamsyncai/providers/userprovider.dart';
-
+import 'package:http/http.dart' as http;
 
 
 class MyApp extends StatelessWidget {
@@ -23,6 +25,8 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage>
     with SingleTickerProviderStateMixin {
+        final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -68,10 +72,9 @@ class _SignInPageState extends State<SignInPage>
                     children: <Widget>[
                       Image.asset("assets/images/logo.png"),
                       const SizedBox(height: 20),
-                      _buildTextField(
-                          "Email or Username", Icons.person, false),
+                 _buildTextField("username or Username", Icons.person, false, _usernameController),
                       const SizedBox(height: 10),
-                      _buildTextField("Password", Icons.lock, true),
+                      _buildTextField("Password", Icons.lock, true, _passwordController),
                       const SizedBox(height: 10),
                       Row(
                         children: [
@@ -106,6 +109,53 @@ class _SignInPageState extends State<SignInPage>
                         ),
                       ),
                       const SizedBox(height: 20),
+              ElevatedButton(
+  onPressed: () async {
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    try {
+      // Authenticate user
+      User user = await Provider.of<UserProvider>(context, listen: false)
+          .authenticateUser(username, password);
+
+      // Save user details locally
+      // Assuming you have a method named `saveUserDetailsLocally` in UserProvider
+      Provider.of<UserProvider>(context, listen: false)
+          .saveUserDetailsLocally(user);
+
+      // Navigate to Dashboard
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => home()),
+      );
+    } catch (error) {
+      print('Authentication failed: $error');
+
+      // Display an error message to the user
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Authentication Failed'),
+            content: Text('Failed to authenticate. Please check your credentials and try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  },
+  child: const Text('Sign In'),
+),
+
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -200,8 +250,7 @@ class _SignInPageState extends State<SignInPage>
   }
 }
 
-  Widget _buildTextField(
-      String labelText, IconData iconData, bool obscureText) {
+ Widget _buildTextField(String labelText, IconData iconData, bool obscureText, TextEditingController controller) {
     return Container(
       width: double.infinity,
       height: 50,
@@ -332,4 +381,3 @@ class _SignInPageState extends State<SignInPage>
       ],
     );
   }
-

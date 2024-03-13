@@ -1,7 +1,10 @@
 import 'dart:io';
-
+import 'dart:async';
+import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:teamsyncai/screens/displayprofile.dart';
 import 'package:teamsyncai/screens/otp.dart';
 import 'package:teamsyncai/providers/GoogleSignInApi.dart';
@@ -98,30 +101,157 @@ class _RegisterState extends State<register>{
     );
   }
 Future<void> _pickCV() async {
-  // Remove permission check
-  FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: ['pdf'],
-  );
+    // Remove permission check
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
 
-  if (result != null) {
-    setState(() {
-      _cvFile = File(result.files.single.path!);
-    });
-    _extractSkillsFromCV();
-  } else {
-    // User canceled the picker
+    if (result != null) {
+      setState(() {
+        _cvFile = File(result.files.single.path!);
+      });
+      _extractSkillsFromCV();
+    } else {
+      // User canceled the picker
+    }
   }
-}
 
-  void _extractSkillsFromCV() {
-    // Implement logic to parse PDF and extract skills
-    // For now, let's assume dummy skills
-    final List<String> dummySkills = ['Skill 1', 'Skill 2', 'Skill 3'];
+  Future<String> extractTextFromPDF(File pdfFile) async {
+    // Placeholder implementation for extracting text from PDF
+    // Implement your logic to extract text from the PDF file
+    return '';
+  }
+
+  List<String> extractSkills(String text) {
+    // Placeholder implementation for extracting skills from text
+    // Implement your logic to extract skills from the provided text
+    return [];
+  }
+
+  void _extractSkillsFromCV() async {
+    String selectedSkill = '';
+
+    if (_cvFile != null) {
+      try {
+        final text = await extractTextFromPDF(_cvFile!);
+        final List<String> cvSkills = extractSkills(text);
+        final List<String> availableSkills = _getAvailableSkills(cvSkills);
+
+        if (availableSkills.isNotEmpty) {
+          // Pick one skill randomly from the available skills
+          final Random random = Random();
+          selectedSkill = availableSkills[random.nextInt(availableSkills.length)];
+        } else {
+          // No matching skills found in the CV, choose one skill randomly from the list
+          final List<String> allSkills = _getAllSkills();
+          final Random random = Random();
+          selectedSkill = allSkills[random.nextInt(allSkills.length)];
+        }
+      } catch (e) {
+        print('Error extracting skills: $e');
+      }
+    }
 
     setState(() {
-      _cvSkillsController.text = dummySkills.join(', ');
+      _cvSkillsController.text = selectedSkill;
     });
+  }
+
+  List<String> _getAvailableSkills(List<String> cvSkills) {
+    // Placeholder implementation for getting available skills
+    // Compare cvSkills with a predefined list of skills
+  const List<String> skillList = [
+ 
+  "organization",
+  "analytical skills",
+ 
+  "java",
+  "python",
+  "javascript",
+  "c++",
+  "c#",
+  "sql",
+  "html",
+  "css",
+  "linux",
+  "machine learning",
+  "php",
+  "swift",
+  "kotlin",
+  "rust",
+  "react",
+  "angular",
+  "vue.js",
+  "node.js",
+  "express.js",
+  "django",
+  "spring boot",
+  "mongodb",
+  "cassandra",
+  "hadoop",
+  "spark",
+  "aws",
+  "azure",
+  "gcp",
+  "network security",
+  "devops",
+  "pandas",
+  "r",
+  "tensorflow",
+  "pytorch",
+  "agile",
+  "scrum",
+  "ux/ui",
+  "seo",
+  "sem",
+];
+
+    return cvSkills
+        .where((skill) => skillList.contains(skill.toLowerCase()))
+        .toList();
+  }
+
+  List<String> _getAllSkills() {
+    // Return a list of all predefined skills
+    return [
+      "organization",
+  "analytical skills",
+  "java",
+  "python",
+  "javascript",
+  "c++",
+  "c#",
+  "sql",
+  "html",
+  "css",
+  "linux",
+  "machine learning",
+  "php",
+  "ruby",
+  "swift",
+  "kotlin",
+  "react",
+  "angular",
+  "vue.js",
+  "node.js",
+  "express.js",
+  "django",
+  "spring boot",
+  "mongodb",
+  "aws",
+  "azure",
+  "gcp",
+  "network security",
+  "tensorflow",
+  "pytorch",
+  "agile",
+  "scrum",
+  "ux/ui",
+  "seo",
+  "sem",
+      // Add more skills as needed
+    ];
   }
   Widget _buildSocialLoginButtons() {
     return Row(
@@ -215,24 +345,45 @@ Future<void> _pickCV() async {
               _buildTextField(passwordController, 'Password', Icons.lock, true),
               const SizedBox(height: 10.0),
               _buildTextField(passwordController, 'Confirm Password', Icons.lock, true),
-              ElevatedButton(
-                onPressed: _pickCV,
-                child: Text(_cvFile != null ? 'Change CV' : 'Pick CV'),
-              ),
-              if (_cvFile != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(_cvFile!.path),
-                ),
-              TextField(
-                controller: _cvSkillsController,
-                decoration: InputDecoration(
-                  labelText: 'Skills from CV',
-                  hintText: 'Extracted skills will appear here',
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
-              ),
+            ElevatedButton(
+  onPressed: _pickCV,
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(Icons.file_upload),
+      SizedBox(width: 5),
+      Text(_cvFile != null ? 'Change CV' : 'Pick CV'),
+    ],
+  ),
+),
+
+if (_cvFile != null)
+  Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10.0),
+    child: Text(
+      _cvFile!.path,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+  ),
+
+Container(
+  margin: const EdgeInsets.only(top: 10.0),
+  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  decoration: BoxDecoration(
+    color: Colors.grey[200],
+    borderRadius: BorderRadius.circular(10.0),
+  ),
+  child: TextFormField(
+    controller: _cvSkillsController,
+    decoration: InputDecoration(
+      labelText: 'Skills from CV',
+      border: InputBorder.none,
+      prefixIcon: Icon(Icons.description),
+    ),
+    readOnly: true,
+  ),
+),
+
               const SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
@@ -338,8 +489,8 @@ Future<void> _pickCV() async {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
+          padding: const EdgeInsets.all(20.0),
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(

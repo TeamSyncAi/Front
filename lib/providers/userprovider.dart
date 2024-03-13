@@ -39,13 +39,24 @@ Future<User> createUser(String username, String email, String numTel, String pas
     final String userId = prefs.getString('userId') ?? '';
     return UserApiService.fetchUserProfile(userId);
   }
+ void saveUserDetailsLocally(User user) {
+    // You can implement this method to save user details locally, for example:
+    // Save user details to SharedPreferences, local database, etc.
+    // For example, if using SharedPreferences:
+    SharedPreferences.getInstance().then((prefs) {
+     // prefs.setString('userId', user.id);
+      // Save other user details as needed
+    });
 
-  Future<void> sendCredentialsByEmail(String adminEmail) async {
+    // Notify listeners if needed
+    notifyListeners();
+  }
+  Future<void> findByCredentials(String username, String password) async {
     try {
       _invitationStatus = 'Sending credentials...';
       notifyListeners();
 
-      await UserApiService.sendCredentialsByEmail(adminEmail);
+      await UserApiService.findByCredentials(username,password);
 
       _invitationStatus = 'Credentials sent successfully';
       notifyListeners();

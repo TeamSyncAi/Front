@@ -5,7 +5,7 @@ import 'package:teamsyncai/screens/home.dart';
 import 'package:teamsyncai/screens/login_screen.dart'; 
 import 'package:teamsyncai/screens/Identification.dart'; 
 import 'package:teamsyncai/screens/Notifications.dart'; 
-import 'package:teamsyncai/screens/ReportProblem.dart'; 
+import 'package:teamsyncai/screens/screenrec/ReportProblem.dart'; 
 
 class profile extends StatefulWidget {
   @override
@@ -171,7 +171,7 @@ class _ProfileState extends State<profile> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
         break;
       case 'Report a problem':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ReportProblem()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamationScreen()));
         break;
       case 'Still to come':
         Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));

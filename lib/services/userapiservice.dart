@@ -3,34 +3,34 @@ import 'package:http/http.dart' as http;
 import 'package:teamsyncai/model/user_model.dart';
 
 class UserApiService {
-  static const String baseUrl = "http://192.168.1.3:3000";
+  static const String baseUrl = "http://172.16.2.246:3000";
 
 
 static Future<User> authenticateUser(String username, String password) async {
-  try {
-    final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
-    final Map<String, String> requestBody = {
-      'username': username,
-      'password': password,
-    };
+    try {
+      final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
+      final Map<String, String> requestBody = {
+        'username': username,
+        'password': password,
+      };
 
-    final http.Response response = await http.post(
-      requestUri,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(requestBody),
-    );
+      final http.Response response = await http.post(
+        requestUri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(requestBody),
+      );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      return User.fromJson(responseData['user']);
-    } else {
-      throw Exception('Authentication failed with status code: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return User.fromJson(responseData['user']);
+      } else {
+        throw Exception('Authentication failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Authentication failed with error: $e');
+      throw Exception('Authentication failed: $e');
     }
-  } catch (e) {
-    print('Authentication failed with error: $e');
-    throw Exception('Authentication failed');
   }
-}
 
 
   static Future<User> fetchUserProfile(String userId) async {
@@ -50,10 +50,11 @@ static Future<User> authenticateUser(String username, String password) async {
   }
 
   
-  static Future<void> sendCredentialsByEmail(String adminEmail) async {
-    final Uri requestUri = Uri.parse('$baseUrl/sendCredentials');
+  static Future<void> findByCredentials(String username, String password) async {
+    final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
     final Map<String, String> requestBody = {
-      'adminEmail': adminEmail,
+      'username': username,
+      'password': password,
     };
 
     final http.Response response = await http.post(
@@ -63,7 +64,7 @@ static Future<User> authenticateUser(String username, String password) async {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to send credentials by email');
+      throw Exception('Failed to send credentials by username');
     }
   }
   static Future<User> createUser(String username, String email,String numTel,  String password) async {
