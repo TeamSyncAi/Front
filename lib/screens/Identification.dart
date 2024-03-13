@@ -28,7 +28,7 @@ class _IdentState extends State<Identification> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('QR Code'),
+                      title: Text(''),
                       content: SizedBox(
                         width: 200,
                         height: 200,
