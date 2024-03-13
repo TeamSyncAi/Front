@@ -62,30 +62,63 @@ class _profileState extends State<profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      _pickImage(ImageSource.gallery);
-                    },
-                    child: Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(75),
-                        image: _image != null
-                            ? DecorationImage(
-                                image: FileImage(_image!),
-                                fit: BoxFit.cover,
-                              )
-                            : null,
-                      ),
-                      child: _image == null
-                          ? const Icon(Icons.camera_alt, size: 50, color: Colors.grey)
-                          : null,
-                    ),
-                  ),
+               Center(
+  child: GestureDetector(
+    onTap: () {
+      _pickImage(ImageSource.gallery);
+    },
+    child: Container(
+      width: 150,
+      height: 150,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: _image != null
+                ? Image.file(
+                    _image!,
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  )
+                : Icon(Icons.camera_alt, size: 50, color: Colors.grey),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
+              ),
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
+
                 const SizedBox(height: 20.0),
                 ElevatedButton.icon(
                   onPressed: () {
@@ -134,20 +167,37 @@ class _profileState extends State<profile> {
                   },
                 ),
                 const SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    _showLogoutDialog(context);
-                  },
-                  child: const Text(
-                    'Log Out',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  ),
-                ),
+             ElevatedButton(
+  onPressed: () {
+    _showLogoutDialog(context);
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.red, 
+    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30.0),
+    ),
+  ),
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(
+        Icons.exit_to_app, // Change icon to exit icon
+        color: Colors.white,
+        size: 24,
+      ),
+      SizedBox(width: 10), // Add some spacing between icon and text
+      Text(
+        'Exit', // Change text to 'Exit'
+        style: TextStyle(
+          fontSize: 16.0,
+          color: Colors.white,
+        ),
+      ),
+    ],
+  ),
+),
+
               ],
             ),
           ),
