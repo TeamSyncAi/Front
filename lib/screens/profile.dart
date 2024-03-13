@@ -103,7 +103,7 @@ class _ProfileState extends State<profile> {
                   onChanged: (value) {
                     setState(() {
                       _isDarkMode = value;
-                      // Update app theme based on dark mode state
+                   
                     });
                   },
                 ),
@@ -146,9 +146,9 @@ class _ProfileState extends State<profile> {
             ),
             TextButton(
               onPressed: () {
-                // Log out logic
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage())); // Navigate to login screen
+               
+                Navigator.of(context).pop(); 
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage())); 
               },
               child: const Text('Yes'),
             ),
@@ -162,7 +162,7 @@ class _ProfileState extends State<profile> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return EditProfile(); // Your bottom sheet widget
+        return EditProfile(); 
       },
     );
   }
@@ -193,6 +193,6 @@ List<Map<String, dynamic>> _accountSettings = [
   {'title': 'Identification', 'icon': Icons.save_as_sharp},
   {'title': 'Notifications', 'icon': Icons.notifications},
   {'title': 'Report a problem', 'icon': Icons.privacy_tip},
-  {'title': 'Reports', 'icon': Icons.article}, // Add this entry for Reports
+  {'title': 'Reports', 'icon': Icons.article}, 
   {'title': 'Still to come', 'icon': Icons.more_horiz},
 ];
