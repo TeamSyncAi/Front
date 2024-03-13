@@ -4,20 +4,26 @@ import 'package:provider/provider.dart';
 import 'package:teamsyncai/providers/userprovider.dart';
 import 'package:teamsyncai/screens/launch_screen.dart';
 import 'package:teamsyncai/screens/login_screen.dart';
+import 'package:teamsyncai/screens/home.dart';
 import 'package:teamsyncai/screens/register.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:device_preview/device_preview.dart'; // Import DevicePreview package
-
+import 'package:teamsyncai/providers/ChangeNotifierProvider.dart';
+import 'package:flutter/foundation.dart';
 void main() {
   runApp(
-    // Wrap MaterialApp with Provider<UserProvider>
-    ChangeNotifierProvider(
-      create: (_) => UserProvider(), // Assuming UserProvider extends ChangeNotifier
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ImageProvider()), // Add ImageProvider here
+      ],
       child: MyApp(),
     ),
   );
 }
-
+class ImageProvider extends ChangeNotifier {
+  // Your image-related logic and state management methods will go here
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

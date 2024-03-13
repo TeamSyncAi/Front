@@ -24,26 +24,26 @@ class _CompleteProfileState extends State<completeProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Complete Profile'),
+        title: const Text('Complete Profile'),
         backgroundColor: Colors.orange,
         elevation: 15,
-        iconTheme: IconThemeData(color: Colors.black38),
+        iconTheme: const IconThemeData(color: Colors.black38),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Last step for creating your profile',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Upload a photo for us to easily identify you.',
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -63,12 +63,12 @@ class _CompleteProfileState extends State<completeProfile> {
                         : null,
                   ),
                   child: _image == null
-                      ? Icon(Icons.camera_alt, size: 50, color: Colors.grey)
+                      ? const Icon(Icons.camera_alt, size: 50, color: Colors.grey)
                       : null,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -79,7 +79,7 @@ class _CompleteProfileState extends State<completeProfile> {
                       MaterialPageRoute(builder: (context) => OnboardingScreen()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Skip for Now',
                     style: TextStyle(fontSize: 16),
                   ),
@@ -93,17 +93,17 @@ class _CompleteProfileState extends State<completeProfile> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
-                    minimumSize: Size(120, 50),
+                    minimumSize: const Size(120, 50),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save Profile',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

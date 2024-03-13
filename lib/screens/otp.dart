@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/completeprofile.dart';
+import 'package:teamsyncai/screens/onboardingscreen.dart';
 
 class otp extends StatefulWidget {
   @override
@@ -67,7 +68,7 @@ class _OTPScreenState extends State<otp> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => completeProfile()),
+                      MaterialPageRoute(builder: (context) => OnboardingScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

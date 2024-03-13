@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart'; 
 import 'package:teamsyncai/screens/EditProfile.dart';
 import 'package:teamsyncai/screens/StillToCome%20.dart';
 import 'package:teamsyncai/screens/home.dart';
@@ -7,18 +11,29 @@ import 'package:teamsyncai/screens/Identification.dart';
 import 'package:teamsyncai/screens/Notifications.dart'; 
 import 'package:teamsyncai/screens/screenrec/ReportProblem.dart';
 import 'package:teamsyncai/screens/screenrec/reports.dart'; 
+import 'package:teamsyncai/providers/ChangeNotifierProvider.dart';
 
 class profile extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _profileState createState() => _profileState();
 }
 
-class _ProfileState extends State<profile> {
+class _profileState extends State<profile> {
+  File? _image;
+  bool _isDarkMode = false;
+
   void _navigateToReports(BuildContext context) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
-}
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen()));
+  }
 
-  bool _isDarkMode = false; 
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +62,29 @@ class _ProfileState extends State<profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/logo.png'),
-                      radius: 40,
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      _pickImage(ImageSource.gallery);
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(75),
+                        image: _image != null
+                            ? DecorationImage(
+                                image: FileImage(_image!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: _image == null
+                          ? const Icon(Icons.camera_alt, size: 50, color: Colors.grey)
+                          : null,
                     ),
-                    Text(
-                      'Yassine',
-                      style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 ElevatedButton.icon(
@@ -76,7 +102,7 @@ class _ProfileState extends State<profile> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   ),
                 ),
-                 const SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -146,7 +172,6 @@ class _ProfileState extends State<profile> {
             ),
             TextButton(
               onPressed: () {
-               
                 Navigator.of(context).pop(); 
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage())); 
               },
@@ -167,26 +192,25 @@ class _ProfileState extends State<profile> {
     );
   }
 
-void _handleAccountSettingTap(BuildContext context, String title) {
-  switch (title) {
-    case 'Identification':
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Identification()));
-      break;
-    case 'Notifications':
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
-      break;
-    case 'Report a problem':
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamationScreen()));
-      break;
-    case 'Reports': 
-      _navigateToReports(context);
-      break;
-    case 'Still to come':
-      Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));
-      break;
+  void _handleAccountSettingTap(BuildContext context, String title) {
+    switch (title) {
+      case 'Identification':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Identification()));
+        break;
+      case 'Notifications':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+        break;
+      case 'Report a problem':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamationScreen()));
+        break;
+      case 'Reports': 
+        _navigateToReports(context);
+        break;
+      case 'Still to come':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => StillToCome()));
+        break;
+    }
   }
-}
-
 }
 
 List<Map<String, dynamic>> _accountSettings = [
