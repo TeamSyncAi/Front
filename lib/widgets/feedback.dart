@@ -1,12 +1,8 @@
-
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:teamsyncia/models/reclamation.dart';
 import '../widgets/addReclamation.dart';
-import 'package:http/http.dart' as http;
-
-import 'dart:convert';
-import 'package:flutter/material.dart';
-
-
 
 class FeedbackScreen extends StatefulWidget {
   @override
@@ -62,12 +58,37 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 itemCount: feedbacks.length,
                 itemBuilder: (context, index) {
                   final feedback = feedbacks[index];
-                  return ListTile(
-                    title: Text(feedback.title),
-                    subtitle: Text(feedback.status?.toString() ?? "Unknown"), // Handle null value
-                    onTap: () {
-                      // Gérer la suppression du feedback ici
-                    },
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  feedback.title,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(feedback.description),
+                              ],
+                            ),
+                          ),
+                          _buildStatusWidget(feedback.status) // Helper function for status widget
+                        ],
+                      ),
+                    ),
                   );
                 },
               ),
@@ -76,12 +97,53 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddReclamation()), // Replace with your AddReclamation screen
+            MaterialPageRoute(builder: (context) => AddReclamation()),
           );
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.orange,
+        backgroundColor: Color.fromARGB(255, 241, 241, 241),
       ),
+    );
+  }
+
+  Widget _buildStatusWidget(String status) {
+    Color backgroundColor;
+    switch (status.toLowerCase()) {
+      case 'in progress':
+        backgroundColor = Colors.orange;
+        break;
+      case 'accepted':
+        backgroundColor = Colors.green;
+        break;
+      case 'rejected':
+        backgroundColor = Colors.red;
+        break;
+      default:
+        backgroundColor = Colors.grey;
+    }
+
+    return Row(
+      children: [
+        Container(
+          width: 20.0,
+          height: 20.0,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        SizedBox(width: 5.0),
+        Text(status),
+        SizedBox(width: 5.0),
+               IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            // Implement deletion logic here
+            // (e.g., call an API endpoint or show confirmation dialog)
+    print('Delete button pressed for feedback'); // Fixed quotation mark
+          },
+        ),
+      ],
     );
   }
 }

@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'typesreclamation/ideesuggestion.dart';
-import 'typesreclamation/signalement.dart'; 
-import 'typesreclamation/help.dart';     
-import 'typesreclamation/gestiontaches.dart';  
-import 'typesreclamation/health.dart';   
-import 'feedback.dart';            
+import 'typesreclamation/signalement.dart';
+import 'typesreclamation/help.dart';
+import 'typesreclamation/gestiontaches.dart';
+import 'typesreclamation/health.dart';
+import 'feedback.dart';
+
 class Reclamation {
   String type;
   int count;
 
-  Reclamation({required this.type, this.count = 0});
+  Reclamation({required this.type, required this.count});
 }
 
+class ReclamationState {
+  final List<Reclamation> reclamations;
+
+  ReclamationState(this.reclamations);
+
+  ReclamationState copyWith({
+    List<Reclamation>? reclamations,
+  }) {
+    return ReclamationState(reclamations ?? this.reclamations);
+  }
+}
 
 class ReclamationScreen extends StatefulWidget {
   @override
@@ -19,14 +31,34 @@ class ReclamationScreen extends StatefulWidget {
 }
 
 class _ReclamationScreenState extends State<ReclamationScreen> {
-  List<Reclamation> reclamations = [
-    Reclamation(type: 'Ideas and suggestions'),
-    Reclamation(type: 'Reporting problems'),
-    Reclamation(type: 'Support Requests'),
-    Reclamation(type: 'Task and project management'),
-    Reclamation(type: 'Feedback'),
-    Reclamation(type: 'Health'),
-  ];
+  ReclamationState state = ReclamationState([
+    Reclamation(type: 'Ideas and suggestions', count: 0),
+    Reclamation(type: 'Reporting problems', count: 0),
+    Reclamation(type: 'Support Requests', count: 0),
+    Reclamation(type: 'Task and project management', count: 0),
+    Reclamation(type: 'Feedback', count: 0), // Initial count for feedback
+    Reclamation(type: 'Health', count: 0),
+  ]);
+
+  // ValueNotifier for feedback count
+  final feedbackCount = ValueNotifier<int>(0);
+
+  // Example function to update count (replace with your actual data fetching)
+  void updateCount(String type, int newCount) {
+    if (type.toLowerCase() == 'feedback') {
+      feedbackCount.value = newCount;
+    } else {
+      setState(() {
+        state = state.copyWith(
+          reclamations: state.reclamations
+              .map((reclamation) => reclamation.type.toLowerCase() == type.toLowerCase()
+                  ? Reclamation(type: type, count: newCount)
+                  : reclamation)
+              .toList(),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +72,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Rechercher',
+                labelText: 'Search',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
                 filled: true,
@@ -50,32 +82,33 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: reclamations.length,
+              itemCount: state.reclamations.length,
               itemBuilder: (context, index) {
+                final reclamation = state.reclamations[index];
                 return GestureDetector(
                   onTap: () {
-Widget targetScreen = Container();
-                    switch (reclamations[index].type) {
-                      case 'Idea and suggestions':
-                        targetScreen = IdeeSuggestion(type: reclamations[index].type);
+                    Widget targetScreen = Container();
+                    switch (reclamation.type) {
+                      case 'Ideas and suggestions':
+                        targetScreen = IdeeSuggestion(type: reclamation.type);
                         break;
-                      case 'Signalement des problèmes':
-                        targetScreen = Signalement(type: reclamations[index].type); 
+                      case 'Reporting problems':
+                        targetScreen = Signalement(type: reclamation.type);
                         break;
-                      case 'Demande de support':
-                        targetScreen = Help(type: reclamations[index].type); 
-                         break;
-                      case 'Gestion des tâches et des projets':
-                        targetScreen = GestionTaches(type: reclamations[index].type); 
-                         break;
+                      case 'Support Requests':
+                        targetScreen = Help(type: reclamation.type);
+                        break;
+                      case 'Task and project management':
+                        targetScreen = GestionTaches(type: reclamation.type);
+                        break;
                       case 'Feedback':
                         targetScreen = FeedbackScreen();
-                              break;
-                      case 'Santé':
-                        targetScreen = Health(type: reclamations[index].type); 
-                         break;
+                        break;
+                      case 'Health':
+                        targetScreen = Health(type: reclamation.type);
+                        break;
                       default:
-                        print('Unhandled reclamation type: ${reclamations[index].type}');
+                        print('Unhandled reclamation type: ${reclamation.type}');
                     }
 
                     Navigator.push(
@@ -89,11 +122,19 @@ Widget targetScreen = Container();
                       side: BorderSide(color: Colors.orange, width: 2.0),
                     ),
                     child: ListTile(
-                      title: Text(reclamations[index].type),
-                      trailing: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Text(reclamations[index].count.toString()),
-                      ),
+                      title: Text(reclamation.type),
+                      trailing: reclamation.type.toLowerCase() == 'feedback'
+                          ? ValueListenableBuilder<int>(
+                              valueListenable: feedbackCount,
+                              builder: (context, count, _) => CircleAvatar(
+                                backgroundColor: Colors.white,
+                              child: Text(count.toString()),
+                            ),
+                          )
+                          : CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Text(reclamation.count.toString()),
+                            ),
                     ),
                   ),
                 );
