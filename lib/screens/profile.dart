@@ -78,7 +78,7 @@ class _profileState extends State<profile> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -93,21 +93,21 @@ class _profileState extends State<profile> {
                     height: 150,
                     fit: BoxFit.cover,
                   )
-                : Icon(Icons.camera_alt, size: 50, color: Colors.grey),
+                : const Icon(Icons.camera_alt, size: 50, color: Colors.grey),
           ),
           Positioned(
             bottom: 0,
             right: 0,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.orange,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
               ),
-              padding: EdgeInsets.all(8),
-              child: Icon(
+              padding: const EdgeInsets.all(8),
+              child: const Icon(
                 Icons.camera_alt,
                 color: Colors.white,
               ),
@@ -178,7 +178,7 @@ class _profileState extends State<profile> {
       borderRadius: BorderRadius.circular(30.0),
     ),
   ),
-  child: Row(
+  child: const Row(
     mainAxisSize: MainAxisSize.min,
     children: [
       Icon(
