@@ -19,7 +19,7 @@ class _MyHomePageState extends State<home> {
         context,
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 500),
-          pageBuilder: (_, __, ___) => profile(),
+          pageBuilder: (_, __, ___) => Profile(),
           transitionsBuilder: (_, animation, __, child) {
             return SlideTransition(
               position: Tween<Offset>(

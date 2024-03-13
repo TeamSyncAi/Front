@@ -2,23 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart'; 
 import 'package:teamsyncai/screens/EditProfile.dart';
 import 'package:teamsyncai/screens/StillToCome%20.dart';
 import 'package:teamsyncai/screens/home.dart';
-import 'package:teamsyncai/screens/login_screen.dart'; 
-import 'package:teamsyncai/screens/Identification.dart'; 
-import 'package:teamsyncai/screens/Notifications.dart'; 
+import 'package:teamsyncai/screens/login_screen.dart';
+import 'package:teamsyncai/screens/Identification.dart';
+import 'package:teamsyncai/screens/Notifications.dart';
 import 'package:teamsyncai/screens/screenrec/ReportProblem.dart';
-import 'package:teamsyncai/screens/screenrec/reports.dart'; 
-import 'package:teamsyncai/providers/ChangeNotifierProvider.dart';
+import 'package:teamsyncai/screens/screenrec/reports.dart';
 
-class profile extends StatefulWidget {
+class Profile extends StatefulWidget {
   @override
-  _profileState createState() => _profileState();
+  _ProfileState createState() => _ProfileState();
 }
 
-class _profileState extends State<profile> {
+class _ProfileState extends State<Profile> {
   File? _image;
   bool _isDarkMode = false;
 
@@ -53,7 +51,7 @@ class _profileState extends State<profile> {
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.orange,
-          elevation: 15, 
+          elevation: 15,
           iconTheme: const IconThemeData(color: Colors.black38),
         ),
         body: SafeArea(
@@ -62,79 +60,72 @@ class _profileState extends State<profile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-               Center(
-  child: GestureDetector(
-    onTap: () {
-      _pickImage(ImageSource.gallery);
-    },
-    child: Container(
-      width: 150,
-      height: 150,
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 3,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: _image != null
-                ? Image.file(
-                    _image!,
-                    width: 150,
-                    height: 150,
-                    fit: BoxFit.cover,
-                  )
-                : const Icon(Icons.camera_alt, size: 50, color: Colors.grey),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      _pickImage(ImageSource.gallery);
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: _image != null
+                                ? Image.file(
+                              _image!,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
+                                : const Icon(Icons.camera_alt, size: 50, color: Colors.grey),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20),
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(8),
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              padding: const EdgeInsets.all(8),
-              child: const Icon(
-                Icons.camera_alt,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-),
 
                 const SizedBox(height: 20.0),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    _showEditProfileBottomSheet(context); 
-                  },
-                  icon: const Icon(Icons.edit/*, color: Colors.white*/), 
-                  label: const Text(
-                    'Edit Profile',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white54,
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  ),
-                ),
+              FloatingActionButton(
+  onPressed: () {
+    _showEditProfileBottomSheet(context);
+  },
+  backgroundColor: Colors.orange,
+  child: const Icon(Icons.edit, color: Colors.white),
+),
+
                 const SizedBox(height: 20.0),
                 ListView.builder(
                   shrinkWrap: true,
@@ -162,42 +153,40 @@ class _profileState extends State<profile> {
                   onChanged: (value) {
                     setState(() {
                       _isDarkMode = value;
-                   
                     });
                   },
                 ),
                 const SizedBox(height: 20.0),
-             ElevatedButton(
-  onPressed: () {
-    _showLogoutDialog(context);
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.red, 
-    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30.0),
-    ),
-  ),
-  child: const Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Icon(
-        Icons.exit_to_app, // Change icon to exit icon
-        color: Colors.white,
-        size: 24,
-      ),
-      SizedBox(width: 10), // Add some spacing between icon and text
-      Text(
-        'Exit', // Change text to 'Exit'
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.white,
-        ),
-      ),
-    ],
-  ),
-),
-
+                ElevatedButton(
+                  onPressed: () {
+                    _showLogoutDialog(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.exit_to_app, // Change icon to exit icon
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 10), // Add some spacing between icon and text
+                      Text(
+                        'Exit', // Change text to 'Exit'
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -222,8 +211,8 @@ class _profileState extends State<profile> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); 
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage())); 
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignInPage()));
               },
               child: const Text('Yes'),
             ),
@@ -237,7 +226,7 @@ class _profileState extends State<profile> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return EditProfile(); 
+        return EditProfile();
       },
     );
   }
@@ -253,7 +242,7 @@ class _profileState extends State<profile> {
       case 'Report a problem':
         Navigator.push(context, MaterialPageRoute(builder: (context) => ReclamationScreen()));
         break;
-      case 'Reports': 
+      case 'Reports':
         _navigateToReports(context);
         break;
       case 'Still to come':
@@ -267,6 +256,6 @@ List<Map<String, dynamic>> _accountSettings = [
   {'title': 'Identification', 'icon': Icons.save_as_sharp},
   {'title': 'Notifications', 'icon': Icons.notifications},
   {'title': 'Report a problem', 'icon': Icons.privacy_tip},
-  {'title': 'Reports', 'icon': Icons.article}, 
+  {'title': 'Reports', 'icon': Icons.article},
   {'title': 'Still to come', 'icon': Icons.more_horiz},
 ];

@@ -35,7 +35,7 @@ class _SignInPageState extends State<SignInPage>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     );
     _animation = Tween<double>(
       begin: 1.0,
@@ -56,7 +56,7 @@ class _SignInPageState extends State<SignInPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(152, 242, 158, 3),
       body: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
@@ -98,7 +98,7 @@ class _SignInPageState extends State<SignInPage>
                               MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
                               color: Color.fromARGB(255, 119, 194, 245),
@@ -137,14 +137,14 @@ class _SignInPageState extends State<SignInPage>
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Authentication Failed'),
-            content: Text('Failed to authenticate. Please check your credentials and try again.'),
+            title: const Text('Authentication Failed'),
+            content: const Text('Failed to authenticate. Please check your credentials and try again.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -223,8 +223,8 @@ class _SignInPageState extends State<SignInPage>
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
+          padding: const EdgeInsets.all(20.0),
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -286,7 +286,7 @@ class _SignInPageState extends State<SignInPage>
         if (buttonText == "Register") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => register()),
+            MaterialPageRoute(builder: (context) => const register()),
           );
         } else {
           
