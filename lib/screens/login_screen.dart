@@ -25,7 +25,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage>
     with SingleTickerProviderStateMixin {
-        final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -53,167 +53,231 @@ class _SignInPageState extends State<SignInPage>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      body: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Transform.translate(
-            offset: Offset(0.0, 100 * _animation.value),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset("assets/images/logo.png"),
-                      const SizedBox(height: 20),
-                 _buildTextField("username or Username", Icons.person, false, _usernameController),
-                      const SizedBox(height: 10),
-                      _buildTextField("Password", Icons.lock, true, _passwordController),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: false,
-                            onChanged: (bool? value) {},
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Color.fromARGB(255, 255, 255, 255),
+    body: AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0.0, 100 * _animation.value),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset("assets/images/logo.png"),
+                    const SizedBox(height: 20),
+                    _buildTextField("username or Username", Icons.person, false, _usernameController),
+                    const SizedBox(height: 10),
+                    _buildTextField("Password", Icons.lock, true, _passwordController),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (bool? value) {},
+                        ),
+                        Text(
+                          "Remember Me",
+                          style: GoogleFonts.openSans(),
+                        ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
+                          );
+                        },
+                        child: const Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 119, 194, 245),
+                            fontSize: 14,
+                            fontFamily: 'Roboto',
                           ),
-                          Text(
-                            "Remember Me",
-                            style: GoogleFonts.openSans(), 
-                          ),
-                        ],
+                        ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                           
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ForgetPasswordPage()),
-                            );
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildLoginButton(context, "Register",
+                              buttonColor: Colors.white, textColor: Colors.orange),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final String username = _usernameController.text;
+                              final String password = _passwordController.text;
+
+                              try {
+                                // Authenticate user
+                                User user = await Provider.of<UserProvider>(context, listen: false)
+                                    .authenticateUser(username, password);
+
+                                // Save user details locally
+                                // Assuming you have a method named `saveUserDetailsLocally` in UserProvider
+                                Provider.of<UserProvider>(context, listen: false)
+                                    .saveUserDetailsLocally(user);
+
+                                // Navigate to Dashboard
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => home()),
+                                );
+                              } catch (error) {
+                                print('Authentication failed: $error');
+
+                                // Display an error message to the user
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Authentication Failed'),
+                                      content: const Text('Failed to authenticate. Please check your credentials and try again.'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              minimumSize: Size(double.infinity, 50),
+                            ),
+                            child: const Text('Login', style: TextStyle(fontSize: 20, color: Colors.white)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          "By signing in, you agree to our ",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _showPrivacyPolicyBottomSheet(context);
                           },
                           child: const Text(
-                            "Forgot Password?",
+                            "Terms & Conditions",
                             style: TextStyle(
+                              fontSize: 12,
+                              decoration: TextDecoration.underline,
                               color: Color.fromARGB(255, 119, 194, 245),
-                              fontSize: 14,
-                              fontFamily: 'Roboto', 
+                              fontFamily: 'Montserrat',
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "or connect with",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontFamily: 'Arial',
                       ),
-                      const SizedBox(height: 20),
-              ElevatedButton(
-  onPressed: () async {
-    final String username = _usernameController.text;
-    final String password = _passwordController.text;
-
-    try {
-      // Authenticate user
-      User user = await Provider.of<UserProvider>(context, listen: false)
-          .authenticateUser(username, password);
-
-      // Save user details locally
-      // Assuming you have a method named `saveUserDetailsLocally` in UserProvider
-      Provider.of<UserProvider>(context, listen: false)
-          .saveUserDetailsLocally(user);
-
-      // Navigate to Dashboard
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => home()),
-      );
-    } catch (error) {
-      print('Authentication failed: $error');
-
-      // Display an error message to the user
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Authentication Failed'),
-            content: const Text('Failed to authenticate. Please check your credentials and try again.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  },
-  child: const Text('Sign In'),
-),
-
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            child: _buildLoginButton(context, "Login"),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: _buildLoginButton(context, "Register",
-                                buttonColor: Colors.white,
-                                textColor: Colors.orange),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                    
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const Text(
-                            "By signing in, you agree to our ",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _showPrivacyPolicyBottomSheet(context);
-                            },
-                            child: const Text(
-                              "Terms & Conditions",
-                              style: TextStyle(
-                                fontSize: 12,
-                                decoration: TextDecoration.underline,
-                                color: Color.fromARGB(255, 119, 194, 245),
-                                fontFamily:
-                                    'Montserrat', 
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "or connect with",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontFamily: 'Arial', // Change font here
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      _buildSocialLoginButtons(),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 10),
+                    _buildSocialLoginButtons(),
+                  ],
                 ),
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
+    ),
+  );
+}
+
+Widget _buildLoginButton(BuildContext context, String buttonText,
+    {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
+  return ElevatedButton(
+    onPressed: () {
+      if (buttonText == "Register") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const register()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => home()), 
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: buttonColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      minimumSize: const Size(double.infinity, 50),
+    ),
+    child: Text(
+      buttonText,
+      style: TextStyle(
+        color: textColor,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Montserrat',
+      ),
+    ),
+  );
+}
+
+Widget _buildTextField(String labelText, IconData iconData, bool obscureText, TextEditingController controller) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Icon(iconData, color: Colors.orange),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: controller,
+                obscureText: obscureText,
+                decoration: InputDecoration(
+                  labelText: labelText,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -250,70 +314,8 @@ class _SignInPageState extends State<SignInPage>
   }
 }
 
- Widget _buildTextField(String labelText, IconData iconData, bool obscureText, TextEditingController controller) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF2F2F2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Row(
-          children: [
-            Icon(iconData, color: Colors.orange),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextField(
-                obscureText: obscureText, 
-                decoration: InputDecoration(
-                  labelText: labelText,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
- Widget _buildLoginButton(BuildContext context, String buttonText,
-      {Color buttonColor = Colors.orange, Color textColor = Colors.white}) {
-    return ElevatedButton(
-      onPressed: () {
-        if (buttonText == "Register") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const register()),
-          );
-        } else {
-          
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => home()), 
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        minimumSize: const Size(double.infinity, 50),
-      ),
-      child: Text(
-        buttonText,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Montserrat', // Change font here
-        ),
-      ),
-    );
-  }
+
 
 
   Widget _buildSocialLoginButtons() {
