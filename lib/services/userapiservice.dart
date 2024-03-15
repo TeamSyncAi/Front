@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart'; 
 import 'package:teamsyncai/model/user_model.dart';
 
 class UserApiService {
-  static const String baseUrl = "http://172.16.2.246:3000";
+  static const String baseUrl = "http://192.168.1.3:3000";
 
-
-static Future<User> authenticateUser(String username, String password) async {
+  static Future<User> authenticateUser(String username, String password) async {
     try {
       final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
       final Map<String, String> requestBody = {
@@ -32,7 +33,6 @@ static Future<User> authenticateUser(String username, String password) async {
     }
   }
 
-
   static Future<User> fetchUserProfile(String userId) async {
     final Uri requestUri = Uri.parse('$baseUrl/user/profile/$userId');
 
@@ -49,7 +49,6 @@ static Future<User> authenticateUser(String username, String password) async {
     }
   }
 
-  
   static Future<void> findByCredentials(String username, String password) async {
     final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
     final Map<String, String> requestBody = {
@@ -67,27 +66,49 @@ static Future<User> authenticateUser(String username, String password) async {
       throw Exception('Failed to send credentials by username');
     }
   }
-  static Future<User> createUser(String username, String email,String numTel,  String password) async {
-    final Uri requestUri = Uri.parse('$baseUrl/user/registerclient');
-    final Map<String, String> requestBody = {
-      'username': username,
-      'email': email,
-      'numTel': numTel,
-      'password': password,
-    };
 
-    final http.Response response = await http.post(
-      requestUri,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(requestBody),
-    );
+  static Future<User> createUser(String username, String email, String numTel, String password, String specialty, File? cvFile) async {
+    try {
+      final Uri requestUri = Uri.parse('$baseUrl/user/registerclient');
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      return User.fromJson(responseData);
-    } else {
-      throw Exception('Failed to create user');
+      // Create a multipart request
+      var request = http.MultipartRequest('POST', requestUri);
+
+      // Add text fields to the request
+      request.fields['username'] = username;
+      request.fields['email'] = email;
+      request.fields['numTel'] = numTel;
+      request.fields['password'] = password;
+      request.fields['specialty'] = specialty;
+
+      // Add the PDF file to the request if available
+      if (cvFile != null) {
+        var cvStream = http.ByteStream(cvFile.openRead());
+        var length = await cvFile.length();
+
+        var cvFilePart = http.MultipartFile(
+          'cv',
+          cvStream,
+          length,
+          filename: basename(cvFile.path),
+        );
+        request.files.add(cvFilePart);
+      }
+
+      // Send the request and get the response
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return User.fromJson(responseData);
+      } else {
+        print('Failed to create user: ${response.body}');
+        throw Exception('Failed to create user');
+      }
+    } catch (e) {
+      print('Failed to create user: $e');
+      throw Exception('Failed to create user: $e');
     }
   }
-  
 }

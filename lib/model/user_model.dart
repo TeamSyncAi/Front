@@ -4,6 +4,7 @@ class User {
   final String? email;
   final String? numTel;
   final String? password; 
+  final String? specialty;
   final String? role; 
   final bool termsAccepted; 
 
@@ -12,7 +13,8 @@ class User {
     required this.username,
     required this.email,
     required this.numTel,
-    required this.password, 
+    required this.password,
+    required this.specialty, 
     this.role = 'Client', 
     required this.termsAccepted, 
   });
@@ -28,8 +30,8 @@ class User {
       username: json['username'],
       email: json['email'],
       numTel: json['numTel'],
-
       password: json['password'],
+      specialty: json['specialty'],
       role: selectedRole,
       termsAccepted: json['termsAccepted'] ?? false, 
     );

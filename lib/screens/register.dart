@@ -25,9 +25,11 @@ class _RegisterState extends State<register>{
   final TextEditingController emailController = TextEditingController();
   final TextEditingController numTelController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _cvSkillsController = TextEditingController();
+
   bool _isLoading = false;
    File? _cvFile;
-  final TextEditingController _cvSkillsController = TextEditingController();
+  
   Widget _buildTextField(TextEditingController controller, String labelText, IconData iconData, bool obscureText) {
     List<String> usernameSuggestions = ['john_doe', 'user123', 'example'];
   
@@ -101,21 +103,22 @@ class _RegisterState extends State<register>{
     );
   }
 Future<void> _pickCV() async {
-    // Remove permission check
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf'],
+  );
 
-    if (result != null) {
-      setState(() {
-        _cvFile = File(result.files.single.path!);
-      });
-      _extractSkillsFromCV();
-    } else {
-      // User canceled the picker
-    }
+  if (result != null) {
+    setState(() {
+      _cvFile = File(result.files.single.path!);
+    });
+    _extractSkillsFromCV();
+  } else {
+    setState(() {
+      _cvFile = null; // Set _cvFile to null if no file is selected
+    });
   }
+}
 
   Future<String> extractTextFromPDF(File pdfFile) async {
     // Placeholder implementation for extracting text from PDF
@@ -253,6 +256,149 @@ Future<void> _pickCV() async {
       // Add more skills as needed
     ];
   }
+
+ @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(20.0),
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset("assets/images/logo.png"), 
+                  const Text(
+                    'GET STARTED',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              _buildTextField(usernameController, 'Name', Icons.person, false),
+              const SizedBox(height: 10.0),
+              _buildTextField(emailController, 'Email Address', Icons.email, false),
+              const SizedBox(height: 10.0),
+              _buildTextField(numTelController, 'Phone Number', Icons.phone, false),
+              const SizedBox(height: 10.0),
+              _buildTextField(passwordController, 'Password', Icons.lock, true),
+              const SizedBox(height: 10.0),
+              _buildTextField(passwordController, 'Confirm Password', Icons.lock, true),
+            ElevatedButton(
+  onPressed: _pickCV,
+  child: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      const Icon(Icons.file_upload),
+      const SizedBox(width: 5),
+      Text(_cvFile != null ? 'Change CV' : 'Pick CV'),
+    ],
+  ),
+),
+
+if (_cvFile != null)
+  Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10.0),
+    child: Text(
+      _cvFile!.path,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ),
+  ),
+
+
+
+              const SizedBox(height: 10.0),
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                  const Text(
+                    "By signing in, you agree to our ",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _showPrivacyPolicyBottomSheet(context);
+                    },
+                    child: const Text(
+                      "Terms & Conditions",
+                      style: TextStyle(
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: Color.fromARGB(255, 119, 194, 245),
+                        fontFamily: 'Montserrat', 
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+     ElevatedButton(
+  onPressed: () async {
+    if (usernameController.text.isEmpty || emailController.text.isEmpty || numTelController.text.isEmpty || passwordController.text.isEmpty || _cvSkillsController.text.isEmpty) {
+      // Show an error message or dialog indicating that all fields are required
+      return;
+    }
+
+ try {
+      final User newUser = await _userProvider.createUser(
+        usernameController.text,
+        emailController.text,
+        numTelController.text,
+        passwordController.text,
+        _cvSkillsController.text,
+        _cvFile, // Pass the PDF file to createUser function
+      );
+      // User creation successful, navigate to the next screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => otp()), 
+      );
+    } catch (e) {
+      print('Error creating user: $e');
+      // Handle error
+    }
+  },
+
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  textStyle: const TextStyle(color: Colors.white),
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white) // Show progress indicator while loading
+                    : const Text('Sign up'),
+              ),
+              const SizedBox(height: 10.0),
+              const Text('or sign up with'),
+              const SizedBox(height: 10.0),
+              _buildSocialLoginButtons(),
+              const SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('Have an account?'),
+                  TextButton(
+                    child: const Text(
+                      'SIGN IN',
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Go back to the previous screen
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
   Widget _buildSocialLoginButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -317,159 +463,7 @@ Future<void> _pickCV() async {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(20.0),
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset("assets/images/logo.png"), 
-                  const Text(
-                    'GET STARTED',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20.0),
-              _buildTextField(usernameController, 'Name', Icons.person, false),
-              const SizedBox(height: 10.0),
-              _buildTextField(emailController, 'Email Address', Icons.email, false),
-              const SizedBox(height: 10.0),
-              _buildTextField(numTelController, 'Phone Number', Icons.phone, false),
-              const SizedBox(height: 10.0),
-              _buildTextField(passwordController, 'Password', Icons.lock, true),
-              const SizedBox(height: 10.0),
-              _buildTextField(passwordController, 'Confirm Password', Icons.lock, true),
-            ElevatedButton(
-  onPressed: _pickCV,
-  child: Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Icon(Icons.file_upload),
-      SizedBox(width: 5),
-      Text(_cvFile != null ? 'Change CV' : 'Pick CV'),
-    ],
-  ),
-),
-
-if (_cvFile != null)
-  Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10.0),
-    child: Text(
-      _cvFile!.path,
-      style: TextStyle(fontWeight: FontWeight.bold),
-    ),
-  ),
-
-Container(
-  margin: const EdgeInsets.only(top: 10.0),
-  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-  decoration: BoxDecoration(
-    color: Colors.grey[200],
-    borderRadius: BorderRadius.circular(10.0),
-  ),
-  child: TextFormField(
-    controller: _cvSkillsController,
-    decoration: InputDecoration(
-      labelText: 'Skills from CV',
-      border: InputBorder.none,
-      prefixIcon: Icon(Icons.description),
-    ),
-    readOnly: true,
-  ),
-),
-
-              const SizedBox(height: 10.0),
-              Row(
-                children: <Widget>[
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  const Text(
-                    "By signing in, you agree to our ",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _showPrivacyPolicyBottomSheet(context);
-                    },
-                    child: const Text(
-                      "Terms & Conditions",
-                      style: TextStyle(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: Color.fromARGB(255, 119, 194, 245),
-                        fontFamily: 'Montserrat', 
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20.0),
-            ElevatedButton(
-        onPressed: () async {
-  if (usernameController.text.isEmpty || emailController.text.isEmpty || numTelController.text.isEmpty || passwordController.text.isEmpty) {
-    // Show an error message or dialog indicating that all fields are required
-    return;
-  }
-
-  try {
-    final User newUser = await _userProvider.createUser(
-      usernameController.text,
-      emailController.text,
-      numTelController.text,
-      passwordController.text,
-    );
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => otp()), 
-    );
-  } catch (e) {
-    print('Error creating user: $e');
-    // Handle error
-  }
-},
-
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  textStyle: const TextStyle(color: Colors.white),
-                ),
-                child: _isLoading
-                    ? const CircularProgressIndicator(color: Colors.white) // Show progress indicator while loading
-                    : const Text('Sign up'),
-              ),
-              const SizedBox(height: 10.0),
-              const Text('or sign up with'),
-              const SizedBox(height: 10.0),
-              _buildSocialLoginButtons(),
-              const SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Have an account?'),
-                  TextButton(
-                    child: const Text(
-                      'SIGN IN',
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Go back to the previous screen
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+ 
 
   Future signIn() async {
     final user = await GoogleSignInApi.login();

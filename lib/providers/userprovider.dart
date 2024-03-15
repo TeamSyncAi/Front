@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:teamsyncai/model/user_model.dart';
 import 'package:teamsyncai/services/userapiservice.dart';
@@ -10,19 +12,16 @@ class UserProvider with ChangeNotifier {
   List<User> get users => _users;
   String get invitationStatus => _invitationStatus;
 
-Future<User> createUser(String username, String email, String numTel, String password) async {
-    try {
-      final User newUser = await UserApiService.createUser(username, email, numTel,password );
-      
- 
-      
-      return newUser;
-    } catch (e) {
-      
-      print('Failed to create user: $e');
-      throw Exception('Failed to create user');
-    }
+Future<User> createUser(String username, String email, String numTel, String password, String specialty, File? cvFile) async {
+  try {
+    final User newUser = await UserApiService.createUser(username, email, numTel, password, specialty, cvFile);
+    return newUser;
+  } catch (e) {
+    print('Failed to create user: $e');
+    throw Exception('Failed to create user');
   }
+}
+
   Future<User> authenticateUser(String username, String password) async {
     final User user = await UserApiService.authenticateUser(username, password);
 
