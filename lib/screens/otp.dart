@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/screens/completeprofile.dart';
 import 'package:teamsyncai/screens/onboardingscreen.dart';
-
+import 'package:http/http.dart' as http;
 class otp extends StatefulWidget {
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -85,4 +85,59 @@ class _OTPScreenState extends State<otp> {
       ),
     );
   }
+Future<void> verifyOTP(String enteredOTP, BuildContext context) async {
+  try {
+    final response = await http.post(
+      Uri.parse('your_backend_url/verifyOTP'),
+      body: {'enteredOTP': enteredOTP},
+    );
+
+    if (response.statusCode == 200) {
+      // OTP verified successfully, proceed with next steps
+      // For example, navigate to password reset screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
+    } else {
+      // Handle error, display appropriate message to user
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('OTP Verification Failed'),
+            content: Text('Invalid OTP. Please try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  } catch (error) {
+    // Handle network or other errors
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Failed to verify OTP. Please try again later.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 }
