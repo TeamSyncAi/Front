@@ -7,11 +7,11 @@ import 'package:teamsyncai/model/user_model.dart';
 class UserApiService {
   static const String baseUrl = "http://192.168.1.3:3000";
 
-  static Future<User> authenticateUser(String username, String password) async {
+  static Future<User> authenticateUser(String email, String password) async {
     try {
       final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
       final Map<String, String> requestBody = {
-        'username': username,
+        'email': email,
         'password': password,
       };
 
@@ -49,10 +49,10 @@ class UserApiService {
     }
   }
 
-  static Future<void> findByCredentials(String username, String password) async {
+  static Future<void> findByCredentials(String email, String password) async {
     final Uri requestUri = Uri.parse('$baseUrl/user/loginclient');
     final Map<String, String> requestBody = {
-      'username': username,
+      'email': email,
       'password': password,
     };
 
@@ -63,7 +63,7 @@ class UserApiService {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to send credentials by username');
+      throw Exception('Failed to send credentials by email');
     }
   }
 

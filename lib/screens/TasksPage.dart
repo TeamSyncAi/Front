@@ -6,13 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:teamsyncai/screens/task.dart/tasksDetails.dart';
 
 
-class Task {
+class Tasks {
   final String taskTitle;
   final String taskDescription;
   final DateTime date;
   final List<Member> members;
 
-  Task({
+  Tasks({
     required this.taskTitle,
     required this.taskDescription,
     required this.date,
@@ -32,7 +32,7 @@ class Member {
   });
 }
 class TasksPage extends StatefulWidget {
-  final Task task;
+  final Tasks task;
 
   const TasksPage({
     Key? key,
@@ -48,7 +48,7 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    Task task = widget.task;
+    Tasks task = widget.task;
 
     return Scaffold(
       appBar: AppBar(

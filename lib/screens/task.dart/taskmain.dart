@@ -47,7 +47,7 @@ class taskmain extends StatelessWidget {
                     percentage:
                         50, // You can modify this to get the percentage from the module data
                     imagePath: 'images/pp.png',
-                    task: Task(
+                    task: Tasks(
                       taskTitle: 'Design Template Screens',
                       taskDescription:
                           'Create template screen for tasks todo app.',
@@ -70,7 +70,7 @@ class taskmain extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => TasksPage(
-                            task: Task(
+                            task: Tasks(
                               taskTitle: 'Design Template Screens',
                               taskDescription:
                                   'Create template screen for tasks todo app.',

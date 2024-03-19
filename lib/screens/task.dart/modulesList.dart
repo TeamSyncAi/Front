@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:teamsyncai/model/dashtask.dart';
+import 'package:teamsyncai/screens/TasksPage.dart';
 
 class ListTileModule extends StatelessWidget {
   final String projectTitle;
@@ -10,7 +11,7 @@ class ListTileModule extends StatelessWidget {
   final List<String> profileImagePaths;
   final int percentage;
   final String imagePath;
-  final Task task;
+  final Tasks task;
   final VoidCallback onTap;
 
   const ListTileModule({

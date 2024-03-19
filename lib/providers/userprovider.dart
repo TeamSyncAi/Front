@@ -22,8 +22,8 @@ Future<User> createUser(String username, String email, String numTel, String pas
   }
 }
 
-  Future<User> authenticateUser(String username, String password) async {
-    final User user = await UserApiService.authenticateUser(username, password);
+  Future<User> authenticateUser(String email, String password) async {
+    final User user = await UserApiService.authenticateUser(email, password);
 
    
     final SharedPreferences prefs = await SharedPreferences.getInstance();

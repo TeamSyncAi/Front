@@ -25,7 +25,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -72,7 +72,7 @@ Widget build(BuildContext context) {
                   children: <Widget>[
                     Image.asset("assets/images/logo.png"),
                     const SizedBox(height: 20),
-                    _buildTextField("username or Username", Icons.person, false, _usernameController),
+                    _buildTextField("email or email", Icons.person, false, _emailController),
                     const SizedBox(height: 10),
                     _buildTextField("Password", Icons.lock, true, _passwordController),
                     const SizedBox(height: 10),
@@ -118,13 +118,13 @@ Widget build(BuildContext context) {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () async {
-                              final String username = _usernameController.text;
+                              final String email = _emailController.text;
                               final String password = _passwordController.text;
 
                               try {
                                 // Authenticate user
                                 User user = await Provider.of<UserProvider>(context, listen: false)
-                                    .authenticateUser(username, password);
+                                    .authenticateUser(email, password);
 
                                 // Save user details locally
                                 // Assuming you have a method named `saveUserDetailsLocally` in UserProvider
