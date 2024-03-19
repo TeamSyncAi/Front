@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teamsyncai/model/module.dart';
-import 'package:teamsyncai/model/task.dart';
+import 'package:teamsyncai/model/dashtask.dart';
 import 'package:teamsyncai/screens/dashboardscreen/project6.dart';
 import 'package:teamsyncai/services/api_service.dart';
 

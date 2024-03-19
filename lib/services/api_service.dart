@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:teamsyncai/model/project.dart';
 
 import '../model/module.dart';
-import '../model/task.dart';
+import '../model/dashtask.dart';
 
 class ApiService {
   static const String baseURL = 'http://192.168.1.5:3000';

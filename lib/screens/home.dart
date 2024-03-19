@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncai/model/dashtask.dart';
 import 'package:teamsyncai/screens/plus.dart';
 import 'package:teamsyncai/screens/profile.dart';
+import 'package:teamsyncai/screens/TasksPage.dart';
+import 'package:teamsyncai/screens/task.dart/taskmain.dart';
 import 'appbar.dart';
 
 class home extends StatefulWidget {
@@ -20,7 +23,7 @@ class _MyHomePageState extends State<home> {
         context,
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 500),
-          pageBuilder: (_, __, ___) => Profile(),
+          pageBuilder: (_, __, ___) => taskmain(),
           transitionsBuilder: (_, animation, __, child) {
             return SlideTransition(
               position: Tween<Offset>(
@@ -46,7 +49,7 @@ class _MyHomePageState extends State<home> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('TeamSyncAi'),
+        title: Text('TeamSyncAii'),
       ),
       body: IndexedStack(
         index: _selectedIndex,
