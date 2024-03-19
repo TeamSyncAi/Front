@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncai/screens/plus.dart';
 import 'package:teamsyncai/screens/profile.dart';
 import 'appbar.dart';
 
@@ -30,6 +31,12 @@ class _MyHomePageState extends State<home> {
             );
           },
         ),
+      );
+    }
+       if (index == 2) { // Check if "Plus" button is tapped
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProjectFirst()),
       );
     }
   }

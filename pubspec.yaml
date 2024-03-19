@@ -44,7 +44,9 @@ dependencies:
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.0.0
   
-  
+
+  fl_chart: ^0.35.0
+  intl: ^0.18.0
   
  
 
