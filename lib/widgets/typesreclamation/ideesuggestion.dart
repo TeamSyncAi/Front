@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:teamsyncia/models/reclamation.dart'; 
 import '/widgets/addReclamation.dart';
-
+import 'package:teamsyncia/widgets/filterDialog.dart';
 class IdeeSuggestionScreen extends StatefulWidget {
   @override
   _IdeeSuggestionScreenState createState() => _IdeeSuggestionScreenState();
@@ -49,7 +49,19 @@ class _IdeeSuggestionScreenState extends State<IdeeSuggestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('IdeeSuggestion'),
+        title: Text(
+          'Ideas and suggestions',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () {
+              _showFilterDialog(context);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: ideeSuggestions.isEmpty
@@ -139,4 +151,42 @@ class _IdeeSuggestionScreenState extends State<IdeeSuggestionScreen> {
       ],
     );
   }
+
+  _showFilterDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return FilterDialog(
+        onFilter: (String? status, DateTime? date, String? project) {
+          // Copiez la liste d'idées suggestions dans une liste temporaire pour filtrer
+          List<Reclamation> filteredList = List.from(ideeSuggestions);
+
+          // Filtrer par statut
+          if (status != null) {
+            filteredList = filteredList.where((reclamation) => reclamation.status == status).toList();
+          }
+
+          // Filtrer par date
+          if (date != null) {
+            filteredList = filteredList.where((reclamation) => reclamation.date.year == date.year && reclamation.date.month == date.month && reclamation.date.day == date.day).toList();
+          }
+
+          // Filtrer par projet
+          if (project != null) {
+           // filteredList = filteredList.where((reclamation) => reclamation.project == project).toList();
+          }
+
+          // Mettre à jour la liste d'idées suggestions affichée
+          setState(() {
+            ideeSuggestions = filteredList;
+          });
+
+          // Fermer le dialogue
+          Navigator.of(context).pop();
+        },
+      );
+    },
+  );
+}
+
 }
