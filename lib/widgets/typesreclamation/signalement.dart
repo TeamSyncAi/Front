@@ -1,11 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:teamsyncia/models/reclamation.dart';
 import '../addReclamation.dart';
 
+class SignalementScreen extends StatefulWidget {
+  @override
+  _SignalementState createState() => _SignalementState();
+}
 
-class Signalement extends StatelessWidget {
-  final String type;
+  
 
- Signalement({required this.type});
+class _SignalementState extends State<SignalementScreen> {
+  List<Reclamation> signalements = [];
+
+  Future<void> fetchSignalements() async {
+    try {
+      final response = await http.get(Uri.parse('http://192.168.56.1:48183/reclamation/type/reporting%20problems'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        print("Received data: $data");
+
+        setState(() {
+          signalements = data.map((item) => Reclamation(
+            title: item['title'] ?? '',
+            status: item['status'] ?? '',
+            description: item['description'] ?? '',
+            date: DateTime.parse(item['date']),
+            type: item['type'] ?? '',
+          )).toList();
+        });
+      } else {
+        print("Failed to load data: ${response.statusCode}");
+        throw Exception('Failed to load data'); 
+      }
+    } catch (e) {
+      print("Network error: $e");
+      throw Exception('Network error'); 
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSignalements();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +69,14 @@ class Signalement extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    type,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                 
                   SizedBox(height: 8.0),
-                  _buildEtatCircle('Rejected', const Color.fromARGB(255, 255, 0, 0)),
+                  if (signalements.isEmpty)
+                    Text('No reclamation found')
+                  else
+                    Column(
+                      children: signalements.map((reclamation) => _buildReclamationItem(reclamation)).toList(),
+                    ),
                 ],
               ),
             ),
@@ -65,16 +104,63 @@ class Signalement extends StatelessWidget {
     );
   }
 
-  Widget _buildEtatCircle(String etat, Color couleur) {
+  Widget _buildReclamationItem(Reclamation reclamation) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 1.0),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            reclamation.title,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            reclamation.description,
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          _buildStatusWidget(reclamation.status),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusWidget(String status) {
+    Color backgroundColor;
+    switch (status.toLowerCase()) {
+      case 'in progress':
+        backgroundColor = Colors.orange;
+        break;
+      case 'accepted':
+        backgroundColor = Colors.green;
+        break;
+      case 'rejected':
+        backgroundColor = Colors.red;
+        break;
+      default:
+        backgroundColor = Colors.grey;
+    }
+
     return Row(
       children: [
         CircleAvatar(
-          backgroundColor: couleur,
+          backgroundColor: backgroundColor,
           radius: 8.0,
         ),
         SizedBox(width: 8.0),
         Text(
-          etat,
+          status,
           style: TextStyle(
             fontSize: 14.0,
           ),

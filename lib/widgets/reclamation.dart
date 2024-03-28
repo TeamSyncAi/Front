@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:teamsyncia/widgets/typesreclamation/managment.dart';
 import 'typesreclamation/ideesuggestion.dart';
 import 'typesreclamation/signalement.dart';
 import 'typesreclamation/help.dart';
 import 'typesreclamation/gestiontaches.dart';
 import 'typesreclamation/health.dart';
-import 'feedback.dart';
+import 'typesreclamation/feedback.dart';
 
 class Reclamation {
   String type;
@@ -76,7 +77,7 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
                 filled: true,
-                fillColor: Colors.orange[100],
+                fillColor: Color.fromARGB(206, 252, 252, 252),
               ),
             ),
           ),
@@ -90,22 +91,22 @@ class _ReclamationScreenState extends State<ReclamationScreen> {
                     Widget targetScreen = Container();
                     switch (reclamation.type) {
                       case 'Ideas and suggestions':
-                        targetScreen = IdeeSuggestion(type: reclamation.type);
-                        break;
+                          targetScreen = IdeeSuggestionScreen();
+                         break;
                       case 'Reporting problems':
-                        targetScreen = Signalement(type: reclamation.type);
+                        targetScreen =SignalementScreen();
                         break;
                       case 'Support Requests':
-                        targetScreen = Help(type: reclamation.type);
+                        targetScreen = HelpScreen();
                         break;
                       case 'Task and project management':
-                        targetScreen = GestionTaches(type: reclamation.type);
+                        targetScreen = ManagementScreen();
                         break;
                       case 'Feedback':
                         targetScreen = FeedbackScreen();
                         break;
                       case 'Health':
-                        targetScreen = Health(type: reclamation.type);
+                        targetScreen = HealthScreen();
                         break;
                       default:
                         print('Unhandled reclamation type: ${reclamation.type}');

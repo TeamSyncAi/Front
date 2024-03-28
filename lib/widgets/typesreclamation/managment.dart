@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:teamsyncia/models/reclamation.dart';
-import '../addReclamation.dart';
+import '/widgets/addReclamation.dart';
 
-class HelpScreen extends StatefulWidget {
+class ManagementScreen extends StatefulWidget {
   @override
-  _HelpScreenState createState() => _HelpScreenState();
+  _ManagementScreenState createState() => _ManagementScreenState();
 }
 
-class _HelpScreenState extends State<HelpScreen> {
-  List<Reclamation> helpReclamations = [];
+class _ManagementScreenState extends State<ManagementScreen> {
+  List<Reclamation> managementReclamations = [];
 
-  Future<void> fetchHelpReclamations() async {
+  Future<void> fetchManagementReclamations() async {
     try {
-      final response = await http.get(Uri.parse('http://192.168.56.1:48183/reclamation/type/support%20Requests'));
+      final response = await http.get(Uri.parse('http://192.168.56.1:48183/reclamation/type/task%20and%20project%20management'));
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         print("Received data: $data");
 
         setState(() {
-          helpReclamations = data.map((item) => Reclamation(
+          managementReclamations = data.map((item) => Reclamation(
             title: item['title'] ?? '',
             status: item['status'] ?? '',
             description: item['description'] ?? '',
@@ -31,36 +31,36 @@ class _HelpScreenState extends State<HelpScreen> {
         });
       } else {
         print("Failed to load data: ${response.statusCode}");
-        throw Exception('Failed to load data'); 
+        throw Exception('Failed to load data');
       }
     } catch (e) {
       print("Network error: $e");
-      throw Exception('Network error'); 
+      throw Exception('Network error');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    fetchHelpReclamations();
+    fetchManagementReclamations();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Help'),
+        title: Text('Management'),
       ),
       body: Center(
-        child: helpReclamations.isEmpty
+        child: managementReclamations.isEmpty
             ? Text('No reclamation found')
             : ListView.builder(
-                itemCount: helpReclamations.length,
-                itemBuilder: (context, index) {
-                  final helpReclamation = helpReclamations[index];
-                  return _buildHelpReclamationItem(helpReclamation); 
-                },
-              ),
+          itemCount: managementReclamations.length,
+          itemBuilder: (context, index) {
+            final managementReclamation = managementReclamations[index];
+            return _buildManagementReclamationItem(managementReclamation);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -75,7 +75,7 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 
-  Widget _buildHelpReclamationItem(Reclamation helpReclamation) {
+  Widget _buildManagementReclamationItem(Reclamation managementReclamation) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       decoration: BoxDecoration(
@@ -92,7 +92,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    helpReclamation.title,
+                    managementReclamation.title,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class _HelpScreenState extends State<HelpScreen> {
                 ],
               ),
             ),
-            _buildStatusWidget(helpReclamation.status)
+            _buildStatusWidget(managementReclamation.status)
           ],
         ),
       ),
